@@ -3,9 +3,10 @@
 //  Solo edita los valores entre comillas.
 // =====================================================
 var CONFIG = {
-  // Supabase: Project Settings → API (usa la "anon public key", nunca la service_role)
-  SUPABASE_URL: "",
-  SUPABASE_ANON_KEY: "",
+  // Supabase: Project Settings → API Keys
+  // Usa la "Publishable key" (sb_publishable_...). NUNCA la "Secret key" ni la "service_role".
+  SUPABASE_URL: "https://gunukaedqxzshnhzxprc.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_4JM0Ch5_pN4eUNh6IkkEwQ_uutT7XF2",
 
   // Medición (déjalo vacío si aún no lo tienes)
   META_PIXEL_ID: "",

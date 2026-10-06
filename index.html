@@ -333,7 +333,8 @@ footer .pie{margin-top:18px;opacity:.6}
     var x = new XMLHttpRequest();
     x.open(metodo, C.SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/' + ruta, true);
     x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
-    x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY);
+    // Las claves antiguas (eyJ...) también van en Authorization; las nuevas (sb_publishable_...) solo en apikey
+    if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
     if (cuerpo) {
       x.setRequestHeader('Content-Type', 'application/json');
       x.setRequestHeader('Prefer', 'return=minimal');

@@ -7,7 +7,7 @@
 -- ¿Quién es administrador? (solo tu correo)
 create or replace function es_admin() returns boolean
 language sql stable as $$
-  select coalesce(auth.jwt() ->> 'email', '') = 'TU_CORREO@ejemplo.com'
+  select coalesce(auth.jwt() ->> 'email', '') = 'andrefelip672001@gmail.com'
 $$;
 
 -- ---------- CONTENIDO EDITABLE ----------

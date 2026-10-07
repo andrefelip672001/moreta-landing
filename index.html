@@ -675,6 +675,18 @@ footer .pie{margin-top:18px;opacity:.6}
         playerVars: { controls: 0, disablekb: 1, rel: 0, playsinline: 1, modestbranding: 1, fs: 0, iv_load_policy: 3 },
         events: {
           onReady: function () { listo = true; clearTimeout(respaldo); duracion = player.getDuration() || 0; },
+          // Video bloqueado, borrado o privado: no dejamos a la gente atrapada
+          onError: function (e) {
+            clearTimeout(respaldo);
+            track('video-principal', 'error-' + e.data);
+            capa.style.display = 'none';
+            if (!desbloqueado) {
+              desbloqueado = true; // solo por esta visita, no se guarda
+              $('mth').className = 'mth';
+              avance(100);
+            }
+            textoVideo('⚠️ El video no está disponible ahora. Ya puedes registrarte abajo 👇', true);
+          },
           onStateChange: function (e) {
             reproduciendo = e.data === 1;
             capa.className = 'vm-capa' + (reproduciendo ? ' reproduciendo' : '');

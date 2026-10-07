@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://andrefelip672001.github.io/moreta-landing/">
 <meta property="og:title" content="Miguel Ángel Moreta · Mejora tu Hogar 🏠">
 <meta property="og:description" content="Mira el video y registra tu hogar en Mejora tu Hogar. Conoce las propuestas para Santo Domingo. ¡La Tierrita nos une! 💙">
-<meta property="og:image" content="https://andrefelip672001.github.io/moreta-landing/img/og.jpg?v=1">
+<meta property="og:image" content="https://andrefelip672001.github.io/moreta-landing/img/og.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Miguel Ángel Moreta, candidato a la Alcaldía de Santo Domingo · Mejora tu Hogar">
@@ -112,6 +112,8 @@ h2 em{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--magen
 .listo h3{font-size:21px;font-weight:900;margin-top:8px}
 .listo p{color:var(--gris);font-size:14.5px;margin-top:8px;line-height:1.5}
 .opc{font-weight:500;color:var(--gris)}
+.captcha{margin-top:14px}
+.captcha:empty{margin-top:0}
 .fotos{display:flex;margin:0 -5px}
 .foto-slot{flex:1;margin:0 5px;position:relative;border:2px dashed #C9D1EA;border-radius:14px;height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gris);font-size:12.5px;font-weight:700;overflow:hidden;background:#FAFBFF;text-align:center;padding:8px}
 .foto-slot .ic{font-size:28px;margin-bottom:4px}
@@ -176,6 +178,23 @@ h2 em{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--magen
 .vol .enviar{background:var(--marino);border:2px solid var(--marino)}
 .vol .enviar{background:linear-gradient(90deg,var(--azul),var(--azul2))}
 
+/* Biografía con foto */
+.bio-cab{display:flex;align-items:center}
+.bio-foto{width:104px;height:104px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 4px var(--magenta),0 10px 24px rgba(0,0,0,.3);overflow:hidden;flex:none;margin-right:18px;background:#fff}
+.bio-foto img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block}
+.bio-cargo{font-size:13.5px;font-weight:600;opacity:.85;margin-top:6px}
+
+/* Comunidad WhatsApp / Telegram */
+.com{background:#fff;border-radius:24px;padding:26px 22px;text-align:center;box-shadow:0 6px 22px rgba(10,26,92,.08)}
+.com-ic{width:62px;height:62px;border-radius:50%;margin:0 auto 12px;background:var(--fondo);display:flex;align-items:center;justify-content:center;font-size:30px}
+.bt-com{display:flex;align-items:center;justify-content:center;width:100%;padding:15px;border-radius:14px;margin-top:12px;color:#fff;text-decoration:none;font-weight:800;font-size:16px}
+.bt-com svg{width:24px;height:24px;margin-right:10px;flex:none}
+.bt-wsp{background:#25D366}
+.bt-tg{background:#229ED9}
+.com-mini{margin-top:20px;padding-top:16px;border-top:1px solid var(--linea)}
+.com-mini p{font-size:13.5px;font-weight:700;color:var(--marino)}
+.com-mini .bt-com{padding:12px;font-size:15px;margin-top:10px}
+
 /* Descargables */
 .desc{display:flex;align-items:center;background:#fff;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 4px 16px rgba(10,26,92,.07);text-decoration:none}
 .desc .ic{width:50px;height:50px;border-radius:13px;background:var(--fondo);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;margin-right:14px}
@@ -215,7 +234,7 @@ footer .pie{margin-top:18px;opacity:.6}
 .guia-burbuja .x{position:absolute;right:6px;top:4px;width:22px;height:22px;border:0;background:none;color:var(--gris);font-size:16px;cursor:pointer;line-height:1}
 .guia-burbuja .ir{display:block;color:var(--magenta);font-size:12px;margin-top:4px}
 .guia-foto{width:84px;height:84px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 3px var(--magenta),0 8px 20px rgba(0,0,0,.3);overflow:hidden;background:linear-gradient(135deg,#2A63FF,var(--marino));cursor:pointer;flex:none;position:relative;animation:saludo 3s ease-in-out infinite}
-.guia-foto img{width:100%;height:100%;object-fit:cover;display:block}
+.guia-foto img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}
 .guia-foto .ini{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:26px}
 @keyframes saludo{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 
@@ -351,6 +370,7 @@ footer .pie{margin-top:18px;opacity:.6}
               <span>Acepto que la campaña use mis datos para contactarme sobre la propuesta Mejora tu Hogar, según el aviso de privacidad al final de esta página.</span>
             </label>
 
+            <div class="captcha" id="cap-mth"></div>
             <button type="submit" class="enviar" id="m-enviar">Registrar mi hogar</button>
             <p class="err" id="m-err"></p>
           </form>
@@ -359,7 +379,10 @@ footer .pie{margin-top:18px;opacity:.6}
             <div class="big">🏠</div>
             <h3>¡Tu hogar quedó registrado!</h3>
             <p>Te contactaremos por WhatsApp. Comparte esta página para que más familias se registren.</p>
-            <a class="btn-sec" href="#comparte" style="background:#25D366">Compartir con mi familia</a>
+            <a class="btn-sec" href="#comparte" style="background:var(--marino)">Compartir con mi familia</a>
+            <div class="com-mini" data-comunidad>
+              <p>📲 Entérate primero de las novedades de Mejora tu Hogar:</p>
+            </div>
           </div>
         </div>
       </div>
@@ -379,7 +402,13 @@ footer .pie{margin-top:18px;opacity:.6}
 <!-- ================= 4. CONOCE A MORETA ================= -->
 <section id="conoce" class="bio">
   <div class="wrap">
-    <h2>Conoce a <em>Moreta</em></h2>
+    <div class="bio-cab">
+      <div class="bio-foto"><img src="img/moreta.jpg" alt="Miguel Ángel Moreta" loading="lazy"></div>
+      <div>
+        <h2>Conoce a <em>Moreta</em></h2>
+        <p class="bio-cargo">Candidato a la Alcaldía de Santo Domingo</p>
+      </div>
+    </div>
     <div class="texto" id="texto-bio"></div>
   </div>
 </section>
@@ -403,6 +432,18 @@ footer .pie{margin-top:18px;opacity:.6}
     <h2>Agenda de <em>medios</em></h2>
     <p class="sub">Sintoniza y acompáñanos.</p>
     <div id="lista-agenda"></div>
+  </div>
+</section>
+
+<!-- ================= 6b. COMUNIDAD WHATSAPP / TELEGRAM ================= -->
+<section id="comunidad" style="padding-top:10px">
+  <div class="wrap">
+    <div class="com">
+      <div class="com-ic">📲</div>
+      <h2>Únete a mi <em>comunidad</em></h2>
+      <p class="sub">Recibe en tu celular la agenda, las propuestas y las novedades de Mejora tu Hogar. Sin spam, solo lo importante.</p>
+      <div data-comunidad></div>
+    </div>
   </div>
 </section>
 
@@ -445,6 +486,7 @@ footer .pie{margin-top:18px;opacity:.6}
             <span>Acepto que la campaña use mis datos para contactarme sobre actividades de la campaña, según el aviso de privacidad al final de esta página.</span>
           </label>
 
+          <div class="captcha" id="cap-vol"></div>
           <button type="submit" class="enviar" id="f-enviar">Sumarme como voluntario</button>
           <p class="err" id="f-err"></p>
         </form>
@@ -453,6 +495,9 @@ footer .pie{margin-top:18px;opacity:.6}
           <div class="big">🙌</div>
           <h3>¡Gracias por sumarte!</h3>
           <p>Pronto te contactaremos por WhatsApp para coordinar.</p>
+          <div class="com-mini" data-comunidad>
+            <p>📲 Mientras tanto, únete a la comunidad:</p>
+          </div>
         </div>
       </div>
     </div>
@@ -520,8 +565,8 @@ footer .pie{margin-top:18px;opacity:.6}
   </div>
   <div class="guia-foto" id="guia-foto">
     <span class="ini">MM</span>
-    <!-- Cuando tengas la imagen o GIF de Moreta, guárdala como img/moreta-guia.png (o .gif y cambia el nombre aquí) -->
-    <img src="img/moreta-guia.png" alt="Miguel Ángel Moreta" onerror="this.style.display='none'">
+    <!-- Si luego tienes un GIF de Moreta, guárdalo en img/ y cambia el nombre aquí -->
+    <img src="img/moreta-guia.jpg" alt="Miguel Ángel Moreta" onerror="this.style.display='none'">
   </div>
 </div>
 
@@ -792,6 +837,22 @@ footer .pie{margin-top:18px;opacity:.6}
     $('lista-descargables').innerHTML = h;
   }
 
+  /* ---------- Comunidad WhatsApp / Telegram ---------- */
+  var ICONO_WSP = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.43 9.43 0 01-4.8-1.32l-.35-.2-3.57.93.95-3.48-.22-.36a9.4 9.4 0 01-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.99 6.67 2.77a9.37 9.37 0 012.76 6.68c0 5.21-4.24 9.44-9.44 9.44zM20.08 3.9A11.3 11.3 0 0012.04.57C5.78.57.68 5.67.67 11.93c0 2 .52 3.95 1.52 5.67L.57 23.5l6.03-1.58a11.33 11.33 0 005.43 1.38h.01c6.26 0 11.36-5.1 11.36-11.36 0-3.04-1.18-5.89-3.32-8.04z"/></svg>';
+  var ICONO_TG = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M9.78 15.27l-.4 5.6c.57 0 .82-.25 1.12-.54l2.69-2.57 5.58 4.09c1.02.57 1.75.27 2.02-.94L24.45 3.5c.33-1.53-.55-2.13-1.55-1.76L1.4 9.98c-1.48.57-1.46 1.39-.25 1.77l5.5 1.71L19.4 5.43c.6-.4 1.15-.18.7.22"/></svg>';
+  function pintarComunidad(wsp, tg) {
+    var h = '', cont = document.querySelectorAll('[data-comunidad]'), i, base;
+    if (wsp) { h += '<a class="bt-com bt-wsp" href="' + esc(wsp) + '" target="_blank" rel="noopener" data-track="comunidad" data-detalle="whatsapp">' + ICONO_WSP + 'Únete a la comunidad de WhatsApp</a>'; }
+    if (tg) { h += '<a class="bt-com bt-tg" href="' + esc(tg) + '" target="_blank" rel="noopener" data-track="comunidad" data-detalle="telegram">' + ICONO_TG + 'Únete al canal de Telegram</a>'; }
+    for (i = 0; i < cont.length; i++) {
+      base = cont[i].getAttribute('data-base');
+      if (base === null) { base = cont[i].innerHTML; cont[i].setAttribute('data-base', base); }
+      cont[i].innerHTML = h ? base + h : '';
+      cont[i].style.display = h ? '' : 'none';
+    }
+    esconder('comunidad', !h);
+  }
+
   /* ---------- Propuestas (tarjetas) ---------- */
   function pintarPropTxt(lista) {
     var h = '', i, p;
@@ -816,6 +877,7 @@ footer .pie{margin-top:18px;opacity:.6}
       pintarPropTxt(DEMO.propTxt);
       pintarVideos('lista-propuestas', DEMO.propuestas);
       pintarAgenda(DEMO.agenda); $('texto-bio').textContent = DEMO.bio;
+      pintarComunidad('#', '#');
       iniciarVideo(C.VIDEO_PRINCIPAL || '', C.VIDEO_PRINCIPAL_FORMATO || 'vertical');
       return;
     }
@@ -840,6 +902,7 @@ footer .pie{margin-top:18px;opacity:.6}
       var c = {}, i;
       if (ok && d) { for (i = 0; i < d.length; i++) { c[d[i].clave] = d[i].valor; } }
       $('texto-bio').textContent = c.bio || DEMO.bio;
+      pintarComunidad(c.whatsapp_comunidad || '', c.telegram_comunidad || '');
       iniciarVideo(c.video_principal || C.VIDEO_PRINCIPAL || '', c.video_principal_formato || C.VIDEO_PRINCIPAL_FORMATO || 'vertical');
     });
   }
@@ -942,16 +1005,109 @@ footer .pie{margin-top:18px;opacity:.6}
     for (k = 0; k < bts.length; k++) { bts[k].onclick = function () { ponerFoto(+this.getAttribute('data-quitar'), null); }; }
   })();
 
-  function subirFoto(ruta, blob, cb) {
+  /* =========================================================
+     VERIFICACIÓN "NO SOY UN ROBOT" (Cloudflare Turnstile)
+     ========================================================= */
+  var captcha = { mth: { id: null, token: '', cont: 'cap-mth' }, vol: { id: null, token: '', cont: 'cap-vol' } };
+  function dibujarCaptcha(k) {
+    var c = captcha[k];
+    if (!window.turnstile || c.id !== null || !$(c.cont).offsetParent) { return; }
+    c.id = window.turnstile.render('#' + c.cont, {
+      sitekey: C.TURNSTILE_SITE_KEY,
+      language: 'es',
+      appearance: 'interaction-only',   // invisible salvo que Cloudflare necesite preguntar
+      callback: function (t) { c.token = t; },
+      'expired-callback': function () { c.token = ''; window.turnstile.reset(c.id); },
+      'error-callback': function () { c.token = ''; }
+    });
+  }
+  function reiniciarCaptcha(k) {
+    var c = captcha[k]; c.token = '';
+    if (window.turnstile && c.id !== null) { try { window.turnstile.reset(c.id); } catch (e) {} }
+  }
+  if (C.TURNSTILE_SITE_KEY) {
+    window.alCargarTurnstile = function () { dibujarCaptcha('mth'); dibujarCaptcha('vol'); };
+    var ts = document.createElement('script');
+    ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=alCargarTurnstile';
+    ts.async = true; document.head.appendChild(ts);
+  }
+
+  /* =========================================================
+     ENVÍO AL "PORTERO" (Edge Function de Supabase)
+     ========================================================= */
+  var MENSAJES_ERROR = {
+    captcha: 'No pudimos comprobar que eres una persona. Espera unos segundos e inténtalo otra vez.',
+    limite: 'Se han hecho muchos registros desde esta conexión. Inténtalo de nuevo en una hora.',
+    cedula: 'Esta cédula ya está registrada en Mejora tu Hogar.',
+    foto: 'Una de las fotos no se pudo subir. Quítala y prueba con otra.',
+    datos: 'Revisa los datos del formulario e inténtalo otra vez.'
+  };
+  function baseUrl() { return C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, ''); }
+  function xhrSupabase(metodo, ruta, tipoContenido, cuerpo, cb) {
     var x = new XMLHttpRequest();
-    x.open('POST', C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '') + '/storage/v1/object/fotos-hogares/' + ruta, true);
+    x.open(metodo, baseUrl() + ruta, true);
     x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
     if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
-    x.setRequestHeader('Content-Type', blob.type);
-    x.onreadystatechange = function () { if (x.readyState === 4) { cb(x.status >= 200 && x.status < 300); } };
-    x.send(blob);
+    if (tipoContenido) { x.setRequestHeader('Content-Type', tipoContenido); }
+    if (tipoContenido === 'application/json') { x.setRequestHeader('Prefer', 'return=minimal'); }
+    x.onreadystatechange = function () { if (x.readyState === 4) { cb(x.status); } };
+    x.send(cuerpo);
   }
-  function aleatorio() { return Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6); }
+
+  // MODO DIRECTO (sin Cloudflare): guarda directo en Supabase, como al inicio
+  function enviarDirecto(tipo, datos, fotosLista, alProgreso, cb) {
+    function guardar() {
+      if (alProgreso) { alProgreso(100); }
+      xhrSupabase('POST', '/rest/v1/' + (tipo === 'hogar' ? 'hogares' : 'voluntarios'), 'application/json', JSON.stringify(datos), function (st) {
+        if (st >= 200 && st < 300) { return cb(true); }
+        if (st === 0) { return cb(false, 'No hay conexión a internet. Revisa tus datos o wifi e inténtalo otra vez.'); }
+        if (st === 409) { return cb(false, MENSAJES_ERROR.cedula); }
+        cb(false, MENSAJES_ERROR.datos);
+      });
+    }
+    if (tipo !== 'hogar') { return guardar(); }
+    var hoy = new Date(), mes = hoy.getFullYear() + '-' + (hoy.getMonth() < 9 ? '0' : '') + (hoy.getMonth() + 1);
+    datos.fotos = [];
+    (function subir(n) {
+      if (n >= fotosLista.length) { return guardar(); }
+      if (alProgreso) { alProgreso(Math.round(n / fotosLista.length * 100)); }
+      var ruta = 'hogares/' + mes + '/' + Date.now() + '-' + Math.random().toString(36).slice(2, 12) + '.' + fotosLista[n].ext;
+      xhrSupabase('POST', '/storage/v1/object/fotos-hogares/' + ruta, fotosLista[n].blob.type, fotosLista[n].blob, function (st) {
+        if (st < 200 || st >= 300) { return cb(false, st === 0 ? 'No hay conexión a internet. Inténtalo otra vez.' : MENSAJES_ERROR.foto); }
+        datos.fotos.push(ruta); subir(n + 1);
+      });
+    })(0);
+  }
+
+  function enviarAlPortero(k, tipo, datos, fotosLista, alProgreso, cb) {
+    // Sin clave de Cloudflare en config.js → modo directo (sin protección anti-robots)
+    if (!C.TURNSTILE_SITE_KEY) { return enviarDirecto(tipo, datos, fotosLista, alProgreso, cb); }
+    var token = captcha[k].token;
+    if (C.TURNSTILE_SITE_KEY && !token) { return cb(false, 'Estamos comprobando que eres una persona… espera 2 segundos y vuelve a tocar el botón.'); }
+    var fd = new FormData(), i;
+    fd.append('tipo', tipo);
+    fd.append('captcha', token);
+    fd.append('datos', JSON.stringify(datos));
+    for (i = 0; i < fotosLista.length; i++) { fd.append('fotos', fotosLista[i].blob, 'foto' + (i + 1) + '.' + fotosLista[i].ext); }
+
+    var x = new XMLHttpRequest();
+    x.open('POST', C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '') + '/functions/v1/registrar', true);
+    x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
+    if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
+    if (x.upload && alProgreso) {
+      x.upload.onprogress = function (e) { if (e.lengthComputable) { alProgreso(Math.round(e.loaded / e.total * 100)); } };
+    }
+    x.onreadystatechange = function () {
+      if (x.readyState !== 4) { return; }
+      reiniciarCaptcha(k); // cada verificación sirve una sola vez
+      var r = {};
+      try { r = JSON.parse(x.responseText); } catch (e) {}
+      if (x.status >= 200 && x.status < 300 && r.ok) { return cb(true); }
+      if (x.status === 0) { return cb(false, 'No hay conexión a internet. Revisa tus datos o wifi e inténtalo otra vez.'); }
+      cb(false, MENSAJES_ERROR[r.error] || 'No pudimos guardar tus datos. Inténtalo otra vez en unos minutos.');
+    };
+    x.send(fd);
+  }
 
   /* ---------- Validación de cédula ecuatoriana ---------- */
   function cedulaValida(c) {
@@ -996,54 +1152,28 @@ footer .pie{margin-top:18px;opacity:.6}
     if (!conectado()) { return mostrarError('m-err', 'El formulario aún no está conectado. Intenta más tarde.'); }
     mostrarError('m-err', '');
 
-    var boton = $('m-enviar');
-    function falla(msg) { boton.disabled = false; boton.textContent = 'Registrar mi hogar'; mostrarError('m-err', msg); }
-    boton.disabled = true;
-
-    var pendientes = [], i, hoy = new Date(), mes = hoy.getFullYear() + '-' + (hoy.getMonth() < 9 ? '0' : '') + (hoy.getMonth() + 1);
+    var boton = $('m-enviar'), pendientes = [], i;
     for (i = 0; i < fotos.length; i++) { if (fotos[i]) { pendientes.push(fotos[i]); } }
+    delete d.fotos;
+    boton.disabled = true;
+    boton.textContent = pendientes.length ? 'Subiendo fotos…' : 'Guardando…';
 
-    // 1) Subimos las fotos una por una
-    function subirSiguiente(n) {
-      if (n >= pendientes.length) { guardarRegistro(); return; }
-      boton.textContent = 'Subiendo foto ' + (n + 1) + ' de ' + pendientes.length + '...';
-      var ruta = 'hogares/' + mes + '/' + Date.now() + '-' + aleatorio() + '.' + pendientes[n].ext;
-      subirFoto(ruta, pendientes[n].blob, function (ok) {
-        if (!ok) { return falla('No pudimos subir la foto. Revisa tu conexión e inténtalo otra vez.'); }
-        d.fotos.push(ruta); subirSiguiente(n + 1);
-      });
-    }
-    // 2) Guardamos el registro
-    function guardarRegistro() {
-      boton.textContent = 'Guardando...';
-      var x = new XMLHttpRequest();
-      x.open('POST', C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '') + '/rest/v1/hogares', true);
-      x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
-      if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
-      x.setRequestHeader('Content-Type', 'application/json');
-      x.setRequestHeader('Prefer', 'return=minimal');
-      x.onreadystatechange = function () {
-        if (x.readyState !== 4) { return; }
-        if (x.status >= 200 && x.status < 300) {
-          $('form-mth').style.display = 'none'; $('m-listo').style.display = 'block';
-          track('registro', 'mejora-tu-hogar');
-          if (window.fbq) { window.fbq('track', 'Lead'); }
-          decir('¡Listo! 🏠 Tu hogar quedó registrado. ¡Comparte con tu familia!', 'comparte', true);
-        } else if (x.status === 409) {
-          falla('Esta cédula ya está registrada en Mejora tu Hogar.');
-        } else {
-          falla('No pudimos guardar tus datos. Revisa tu conexión e inténtalo otra vez.');
-        }
-      };
-      x.send(JSON.stringify(d));
-    }
-    subirSiguiente(0);
+    enviarAlPortero('mth', 'hogar', d, pendientes, function (p) {
+      boton.textContent = p < 100 ? 'Subiendo… ' + p + '%' : 'Guardando…';
+    }, function (ok, msg) {
+      if (!ok) { boton.disabled = false; boton.textContent = 'Registrar mi hogar'; return mostrarError('m-err', msg); }
+      $('form-mth').style.display = 'none'; $('m-listo').style.display = 'block';
+      track('registro', 'mejora-tu-hogar');
+      if (window.fbq) { window.fbq('track', 'Lead'); }
+      decir('¡Listo! 🏠 Tu hogar quedó registrado. ¡Comparte con tu familia!', 'comparte', true);
+    });
   };
 
   /* ---------- Formulario Voluntarios ---------- */
   $('btn-vol').onclick = function () {
     $('btn-vol').className = 'btn-vol oculto';
     $('caja-vol').className = 'caja-form';
+    dibujarCaptcha('vol');
   };
   $('form-unete').onsubmit = function (ev) {
     ev.preventDefault();
@@ -1061,17 +1191,17 @@ footer .pie{margin-top:18px;opacity:.6}
 
     var boton = $('f-enviar');
     if (!conectado()) { return mostrarError('f-err', 'El formulario aún no está conectado. Intenta más tarde.'); }
-    boton.disabled = true; boton.textContent = 'Enviando...';
-    api('voluntarios', 'POST', {
+    boton.disabled = true; boton.textContent = 'Enviando…';
+    enviarAlPortero('vol', 'voluntario', {
       nombre: nombre, telefono: tel, parroquia: parroquia, barrio: barrio || null,
       ayuda: ayuda.join(', ') || null, fuente: fuente, consentimiento: true
-    }, function (ok) {
+    }, [], null, function (ok, msg) {
       if (ok) {
         $('form-unete').style.display = 'none'; $('f-listo').style.display = 'block';
         track('registro', 'unete');
       } else {
         boton.disabled = false; boton.textContent = 'Sumarme como voluntario';
-        mostrarError('f-err', 'No pudimos enviar tus datos. Revisa tu conexión e inténtalo otra vez.');
+        mostrarError('f-err', msg);
       }
     });
   };
@@ -1127,9 +1257,10 @@ footer .pie{margin-top:18px;opacity:.6}
     agenda:       ['¡Sintonízame! Aquí está mi agenda 📻', 'agenda'],
     unete:        ['¿Quieres ayudar? Súmate al equipo 🤝', 'unete'],
     descargables: ['Descarga el material y compártelo 📲', 'descargables'],
-    comparte:     ['¡Publica esta página en tu Facebook! 🙌', 'comparte']
+    comparte:     ['¡Publica esta página en tu Facebook! 🙌', 'comparte'],
+    comunidad:    ['Únete a mi comunidad de WhatsApp o Telegram 📲', 'comunidad']
   };
-  var ORDEN = ['inicio','mejora','testimonios','conoce','propuestas','agenda','unete','descargables','comparte'];
+  var ORDEN = ['inicio','mejora','testimonios','conoce','propuestas','agenda','comunidad','unete','descargables','comparte'];
   var actual = '', cerrada = false, ocultarT = null, destino = 'mejora';
 
   function decir(texto, ir, forzar) {

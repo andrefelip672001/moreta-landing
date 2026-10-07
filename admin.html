@@ -200,6 +200,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
           <button class="btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
         </div>
       </div>
+      <div id="st-alerta"></div>
       <div class="kpis" id="st-kpis"></div>
       <div class="card" style="margin-top:12px">
         <h3>Visitas y registros por día</h3>
@@ -270,6 +271,23 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
           </div>
           <div class="fila" style="margin-top:14px"><button class="btn mag" id="vp-guardar">Guardar video</button><span id="vp-ok" class="ayuda"></span></div>
           <div id="vp-vista" style="margin-top:14px"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>📲 Comunidades de WhatsApp y Telegram</h3>
+        <p class="ayuda" style="margin-bottom:4px">Los botones aparecen en la página solo si hay un link. Déjalo vacío para ocultar ese botón.</p>
+        <div class="formu" style="margin-top:0">
+          <div class="grid">
+            <div class="ancho">
+              <label class="l" for="co-wsp">Link de la comunidad (o canal) de WhatsApp</label>
+              <input class="in" id="co-wsp" placeholder="https://chat.whatsapp.com/... o https://whatsapp.com/channel/...">
+            </div>
+            <div class="ancho">
+              <label class="l" for="co-tg">Link del canal o grupo de Telegram</label>
+              <input class="in" id="co-tg" placeholder="https://t.me/...">
+            </div>
+          </div>
+          <div class="fila" style="margin-top:14px"><button class="btn mag" id="co-guardar">Guardar links</button></div>
         </div>
       </div>
       <div class="card" style="margin-top:12px">
@@ -391,7 +409,7 @@ const NOMBRES = {
   directo: 'Link directo', compartido: 'Compartido por WhatsApp',
   'compartido-facebook': 'Compartido en Facebook', 'compartido-whatsapp': 'Compartido por WhatsApp',
   'compartido-copiado': 'Enlace copiado', whatsapp: 'Compartir por WhatsApp', 'copiar-enlace': 'Copiar enlace',
-  'ir-al-video': 'Ir al video (candado)', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers'
+  'ir-al-video': 'Ir al video (candado)', telegram: 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers'
 };
 const nombre = n => NOMBRES[n] || n;
 
@@ -413,7 +431,20 @@ cargadores.stats = async () => {
     <div class="card kpi"><div class="t">Video completo</div><div class="n">${s.video_completo ?? 0}</div><div class="d">de ${s.video_inicio ?? 0} que le dieron play (${pct(s.video_completo, s.video_inicio)})</div></div>
     <div class="card kpi dest"><div class="t">Hogares registrados</div><div class="n">${s.hogares ?? 0}</div><div class="d">${s.total_hogares ?? 0} en total · ${pct(s.hogares, s.visitas)} de las visitas</div></div>
     <div class="card kpi"><div class="t">Voluntarios</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
-    <div class="card kpi"><div class="t">Compartidos</div><div class="n">${s.compartidos}</div><div class="d">clics en los botones de compartir</div></div>`;
+    <div class="card kpi"><div class="t">Compartidos</div><div class="n">${s.compartidos}</div><div class="d">clics en los botones de compartir</div></div>
+    <div class="card kpi"><div class="t">🛡️ Intentos bloqueados</div><div class="n">${s.bloqueados ?? 0}</div><div class="d">${s.bloqueados_captcha ?? 0} robots · ${s.bloqueados_limite ?? 0} por exceso de envíos</div></div>`;
+
+  // Alerta de picos: muchos registros en la última hora comparado con lo normal
+  const uh = s.ultima_hora ?? 0, prom = s.promedio_hora ?? 0;
+  const pico = uh >= 20 && uh >= prom * 4;
+  $('#st-alerta').innerHTML = pico
+    ? `<div class="card" style="background:#FFF1F3;border:1.5px solid #F3C9D3;margin-bottom:12px">
+        <h3 style="color:var(--rojo);margin:0">⚠️ Actividad fuera de lo normal</h3>
+        <p class="sub" style="color:var(--marino);margin-top:6px">En la última hora llegaron <b>${uh} registros</b> (lo normal es ${prom} por hora).
+        Si hubo un evento o una publicación grande, es normal. Si no, revisa en 🏠 <b>Mejora tu Hogar</b> si hay registros sospechosos (nombres raros, datos repetidos) y elimínalos.</p></div>`
+    : (s.video_error ? `<div class="card" style="background:#FFF8E6;border:1.5px solid #F5DFA3;margin-bottom:12px">
+        <h3 style="color:#8A5A00;margin:0">🎬 El video principal tuvo ${s.video_error} error(es) de reproducción</h3>
+        <p class="sub" style="color:var(--marino);margin-top:6px">Revisa en YouTube Studio que el video no tenga restricciones por derechos de autor y que siga como "No listado".</p></div>` : '');
 
   const dias_ = s.por_dia || [];
   if (!dias_.length) { $('#st-dias').innerHTML = '<p class="vacio">Aún no hay datos en este periodo.</p>'; }
@@ -784,7 +815,16 @@ cargadores.bio = async () => {
   $('#bio-texto').value = c.bio || '';
   $('#vp-url').value = c.video_principal || '';
   $('#vp-formato').value = c.video_principal_formato || 'vertical';
+  $('#co-wsp').value = c.whatsapp_comunidad || '';
+  $('#co-tg').value = c.telegram_comunidad || '';
   vistaVideo();
+};
+$('#co-guardar').onclick = async () => {
+  const wsp = $('#co-wsp').value.trim(), tg = $('#co-tg').value.trim();
+  if (wsp && !/^https:\/\/(chat\.whatsapp\.com|whatsapp\.com|www\.whatsapp\.com|wa\.me)\//i.test(wsp)) return aviso('El link de WhatsApp debe empezar con https://chat.whatsapp.com/ o https://whatsapp.com/channel/', true);
+  if (tg && !/^https:\/\/(t\.me|telegram\.me)\//i.test(tg)) return aviso('El link de Telegram debe empezar con https://t.me/', true);
+  try { await guardarContenido([['whatsapp_comunidad', wsp], ['telegram_comunidad', tg]]); aviso('Links de comunidad guardados ✓'); }
+  catch (x) { aviso(x.message, true); }
 };
 $('#vp-guardar').onclick = async () => {
   const url = $('#vp-url').value.trim();

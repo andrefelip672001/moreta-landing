@@ -463,7 +463,7 @@ let hogares = [], urlsFotos = {};
 function hogFiltrados() {
   const q = $('#ho-buscar').value.toLowerCase().trim(), p = $('#ho-parroquia').value;
   return hogares.filter(h => (!p || h.parroquia === p) &&
-    (!q || [h.nombre, h.cedula, h.telefono, h.barrio, h.direccion, h.mejoras].join(' ').toLowerCase().includes(q)));
+    (!q || [h.nombre, h.cedula, h.telefono, h.correo, h.barrio, h.direccion, h.mejoras].join(' ').toLowerCase().includes(q)));
 }
 function pintarHogares() {
   const lista = hogFiltrados();
@@ -476,6 +476,7 @@ function pintarHogares() {
         <dl>
           <dt>Cédula</dt><dd>${esc(h.cedula)}</dd>
           <dt>Celular</dt><dd><a href="https://wa.me/593${esc(h.telefono.slice(1))}" target="_blank">${esc(h.telefono)} (WhatsApp)</a></dd>
+          <dt>Correo</dt><dd>${h.correo ? `<a href="mailto:${esc(h.correo)}" style="color:var(--azul)">${esc(h.correo)}</a>` : '<span style="color:var(--gris);font-weight:500">No dejó correo</span>'}</dd>
           <dt>Parroquia</dt><dd>${esc(h.parroquia)}${h.barrio ? ' · ' + esc(h.barrio) : ''}</dd>
           <dt>Dirección</dt><dd>${esc(h.direccion)}</dd>
           <dt>Vivienda</dt><dd>${esc(h.vivienda)} · ${h.personas} persona${h.personas == 1 ? '' : 's'}</dd>
@@ -522,8 +523,8 @@ $('#ho-excel').onclick = () => {
   const lista = hogFiltrados();
   if (!lista.length) return aviso('No hay registros para descargar', true);
   descargarCSV(`mejora-tu-hogar-${new Date().toISOString().slice(0, 10)}.csv`,
-    ['Fecha', 'Nombre', 'Cédula', 'Celular', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Fotos', 'Llegó por'],
-    lista.map(h => [fecha(h.creado), h.nombre, { txt: h.cedula }, { txt: h.telefono }, h.parroquia, h.barrio, h.direccion, h.vivienda, h.personas, h.mejoras, (h.fotos || []).length, nombre(h.fuente || 'directo')]));
+    ['Fecha', 'Nombre', 'Cédula', 'Celular', 'Correo', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Fotos', 'Llegó por'],
+    lista.map(h => [fecha(h.creado), h.nombre, { txt: h.cedula }, { txt: h.telefono }, h.correo || '', h.parroquia, h.barrio, h.direccion, h.vivienda, h.personas, h.mejoras, (h.fotos || []).length, nombre(h.fuente || 'directo')]));
 };
 
 // Excel (CSV que Excel abre con tildes y sin perder los ceros iniciales)

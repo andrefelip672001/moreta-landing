@@ -105,6 +105,27 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
 #toast.err{background:var(--rojo)}
 
 .formu{scroll-margin-top:120px}
+.col .h{width:100%;background:var(--verde);min-height:0}
+
+/* Hogares */
+.hog{background:#fff;border-radius:16px;padding:16px;margin-top:12px;box-shadow:0 3px 14px rgba(10,26,92,.06);display:flex;gap:16px}
+.hog .datos{flex:1;min-width:0}
+.hog h3{font-size:16px;font-weight:800}
+.hog .meta{font-size:12px;color:var(--gris);margin-top:2px}
+.hog dl{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;margin-top:10px;font-size:13.5px}
+.hog dt{color:var(--gris);font-weight:600}
+.hog dd{font-weight:600}
+.hog dd a{color:var(--verde);font-weight:800;text-decoration:none}
+.hog .fotos{display:flex;gap:8px;flex:none}
+.hog .fotos a{display:block;width:110px;height:110px;border-radius:12px;overflow:hidden;background:var(--fondo)}
+.hog .fotos img{width:100%;height:100%;object-fit:cover;display:block}
+.hog .sinfoto{width:110px;height:110px;border-radius:12px;background:var(--fondo);display:flex;align-items:center;justify-content:center;color:var(--gris);font-size:12px;text-align:center;padding:8px}
+.subir{display:inline-block;position:relative;overflow:hidden;margin-top:8px}
+.subir input{position:absolute;left:0;top:0;width:100%;height:100%;opacity:0;cursor:pointer}
+@media (max-width:640px){
+  .hog{flex-direction:column}
+  .hog .fotos a,.hog .sinfoto{width:50%;height:140px}
+}
 @media (max-width:640px){
   .top-in .yo{display:none}
   .top-in a{margin-left:auto}
@@ -149,11 +170,13 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
     </div>
     <nav class="tabs" id="tabs">
       <button data-tab="stats" class="on">📊 Estadísticas</button>
+      <button data-tab="hogares">🏠 Mejora tu Hogar</button>
       <button data-tab="voluntarios">🤝 Voluntarios</button>
+      <button data-tab="bio">⭐ Video principal y bio</button>
       <button data-tab="videos">🎥 Videos</button>
       <button data-tab="propuestas">📋 Propuestas</button>
       <button data-tab="agenda">🗓️ Agenda</button>
-      <button data-tab="bio">💙 Biografía</button>
+      <button data-tab="descargables">📥 Descargables</button>
     </nav>
   </header>
 
@@ -178,13 +201,27 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
       <div class="card" style="margin-top:12px">
         <h3>Visitas y registros por día</h3>
         <div class="columnas" id="st-dias"></div>
-        <div class="leyenda"><span><i style="background:var(--azul)"></i>Visitas</span><span><i style="background:var(--magenta)"></i>Registros</span></div>
+        <div class="leyenda"><span><i style="background:var(--azul)"></i>Visitas</span><span><i style="background:var(--magenta)"></i>Hogares</span><span><i style="background:var(--verde)"></i>Voluntarios</span></div>
       </div>
       <div class="grid2">
         <div class="card"><h3>¿De dónde llegan?</h3><div id="st-fuentes"></div></div>
         <div class="card"><h3>Botones más usados</h3><div id="st-botones"></div></div>
-        <div class="card"><h3>Voluntarios por parroquia</h3><div id="st-parroquias"></div></div>
+        <div class="card"><h3>Hogares por parroquia</h3><div id="st-parroquias"></div></div>
+        <div class="card"><h3>Voluntarios por parroquia</h3><div id="st-parroquias-vol"></div></div>
       </div>
+    </section>
+
+    <!-- Mejora tu Hogar -->
+    <section data-sec="hogares" class="oculto">
+      <div class="cab">
+        <div><h2>Mejora tu Hogar</h2><p class="sub" id="ho-total">—</p></div>
+        <div class="fila">
+          <input class="in" id="ho-buscar" placeholder="Buscar nombre, cédula, barrio…" style="width:240px">
+          <select class="in" id="ho-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
+          <button class="btn mag" id="ho-excel">⬇ Descargar Excel</button>
+        </div>
+      </div>
+      <div id="ho-lista"></div>
     </section>
 
     <!-- Voluntarios -->
@@ -209,12 +246,33 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
     <section data-sec="videos" class="oculto" data-crud="videos"></section>
     <section data-sec="propuestas" class="oculto" data-crud="propuestas"></section>
     <section data-sec="agenda" class="oculto" data-crud="agenda"></section>
+    <section data-sec="descargables" class="oculto" data-crud="descargables"></section>
 
-    <!-- Biografía -->
+    <!-- Video principal y biografía -->
     <section data-sec="bio" class="oculto">
-      <div class="cab"><div><h2>Biografía</h2><p class="sub">Texto de la sección "Conoce a Moreta". Los saltos de línea se respetan.</p></div></div>
+      <div class="cab"><div><h2>Video principal y biografía</h2><p class="sub">El video que la gente debe ver completo para desbloquear Mejora tu Hogar.</p></div></div>
       <div class="card">
-        <textarea class="in" id="bio-texto" style="min-height:280px"></textarea>
+        <h3>⭐ Video principal</h3>
+        <div class="formu" style="margin-top:0">
+          <div class="grid">
+            <div class="ancho">
+              <label class="l" for="vp-url">Link de YouTube</label>
+              <input class="in" id="vp-url" placeholder="https://youtube.com/shorts/... o https://youtu.be/...">
+              <p class="ayuda">Súbelo a YouTube como "No listado" y pega aquí el link. Si lo dejas vacío, la página muestra una simulación.</p>
+            </div>
+            <div>
+              <label class="l" for="vp-formato">Formato</label>
+              <select class="in" id="vp-formato"><option value="vertical">Vertical (Reel / Short)</option><option value="horizontal">Horizontal</option></select>
+            </div>
+          </div>
+          <div class="fila" style="margin-top:14px"><button class="btn mag" id="vp-guardar">Guardar video</button><span id="vp-ok" class="ayuda"></span></div>
+          <div id="vp-vista" style="margin-top:14px"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>💙 Biografía (Conoce a Moreta)</h3>
+        <p class="ayuda" style="margin-bottom:10px">Los saltos de línea se respetan.</p>
+        <textarea class="in" id="bio-texto" style="min-height:240px"></textarea>
         <div class="fila" style="margin-top:12px"><button class="btn mag" id="bio-guardar">Guardar biografía</button></div>
       </div>
     </section>
@@ -327,7 +385,10 @@ const NOMBRES = {
   propuestas: 'Conoce mis propuestas', unete: 'Únete a mi equipo', videos: 'Mira mis videos',
   agenda: 'Agenda de medios', bio: 'Conoce a Moreta', facebook: 'Facebook', instagram: 'Instagram',
   tiktok: 'TikTok', footer: 'Compartir (final de página)', 'tras-registro': 'Compartir (después de registrarse)',
-  directo: 'Link directo', compartido: 'Compartido por WhatsApp'
+  directo: 'Link directo', compartido: 'Compartido por WhatsApp',
+  'compartido-facebook': 'Compartido en Facebook', 'compartido-whatsapp': 'Compartido por WhatsApp',
+  'compartido-copiado': 'Enlace copiado', whatsapp: 'Compartir por WhatsApp', 'copiar-enlace': 'Copiar enlace',
+  'ir-al-video': 'Ir al video (candado)', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers'
 };
 const nombre = n => NOMBRES[n] || n;
 
@@ -343,22 +404,23 @@ cargadores.stats = async () => {
   const dias = +$('#st-rango').value;
   $('#st-rango-txt').textContent = $('#st-rango').selectedOptions[0].text;
   const s = await api('rpc/estadisticas', { method: 'POST', body: { dias } });
-  const conv = s.visitas ? (s.registros / s.visitas * 100).toFixed(1) : '0';
+  const pct = (a, b) => b ? (a / b * 100).toFixed(1) + '%' : '0%';
   $('#st-kpis').innerHTML = `
     <div class="card kpi"><div class="t">Visitas</div><div class="n">${s.visitas}</div><div class="d">veces que se abrió la página</div></div>
-    <div class="card kpi dest"><div class="t">Nuevos voluntarios</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
-    <div class="card kpi"><div class="t">Conversión</div><div class="n">${conv}%</div><div class="d">de visitas que se registran</div></div>
-    <div class="card kpi"><div class="t">Compartidos</div><div class="n">${s.compartidos}</div><div class="d">clics en compartir por WhatsApp</div></div>
-    <div class="card kpi"><div class="t">Videos vistos</div><div class="n">${s.videos}</div><div class="d">reproducciones iniciadas</div></div>`;
+    <div class="card kpi"><div class="t">Video completo</div><div class="n">${s.video_completo ?? 0}</div><div class="d">de ${s.video_inicio ?? 0} que le dieron play (${pct(s.video_completo, s.video_inicio)})</div></div>
+    <div class="card kpi dest"><div class="t">Hogares registrados</div><div class="n">${s.hogares ?? 0}</div><div class="d">${s.total_hogares ?? 0} en total · ${pct(s.hogares, s.visitas)} de las visitas</div></div>
+    <div class="card kpi"><div class="t">Voluntarios</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
+    <div class="card kpi"><div class="t">Compartidos</div><div class="n">${s.compartidos}</div><div class="d">clics en los botones de compartir</div></div>`;
 
   const dias_ = s.por_dia || [];
   if (!dias_.length) { $('#st-dias').innerHTML = '<p class="vacio">Aún no hay datos en este periodo.</p>'; }
   else {
-    const max = Math.max(...dias_.map(d => d.visitas + d.registros), 1);
+    const max = Math.max(...dias_.map(d => d.visitas + (d.hogares || 0) + d.registros), 1);
     $('#st-dias').innerHTML = dias_.map(d => {
       const p = d.dia.split('-');
-      return `<div class="col" title="${d.visitas} visitas · ${d.registros} registros">
-        <div class="r" style="height:${d.registros / max * 140}px"></div>
+      return `<div class="col" title="${d.visitas} visitas · ${d.hogares || 0} hogares · ${d.registros} voluntarios">
+        <div class="h" style="height:${d.registros / max * 140}px"></div>
+        <div class="r" style="height:${(d.hogares || 0) / max * 140}px"></div>
         <div class="v" style="height:${d.visitas / max * 140}px"></div>
         <span>${+p[2]} ${MESES[+p[1] - 1]}</span></div>`;
     }).join('');
@@ -366,9 +428,112 @@ cargadores.stats = async () => {
   barras($('#st-fuentes'), s.por_fuente || []);
   barras($('#st-botones'), s.botones || []);
   barras($('#st-parroquias'), s.parroquias || []);
+  barras($('#st-parroquias-vol'), s.parroquias_vol || []);
 };
 $('#st-rango').onchange = () => cargadores.stats().catch(x => aviso(x.message, true));
 $('#st-recargar').onclick = () => cargadores.stats().then(() => aviso('Actualizado')).catch(x => aviso(x.message, true));
+
+/* ---------- Almacenamiento (fotos y archivos) ---------- */
+async function storage(ruta, opc = {}) {
+  let t;
+  try { t = await token(); } catch (e) { salir(); throw new Error('Tu sesión expiró. Vuelve a entrar.'); }
+  const h = { apikey: KEY, Authorization: 'Bearer ' + t };
+  let body = opc.body;
+  if (body !== undefined && !(body instanceof Blob)) { h['Content-Type'] = 'application/json'; body = JSON.stringify(body); }
+  if (body instanceof Blob) h['Content-Type'] = body.type || 'application/octet-stream';
+  const r = await fetch(`${BASE}/storage/v1/${ruta}`, { method: opc.method || 'GET', headers: h, body });
+  const txt = await r.text(); let d = null;
+  try { d = txt ? JSON.parse(txt) : null; } catch (e) {}
+  if (!r.ok) throw new Error((d && (d.message || d.error)) || ('Error ' + r.status));
+  return d;
+}
+// Links temporales (1 hora) para ver las fotos privadas
+async function firmar(rutas) {
+  if (!rutas.length) return {};
+  const d = await storage('object/sign/fotos-hogares', { method: 'POST', body: { expiresIn: 3600, paths: rutas } });
+  const m = {};
+  (d || []).forEach(x => { if (x.signedURL) m[x.path] = `${BASE}/storage/v1${x.signedURL}`; });
+  return m;
+}
+
+/* =========================================================
+   MEJORA TU HOGAR
+   ========================================================= */
+let hogares = [], urlsFotos = {};
+function hogFiltrados() {
+  const q = $('#ho-buscar').value.toLowerCase().trim(), p = $('#ho-parroquia').value;
+  return hogares.filter(h => (!p || h.parroquia === p) &&
+    (!q || [h.nombre, h.cedula, h.telefono, h.barrio, h.direccion, h.mejoras].join(' ').toLowerCase().includes(q)));
+}
+function pintarHogares() {
+  const lista = hogFiltrados();
+  $('#ho-total').textContent = `${lista.length} de ${hogares.length} hogares registrados`;
+  $('#ho-lista').innerHTML = lista.length ? lista.map(h => `
+    <div class="hog">
+      <div class="datos">
+        <h3>${esc(h.nombre)}</h3>
+        <div class="meta">${esc(fecha(h.creado))} · llegó por ${esc(nombre(h.fuente || 'directo'))}</div>
+        <dl>
+          <dt>Cédula</dt><dd>${esc(h.cedula)}</dd>
+          <dt>Celular</dt><dd><a href="https://wa.me/593${esc(h.telefono.slice(1))}" target="_blank">${esc(h.telefono)} (WhatsApp)</a></dd>
+          <dt>Parroquia</dt><dd>${esc(h.parroquia)}${h.barrio ? ' · ' + esc(h.barrio) : ''}</dd>
+          <dt>Dirección</dt><dd>${esc(h.direccion)}</dd>
+          <dt>Vivienda</dt><dd>${esc(h.vivienda)} · ${h.personas} persona${h.personas == 1 ? '' : 's'}</dd>
+          <dt>Necesita</dt><dd>${esc(h.mejoras)}</dd>
+        </dl>
+        <button class="btn peq rojo" style="margin-top:12px" data-borrar-hog="${h.id}">Eliminar registro</button>
+      </div>
+      <div class="fotos">${(h.fotos || []).length ? h.fotos.map(f => urlsFotos[f]
+          ? `<a href="${esc(urlsFotos[f])}" target="_blank" title="Ver foto completa"><img src="${esc(urlsFotos[f])}" alt="" loading="lazy"></a>`
+          : '<div class="sinfoto">Foto no disponible</div>').join('')
+        : '<div class="sinfoto">Sin fotos</div>'}</div>
+    </div>`).join('')
+    : '<div class="card vacio" style="margin-top:12px">No hay registros todavía.</div>';
+}
+cargadores.hogares = async () => {
+  hogares = [];
+  for (let o = 0; ; o += 1000) {
+    const parte = await api(`hogares?select=*&order=creado.desc&limit=1000&offset=${o}`);
+    hogares = hogares.concat(parte);
+    if (parte.length < 1000) break;
+  }
+  const actual = $('#ho-parroquia').value;
+  const ps = [...new Set(hogares.map(h => h.parroquia))].sort();
+  $('#ho-parroquia').innerHTML = '<option value="">Todas las parroquias</option>' + ps.map(p => `<option ${p === actual ? 'selected' : ''}>${esc(p)}</option>`).join('');
+  pintarHogares();
+  const rutas = [].concat(...hogares.map(h => h.fotos || []));
+  try { urlsFotos = {}; for (let i = 0; i < rutas.length; i += 100) Object.assign(urlsFotos, await firmar(rutas.slice(i, i + 100))); }
+  catch (x) { aviso('No se pudieron cargar las fotos: ' + x.message, true); }
+  pintarHogares();
+};
+$('#ho-buscar').oninput = pintarHogares;
+$('#ho-parroquia').onchange = pintarHogares;
+$('#ho-lista').addEventListener('click', async e => {
+  const id = e.target.dataset.borrarHog; if (!id) return;
+  const h = hogares.find(x => String(x.id) === id);
+  if (!confirm(`¿Eliminar el registro de ${h.nombre} y sus fotos? Esto no se puede deshacer.`)) return;
+  try {
+    if ((h.fotos || []).length) await storage('object/fotos-hogares', { method: 'DELETE', body: { prefixes: h.fotos } });
+    await api(`hogares?id=eq.${id}`, { method: 'DELETE' });
+    aviso('Registro eliminado'); cargadores.hogares();
+  } catch (x) { aviso(x.message, true); }
+});
+$('#ho-excel').onclick = () => {
+  const lista = hogFiltrados();
+  if (!lista.length) return aviso('No hay registros para descargar', true);
+  descargarCSV(`mejora-tu-hogar-${new Date().toISOString().slice(0, 10)}.csv`,
+    ['Fecha', 'Nombre', 'Cédula', 'Celular', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Fotos', 'Llegó por'],
+    lista.map(h => [fecha(h.creado), h.nombre, { txt: h.cedula }, { txt: h.telefono }, h.parroquia, h.barrio, h.direccion, h.vivienda, h.personas, h.mejoras, (h.fotos || []).length, nombre(h.fuente || 'directo')]));
+};
+
+// Excel (CSV que Excel abre con tildes y sin perder los ceros iniciales)
+function descargarCSV(archivo, cab, filas) {
+  const c = v => v && v.txt !== undefined ? '="' + v.txt + '"' : '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const txt = [cab.map(c).join(';')].concat(filas.map(f => f.map(c).join(';'))).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + txt], { type: 'text/csv;charset=utf-8' }));
+  a.download = archivo; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
 
 /* =========================================================
    VOLUNTARIOS
@@ -419,15 +584,9 @@ $('#vo-filas').addEventListener('click', async e => {
 $('#vo-excel').onclick = () => {
   const lista = filtrados();
   if (!lista.length) return aviso('No hay registros para descargar', true);
-  const c = s => '"' + String(s == null ? '' : s).replace(/"/g, '""') + '"';
-  const filas = [['Fecha', 'Nombre', 'Celular', 'Parroquia', 'Barrio', 'Quiere ayudar en', 'Llegó por'].map(c).join(';')]
-    .concat(lista.map(v => [fecha(v.creado), v.nombre, '="' + v.telefono + '"', v.parroquia, v.barrio, v.ayuda, nombre(v.fuente || 'directo')]
-      .map((x, i) => i === 2 ? x : c(x)).join(';')));
-  const blob = new Blob(['﻿' + filas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `voluntarios-moreta-${new Date().toISOString().slice(0, 10)}.csv`;
-  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  descargarCSV(`voluntarios-moreta-${new Date().toISOString().slice(0, 10)}.csv`,
+    ['Fecha', 'Nombre', 'Celular', 'Parroquia', 'Barrio', 'Quiere ayudar en', 'Llegó por'],
+    lista.map(v => [fecha(v.creado), v.nombre, { txt: v.telefono }, v.parroquia, v.barrio, v.ayuda, nombre(v.fuente || 'directo')]));
 };
 
 /* =========================================================
@@ -438,10 +597,11 @@ const TIPOS = { radio: 'Radio', tv: 'Televisión', digital: 'Digital', evento: '
 
 const TABLAS = {
   videos: {
-    titulo: 'Videos', sub: 'Sube el video a YouTube como "No listado", copia el link y pégalo aquí.',
-    orden: 'orden.asc,id.asc', nuevo: '+ Agregar video',
+    titulo: 'Videos', sub: 'Testimonios y videos de propuestas. Sube el video a YouTube como "No listado", copia el link y pégalo aquí.',
+    orden: 'seccion.desc,orden.asc,id.asc', nuevo: '+ Agregar video',
     campos: [
-      { k: 'titulo', l: 'Título', t: 'text', req: 1, ancho: 1 },
+      { k: 'seccion', l: '¿Dónde aparece?', t: 'select', ops: [['testimonios', '💬 Testimonios'], ['propuestas', '📋 Propuestas']] },
+      { k: 'titulo', l: 'Título', t: 'text', req: 1, ancho: 1, ayuda: 'Ej: "Doña Rosa · Bombolí" o "Propuesta 1 · Mejora tu Hogar"' },
       { k: 'youtube_url', l: 'Link de YouTube', t: 'text', req: 1, ancho: 1, ayuda: 'Ej: https://youtube.com/shorts/abc123XYZ00 o https://youtu.be/abc123XYZ00' },
       { k: 'formato', l: 'Formato', t: 'select', ops: [['vertical', 'Vertical (Shorts / Reels)'], ['horizontal', 'Horizontal']] },
       { k: 'orden', l: 'Orden (1 aparece primero)', t: 'number', def: 1 },
@@ -450,7 +610,21 @@ const TABLAS = {
     validar: d => ytId(d.youtube_url) ? null : 'El link de YouTube no es válido.',
     vista: r => { const id = ytId(r.youtube_url);
       return `<img class="thumb" src="${id ? 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg' : ''}" alt="">
-        <div class="info"><b>${esc(r.titulo)}<span class="badge">#${r.orden}</span></b><small>${esc(r.formato)} · ${esc(r.youtube_url)}</small></div>`; }
+        <div class="info"><b>${esc(r.titulo)}<span class="badge">${r.seccion === 'testimonios' ? '💬 Testimonio' : '📋 Propuesta'}</span><span class="badge">#${r.orden}</span></b><small>${esc(r.formato)} · ${esc(r.youtube_url)}</small></div>`; }
+  },
+  descargables: {
+    titulo: 'Descargables', sub: 'Material que la gente puede descargar: PDF, imágenes, stickers… (máximo 50 MB por archivo).',
+    orden: 'orden.asc,id.asc', nuevo: '+ Agregar descargable',
+    campos: [
+      { k: 'titulo', l: 'Título', t: 'text', req: 1, ayuda: 'Ej: Plan de trabajo' },
+      { k: 'icono', l: 'Ícono (emoji)', t: 'select', ops: [['📄', '📄 Documento'], ['🖼️', '🖼️ Imagen'], ['💬', '💬 Stickers'], ['🖨️', '🖨️ Para imprimir'], ['🎵', '🎵 Audio / jingle'], ['🎥', '🎥 Video'], ['📦', '📦 Paquete (ZIP)']] },
+      { k: 'detalle', l: 'Descripción corta', t: 'text', ancho: 1, ayuda: 'Ej: PDF · Las propuestas completas' },
+      { k: 'url', l: 'Archivo', t: 'archivo', req: 1, ancho: 1 },
+      { k: 'orden', l: 'Orden', t: 'number', def: 1 },
+      { k: 'activo', l: 'Visible en la página', t: 'check', def: true }
+    ],
+    vista: r => `<span class="thumb" style="height:54px;display:flex;align-items:center;justify-content:center;font-size:26px">${esc(r.icono)}</span>
+      <div class="info"><b>${esc(r.titulo)}<span class="badge">#${r.orden}</span></b><small>${esc(r.detalle)} · <a href="${esc(r.url)}" target="_blank">ver archivo</a></small></div>`
   },
   propuestas: {
     titulo: 'Propuestas', sub: 'Las 5 propuestas del candidato. Se muestran ordenadas por el campo "Orden".',
@@ -485,6 +659,10 @@ function campoHTML(c) {
   const id = 'c-' + c.k, cls = c.ancho ? ' class="ancho"' : '';
   let ctrl;
   if (c.t === 'check') return `<div${cls}><label class="check"><input type="checkbox" name="${c.k}"> ${c.l}</label></div>`;
+  if (c.t === 'archivo') return `<div${cls}><label class="l" for="${id}">${c.l}${c.req ? ' *' : ''}</label>
+    <input class="in" type="text" name="${c.k}" id="${id}" placeholder="Sube un archivo o pega un link">
+    <span class="btn sec peq subir">⬆ Subir archivo desde mi computadora<input type="file" data-subir="${c.k}"></span>
+    <p class="ayuda" data-subir-estado></p></div>`;
   if (c.t === 'select') ctrl = `<select class="in" name="${c.k}" id="${id}">${c.ops.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</select>`;
   else if (c.t === 'textarea') ctrl = `<textarea class="in" name="${c.k}" id="${id}"></textarea>`;
   else ctrl = `<input class="in" type="${c.t}" name="${c.k}" id="${id}">`;
@@ -514,6 +692,7 @@ function montarCrud(sec) {
       if (c.t === 'check') el.checked = !!v; else el.value = v == null ? '' : v;
     });
     if (!r && tabla !== 'agenda') { const n = filas.length + 1; ['orden', 'numero'].forEach(k => form.elements[k] && (form.elements[k].value = n)); }
+    const est = $('[data-subir-estado]', sec); if (est) est.textContent = '';
     ferr.classList.add('oculto'); form.classList.remove('oculto'); form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   const cerrarForm = () => { form.classList.add('oculto'); editando = null; };
@@ -530,6 +709,22 @@ function montarCrud(sec) {
       : '<div class="card vacio" style="margin-top:10px">Todavía no hay nada aquí. Usa el botón de arriba para agregar.</div>';
   }
   cargadores[tabla] = cargar;
+
+  // Subir archivo a Supabase (bucket público "descargables")
+  $$('[data-subir]', sec).forEach(inp => inp.addEventListener('change', async () => {
+    const f = inp.files[0]; if (!f) return;
+    const estado = $('[data-subir-estado]', sec);
+    if (f.size > 50 * 1024 * 1024) { estado.textContent = '❌ El archivo pesa más de 50 MB.'; inp.value = ''; return; }
+    const limpio = f.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9._-]+/g, '-').toLowerCase();
+    const ruta = `${Date.now()}-${limpio}`;
+    estado.textContent = `⏳ Subiendo ${f.name}…`;
+    try {
+      await storage(`object/descargables/${ruta}`, { method: 'POST', body: f });
+      form.elements[inp.dataset.subir].value = `${BASE}/storage/v1/object/public/descargables/${ruta}`;
+      estado.textContent = '✅ Archivo subido. Ahora dale Guardar.';
+    } catch (x) { estado.textContent = '❌ ' + x.message; }
+    inp.value = '';
+  }));
 
   $('[data-nuevo]', sec).onclick = () => abrirForm(null);
   $('[data-cancelar]', sec).onclick = cerrarForm;
@@ -567,17 +762,35 @@ function montarCrud(sec) {
 $$('[data-crud]').forEach(montarCrud);
 
 /* =========================================================
-   BIOGRAFÍA
+   VIDEO PRINCIPAL Y BIOGRAFÍA
    ========================================================= */
+async function guardarContenido(pares) {
+  await api('contenido?on_conflict=clave', { method: 'POST', body: pares.map(([clave, valor]) => ({ clave, valor })), prefer: 'resolution=merge-duplicates,return=minimal' });
+}
+function vistaVideo() {
+  const id = ytId($('#vp-url').value);
+  $('#vp-vista').innerHTML = id
+    ? `<div class="item" style="margin:0"><img class="thumb" src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt=""><div class="info"><b>Video detectado ✓</b><small>ID: ${id}</small></div></div>`
+    : ($('#vp-url').value.trim() ? '<p class="msg-err">Ese link de YouTube no es válido.</p>' : '<p class="ayuda">Sin video: la página muestra la simulación.</p>');
+}
+$('#vp-url').oninput = vistaVideo;
 cargadores.bio = async () => {
-  const d = await api('contenido?select=valor&clave=eq.bio');
-  $('#bio-texto').value = d && d[0] ? d[0].valor : '';
+  const d = await api('contenido?select=clave,valor');
+  const c = Object.fromEntries((d || []).map(x => [x.clave, x.valor]));
+  $('#bio-texto').value = c.bio || '';
+  $('#vp-url').value = c.video_principal || '';
+  $('#vp-formato').value = c.video_principal_formato || 'vertical';
+  vistaVideo();
+};
+$('#vp-guardar').onclick = async () => {
+  const url = $('#vp-url').value.trim();
+  if (url && !ytId(url)) return aviso('Ese link de YouTube no es válido', true);
+  try { await guardarContenido([['video_principal', url], ['video_principal_formato', $('#vp-formato').value]]); aviso('Video principal guardado ✓'); }
+  catch (x) { aviso(x.message, true); }
 };
 $('#bio-guardar').onclick = async () => {
-  try {
-    await api('contenido?on_conflict=clave', { method: 'POST', body: { clave: 'bio', valor: $('#bio-texto').value.trim() }, prefer: 'resolution=merge-duplicates,return=minimal' });
-    aviso('Biografía guardada ✓');
-  } catch (x) { aviso(x.message, true); }
+  try { await guardarContenido([['bio', $('#bio-texto').value.trim()]]); aviso('Biografía guardada ✓'); }
+  catch (x) { aviso(x.message, true); }
 };
 
 /* ---------- Inicio: si ya hay sesión guardada, entrar directo ---------- */

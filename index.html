@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Miguel Ángel Moreta · La Tierrita nos une</title>
-<meta name="description" content="Conoce a Miguel Ángel Moreta, candidato a la Alcaldía de Santo Domingo. Sus propuestas, su agenda y cómo sumarte al equipo.">
+<meta name="description" content="Mira el mensaje de Miguel Ángel Moreta, regístrate en Mejora tu Hogar y conoce sus propuestas para Santo Domingo.">
 <meta property="og:title" content="Miguel Ángel Moreta · La Tierrita nos une">
-<meta property="og:description" content="Conoce sus propuestas para Santo Domingo y súmate al equipo.">
+<meta property="og:description" content="Mira el video y regístrate en Mejora tu Hogar. ¡La Tierrita nos une!">
 <meta property="og:image" content="img/og.jpg">
 <meta name="theme-color" content="#0A1A5C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,42 +14,43 @@
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <style>
-:root{--azul:#1D5BF2;--azul2:#0E3BC4;--marino:#0A1A5C;--magenta:#E5177E;--rosa:#FF4FA8;--gris:#5B6488;--fondo:#F3F5FC;--linea:#DFE3F0}
+:root{--azul:#1D5BF2;--azul2:#0E3BC4;--marino:#0A1A5C;--magenta:#E5177E;--rosa:#FF4FA8;--gris:#5B6488;--fondo:#F3F5FC;--linea:#DFE3F0;--verde:#13A35B}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:Montserrat,Arial,sans-serif;background:var(--fondo);color:var(--marino);-webkit-font-smoothing:antialiased}
 .wrap{max-width:560px;margin:0 auto;padding:0 18px;position:relative}
 a{color:inherit}
+.oculto{display:none!important}
 
 /* ---------- HERO ---------- */
-.hero{background:radial-gradient(circle at 85% 8%,#3D7BFF 0,rgba(61,123,255,0) 45%),linear-gradient(160deg,var(--azul) 0%,var(--azul2) 45%,var(--marino) 100%);color:#fff;position:relative;overflow:hidden;padding:30px 0 40px;text-align:center}
+.hero{background:radial-gradient(circle at 85% 8%,#3D7BFF 0,rgba(61,123,255,0) 45%),linear-gradient(160deg,var(--azul) 0%,var(--azul2) 45%,var(--marino) 100%);color:#fff;position:relative;overflow:hidden;padding:26px 0 40px;text-align:center}
 .hero:before{content:"";position:absolute;right:-70px;top:150px;width:150px;height:440px;background:linear-gradient(var(--magenta),var(--rosa));transform:rotate(20deg);border-radius:34px;opacity:.85}
 .hero:after{content:"";position:absolute;left:-90px;bottom:-60px;width:220px;height:420px;background:rgba(255,255,255,.07);transform:rotate(-24deg);border-radius:40px}
-.slogan{position:relative;z-index:1}
-.logo{display:block;width:300px;max-width:88%;height:auto;margin:0 auto;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}
-.slogan .s1{font-weight:900;font-size:30px;letter-spacing:.5px;line-height:1;text-shadow:0 3px 0 rgba(0,0,0,.15)}
-.slogan .s2{font-family:'Kaushan Script',cursive;color:var(--rosa);font-size:29px;margin-top:-2px}
-.foto{width:210px;height:210px;margin:22px auto 0;border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 6px var(--magenta),0 18px 40px rgba(0,0,0,.35);overflow:hidden;background:linear-gradient(135deg,#2A63FF,var(--marino));position:relative;z-index:1}
-.foto img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
-.foto .ini{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:64px}
+.logo{display:block;width:300px;max-width:88%;height:auto;margin:0 auto;position:relative;z-index:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}
 .nombre{position:relative;z-index:1}
-.nombre .n1{font-style:italic;font-weight:700;font-size:22px;margin-top:20px}
-.nombre .n2{font-weight:900;font-size:50px;letter-spacing:1px;line-height:1}
-.barra{display:flex;width:190px;height:6px;margin:10px auto 0}
+.nombre .n1{font-style:italic;font-weight:700;font-size:20px;margin-top:20px}
+.nombre .n2{font-weight:900;font-size:44px;letter-spacing:1px;line-height:1}
+.barra{display:flex;width:170px;height:6px;margin:10px auto 0}
 .barra span{flex:1;border-radius:3px;margin:0 2px}
-.cargo{margin-top:14px;font-weight:600;font-size:15px;position:relative;z-index:1}
-.redes{display:flex;justify-content:center;margin-top:18px;position:relative;z-index:1}
-.redes a{width:48px;height:48px;margin:0 7px;border-radius:50%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center}
-.redes svg{width:22px;height:22px}
-.botones{margin-top:24px;position:relative;z-index:1}
-.btn{display:flex;align-items:center;padding:14px 16px;border-radius:16px;background:#fff;color:var(--marino);text-decoration:none;text-align:left;box-shadow:0 8px 22px rgba(0,0,0,.18);font-weight:800;font-size:16px;margin-top:12px;-webkit-tap-highlight-color:transparent}
-.btn:active{transform:scale(.98)}
-.btn small{display:block;font-weight:500;font-size:12.5px;color:var(--gris);margin-top:2px}
-.btn .ic{width:44px;height:44px;border-radius:12px;background:var(--fondo);display:flex;align-items:center;justify-content:center;flex:none;font-size:21px;margin-right:14px}
-.btn .fl{margin-left:auto;padding-left:10px;opacity:.5;font-size:18px}
-.btn.prim{background:linear-gradient(90deg,var(--magenta),var(--rosa));color:#fff}
-.btn.prim small{color:rgba(255,255,255,.92)}
-.btn.prim .ic{background:rgba(255,255,255,.22)}
+.cargo{margin-top:12px;font-weight:600;font-size:14.5px;position:relative;z-index:1}
+
+/* ---------- VIDEO PRINCIPAL (obligatorio) ---------- */
+.vm{position:relative;z-index:1;width:100%;max-width:310px;margin:22px auto 0;border-radius:22px;overflow:hidden;border:4px solid #fff;box-shadow:0 0 0 5px var(--magenta),0 18px 40px rgba(0,0,0,.35);background:#000}
+.vm.h{max-width:520px}
+.vm-ratio{position:relative;padding-top:177.77%}
+.vm.h .vm-ratio{padding-top:56.25%}
+.vm-ratio iframe,.vm-ratio .vm-demo{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.vm-demo{background:linear-gradient(160deg,#2A63FF,var(--marino));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;color:rgba(255,255,255,.85);font-weight:700;font-size:14px;line-height:1.4}
+.vm-demo b{font-size:46px;font-weight:900;color:#fff;margin-bottom:8px}
+.vm-capa{position:absolute;top:0;left:0;right:0;bottom:0;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.vm-play{width:76px;height:76px;border-radius:50%;background:var(--magenta);box-shadow:0 8px 24px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
+.vm-play:after{content:"";border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:7px}
+.vm-capa.reproduciendo .vm-play{display:none}
+.vm-pie{background:var(--marino);padding:10px 14px 12px;text-align:left}
+.vm-pista{height:7px;background:rgba(255,255,255,.18);border-radius:5px;overflow:hidden}
+.vm-avance{height:100%;width:0;background:linear-gradient(90deg,var(--magenta),var(--rosa));border-radius:5px}
+.vm-txt{font-size:12px;font-weight:700;margin-top:7px;color:rgba(255,255,255,.9)}
+.vm-txt.ok{color:#7CF0B4}
 
 /* ---------- SECCIONES ---------- */
 section{padding:44px 0}
@@ -57,7 +58,65 @@ h2{font-weight:900;font-size:26px;line-height:1.1;text-transform:uppercase}
 h2 em{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--magenta);font-style:normal;font-weight:400}
 .sub{color:var(--gris);font-size:14.5px;margin-top:8px;line-height:1.5}
 
-/* Videos */
+/* Mejora tu Hogar */
+#mejora{padding-top:0;margin-top:-22px;position:relative;z-index:2}
+.mth{background:#fff;border-radius:24px;box-shadow:0 14px 40px rgba(10,26,92,.16);overflow:hidden;position:relative}
+.mth-cab{background:linear-gradient(120deg,var(--magenta),var(--rosa));color:#fff;padding:20px 22px}
+.mth-cab .et{display:inline-block;background:rgba(255,255,255,.22);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.mth-cab h2{color:#fff;margin-top:8px;font-size:25px}
+.mth-cab p{font-size:14px;margin-top:6px;line-height:1.5;opacity:.95}
+.mth-cuerpo{padding:22px;position:relative}
+.bloqueado .form-in{filter:blur(3px);opacity:.45;pointer-events:none;-webkit-user-select:none;user-select:none}
+.candado{display:none;position:absolute;left:16px;right:16px;top:30px;background:#fff;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(10,26,92,.18);z-index:3}
+.bloqueado .candado{display:block}
+.candado .ic{font-size:38px}
+.candado h3{font-size:18px;font-weight:900;margin-top:6px}
+.candado p{font-size:13.5px;color:var(--gris);margin-top:6px;line-height:1.5}
+.btn-sec{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:12px;background:var(--marino);color:#fff;font-weight:800;font-size:14px;text-decoration:none;border:0;cursor:pointer;font-family:inherit}
+
+/* Formularios */
+.form label.l{font-weight:700;font-size:13.5px;display:block;margin:16px 0 7px}
+.form label.l:first-child{margin-top:0}
+.form input[type=text],.form input[type=tel],.form select{width:100%;padding:13px 14px;border:1.5px solid var(--linea);border-radius:12px;font:inherit;font-size:16px;color:var(--marino);background:#fff;-webkit-appearance:none;appearance:none}
+.form input:focus,.form select:focus{outline:none;border-color:var(--azul)}
+.dos{display:flex;margin:0 -6px}
+.dos>div{flex:1;padding:0 6px;min-width:0}
+.chips{display:flex;flex-wrap:wrap}
+.chip{margin:0 8px 8px 0}
+.chip input{position:absolute;opacity:0}
+.chip span{display:inline-block;padding:9px 13px;border:1.5px solid var(--linea);border-radius:30px;font-size:13.5px;font-weight:600;cursor:pointer}
+.chip input:checked+span{background:var(--marino);border-color:var(--marino);color:#fff}
+.consent{display:flex;align-items:flex-start;margin-top:16px;font-size:13px;color:var(--gris);line-height:1.5}
+.consent input{margin:3px 10px 0 0;width:18px;height:18px;flex:none}
+.enviar{width:100%;margin-top:18px;padding:16px;border:0;border-radius:14px;background:linear-gradient(90deg,var(--magenta),var(--rosa));color:#fff;font:inherit;font-weight:900;font-size:17px;cursor:pointer}
+.enviar[disabled]{opacity:.6}
+.err{color:#C4153F;font-size:13px;font-weight:600;margin-top:12px;display:none}
+.listo{display:none;text-align:center;padding:10px 0}
+.listo .big{font-size:46px}
+.listo h3{font-size:21px;font-weight:900;margin-top:8px}
+.listo p{color:var(--gris);font-size:14.5px;margin-top:8px;line-height:1.5}
+.opc{font-weight:500;color:var(--gris)}
+.fotos{display:flex;margin:0 -5px}
+.foto-slot{flex:1;margin:0 5px;position:relative;border:2px dashed #C9D1EA;border-radius:14px;height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gris);font-size:12.5px;font-weight:700;overflow:hidden;background:#FAFBFF;text-align:center;padding:8px}
+.foto-slot .ic{font-size:28px;margin-bottom:4px}
+.foto-slot input{position:absolute;left:0;top:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1}
+.foto-slot img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.foto-slot .quitar{position:absolute;right:6px;top:6px;z-index:3;width:28px;height:28px;border-radius:50%;border:0;background:rgba(10,26,92,.85);color:#fff;font-size:15px;cursor:pointer;display:none}
+.foto-slot.lleno{border-style:solid;border-color:var(--azul)}
+.foto-slot.lleno .quitar{display:block}
+.foto-slot.lleno input{display:none}
+.foto-slot .peso{position:absolute;left:6px;bottom:6px;z-index:3;background:rgba(10,26,92,.85);color:#fff;font-size:10.5px;padding:2px 7px;border-radius:10px;display:none}
+.foto-slot.lleno .peso{display:block}
+.ayuda{font-size:12px;color:var(--gris);margin-top:6px}
+
+/* Propuestas (tarjetas) */
+.prop{background:#fff;border-radius:18px;padding:18px;display:flex;margin-top:12px;box-shadow:0 4px 16px rgba(10,26,92,.07)}
+.num{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--marino));color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;flex:none;margin-right:14px}
+.prop h3{font-size:16.5px;font-weight:800;line-height:1.25}
+.prop p{font-size:14px;color:var(--gris);line-height:1.55;margin-top:5px}
+.subtit{font-weight:800;font-size:16px;margin-top:26px}
+
+/* Videos (carruseles) */
 .carrusel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:18px;padding:18px 18px 6px;margin:0 -18px;-webkit-overflow-scrolling:touch}
 .video{flex:none;width:200px;margin-right:12px;scroll-snap-align:start;cursor:pointer}
 .video.h{width:300px}
@@ -68,12 +127,6 @@ h2 em{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--magen
 .play{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:var(--magenta);box-shadow:0 6px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
 .play:after{content:"";border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px}
 .vtit{font-weight:700;font-size:13.5px;margin-top:8px;line-height:1.35}
-
-/* Propuestas */
-.prop{background:#fff;border-radius:18px;padding:18px;display:flex;margin-top:12px;box-shadow:0 4px 16px rgba(10,26,92,.07)}
-.num{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--marino));color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;flex:none;margin-right:14px}
-.prop h3{font-size:16.5px;font-weight:800;line-height:1.25}
-.prop p{font-size:14px;color:var(--gris);line-height:1.55;margin-top:5px}
 
 /* Bio */
 .bio{background:linear-gradient(160deg,var(--azul2),var(--marino));color:#fff}
@@ -91,49 +144,91 @@ h2 em{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--magen
 .agi p{font-size:14px;color:var(--gris);margin-top:3px;font-weight:600}
 .vacia{background:#fff;border-radius:18px;padding:20px;margin-top:12px;color:var(--gris);font-size:14px;text-align:center}
 
-/* Formulario */
-.form{background:#fff;border-radius:22px;padding:22px;margin-top:18px;box-shadow:0 8px 26px rgba(10,26,92,.09)}
-.form label.l{font-weight:700;font-size:13.5px;display:block;margin:16px 0 7px}
-.form label.l:first-child{margin-top:0}
-.form input[type=text],.form input[type=tel],.form select{width:100%;padding:13px 14px;border:1.5px solid var(--linea);border-radius:12px;font:inherit;font-size:16px;color:var(--marino);background:#fff;-webkit-appearance:none;appearance:none}
-.form input:focus,.form select:focus{outline:none;border-color:var(--azul)}
-.chips{display:flex;flex-wrap:wrap}
-.chip{margin:0 8px 8px 0}
-.chip input{position:absolute;opacity:0}
-.chip span{display:inline-block;padding:9px 13px;border:1.5px solid var(--linea);border-radius:30px;font-size:13.5px;font-weight:600;cursor:pointer}
-.chip input:checked+span{background:var(--marino);border-color:var(--marino);color:#fff}
-.consent{display:flex;align-items:flex-start;margin-top:16px;font-size:13px;color:var(--gris);line-height:1.5}
-.consent input{margin:3px 10px 0 0;width:18px;height:18px;flex:none}
-.enviar{width:100%;margin-top:18px;padding:16px;border:0;border-radius:14px;background:linear-gradient(90deg,var(--magenta),var(--rosa));color:#fff;font:inherit;font-weight:900;font-size:17px;cursor:pointer}
-.enviar[disabled]{opacity:.6}
-.err{color:#C4153F;font-size:13px;font-weight:600;margin-top:12px;display:none}
-.listo{display:none;text-align:center;padding:10px 0}
-.listo .big{font-size:46px}
-.listo h3{font-size:21px;font-weight:900;margin-top:8px}
-.listo p{color:var(--gris);font-size:14.5px;margin-top:8px;line-height:1.5}
+/* Voluntariado (distinto a Mejora tu Hogar) */
+.vol{background:var(--marino);color:#fff;border-radius:24px;padding:24px 22px;position:relative;overflow:hidden}
+.vol:before{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.06)}
+.vol .et{display:inline-block;background:rgba(255,255,255,.14);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.vol h2{color:#fff;margin-top:10px}
+.vol h2 em{color:var(--rosa)}
+.vol .sub{color:rgba(255,255,255,.82)}
+.aviso-vol{display:flex;align-items:flex-start;background:rgba(255,255,255,.1);border-radius:12px;padding:11px 12px;margin-top:14px;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.9)}
+.aviso-vol span{margin-right:8px}
+.aviso-vol a{color:var(--rosa);font-weight:800}
+.btn-vol{width:100%;margin-top:16px;padding:15px;border-radius:14px;border:2px solid #fff;background:transparent;color:#fff;font:inherit;font-weight:900;font-size:16px;cursor:pointer}
+.vol .caja-form{background:#fff;color:var(--marino);border-radius:18px;padding:20px;margin-top:16px}
+.vol .enviar{background:var(--marino);border:2px solid var(--marino)}
+.vol .enviar{background:linear-gradient(90deg,var(--azul),var(--azul2))}
+
+/* Descargables */
+.desc{display:flex;align-items:center;background:#fff;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 4px 16px rgba(10,26,92,.07);text-decoration:none}
+.desc .ic{width:50px;height:50px;border-radius:13px;background:var(--fondo);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;margin-right:14px}
+.desc .tx{flex:1;min-width:0}
+.desc b{display:block;font-size:15px;font-weight:800}
+.desc small{display:block;color:var(--gris);font-size:12.5px;margin-top:3px}
+.desc .bajar{flex:none;margin-left:10px;width:40px;height:40px;border-radius:50%;background:var(--magenta);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900}
+
+/* Compartir */
+.comp{background:linear-gradient(160deg,var(--azul),var(--marino));color:#fff;border-radius:24px;padding:26px 22px;text-align:center}
+.comp h2{color:#fff}
+.comp h2 em{color:var(--rosa)}
+.comp .sub{color:rgba(255,255,255,.85)}
+.bt-comp{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border-radius:14px;margin-top:12px;border:0;font:inherit;font-weight:800;font-size:15.5px;color:#fff;text-decoration:none;cursor:pointer}
+.bt-comp svg{width:22px;height:22px;margin-right:10px;flex:none}
+.bt-fb{background:#1877F2}
+.bt-wa{background:#25D366}
+.bt-cp{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4)}
 
 /* Footer */
-footer{background:var(--marino);color:#fff;text-align:center;padding:36px 0 44px;font-size:13px}
-footer .s1{font-weight:900;font-size:22px}
-footer .s2{font-family:'Kaushan Script',cursive;color:var(--rosa);font-size:22px}
-.compartir{display:inline-block;margin-top:18px;padding:13px 22px;border-radius:30px;background:#25D366;color:#fff;text-decoration:none;font-weight:800;font-size:15px}
+footer{background:var(--marino);color:#fff;text-align:center;padding:36px 0 120px;font-size:13px}
 footer details{margin-top:22px;opacity:.75;text-align:left;font-size:12.5px;line-height:1.6}
 footer summary{cursor:pointer;text-align:center;font-weight:600}
 footer .pie{margin-top:18px;opacity:.6}
+
+/* ---------- FLOTANTES ---------- */
+.redes-flot{position:fixed;left:14px;bottom:16px;z-index:40;display:flex;flex-direction:column}
+.redes-flot a{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:10px;box-shadow:0 6px 16px rgba(0,0,0,.25);-webkit-tap-highlight-color:transparent}
+.redes-flot svg{width:22px;height:22px}
+.rf-fb{background:#1877F2}
+.rf-ig{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.rf-tt{background:#000}
+
+.guia{position:fixed;right:14px;bottom:16px;z-index:41;display:flex;align-items:flex-end}
+.guia-burbuja{background:#fff;color:var(--marino);border-radius:16px 16px 4px 16px;padding:11px 30px 11px 13px;font-size:13px;font-weight:700;line-height:1.4;max-width:210px;box-shadow:0 8px 24px rgba(10,26,92,.25);margin:0 8px 30px 0;position:relative;cursor:pointer;transition:opacity .25s,transform .25s}
+.guia-burbuja.escondida{opacity:0;transform:translateY(8px);pointer-events:none}
+.guia-burbuja .x{position:absolute;right:6px;top:4px;width:22px;height:22px;border:0;background:none;color:var(--gris);font-size:16px;cursor:pointer;line-height:1}
+.guia-burbuja .ir{display:block;color:var(--magenta);font-size:12px;margin-top:4px}
+.guia-foto{width:84px;height:84px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 3px var(--magenta),0 8px 20px rgba(0,0,0,.3);overflow:hidden;background:linear-gradient(135deg,#2A63FF,var(--marino));cursor:pointer;flex:none;position:relative;animation:saludo 3s ease-in-out infinite}
+.guia-foto img{width:100%;height:100%;object-fit:cover;display:block}
+.guia-foto .ini{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:26px}
+@keyframes saludo{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+@media (max-width:600px){
+  .redes-flot{left:8px;bottom:12px}
+  .redes-flot a{width:40px;height:40px;margin-top:8px}
+  .redes-flot svg{width:19px;height:19px}
+  .guia{right:8px;bottom:12px}
+  .guia-foto{width:64px;height:64px}
+  .guia-foto .ini{font-size:20px}
+  .guia-burbuja{max-width:175px;font-size:12.5px;margin-bottom:24px}
+}
 </style>
 </head>
 <body>
 
-<!-- ================= HERO ================= -->
-<header class="hero">
+<!-- ================= 1. HERO + VIDEO OBLIGATORIO ================= -->
+<header class="hero" id="inicio">
   <div class="wrap">
-    <div class="slogan">
-      <img class="logo" src="img/logo-tierrita.png" alt="La Tierrita nos une">
-    </div>
+    <img class="logo" src="img/logo-tierrita.png" alt="La Tierrita nos une">
 
-    <div class="foto">
-      <span class="ini">MM</span>
-      <img src="img/moreta.jpg" alt="Miguel Ángel Moreta" onerror="this.style.display='none'">
+    <div class="vm" id="vm">
+      <div class="vm-ratio">
+        <div id="yt-player"></div>
+        <div class="vm-capa" id="vm-capa" aria-label="Reproducir video"><span class="vm-play"></span></div>
+      </div>
+      <div class="vm-pie">
+        <div class="vm-pista"><div class="vm-avance" id="vm-avance"></div></div>
+        <p class="vm-txt" id="vm-txt">▶ Mira el video completo para desbloquear tu registro</p>
+      </div>
     </div>
 
     <div class="nombre">
@@ -142,67 +237,148 @@ footer .pie{margin-top:18px;opacity:.6}
       <div class="barra"><span style="background:#E5177E"></span><span style="background:#fff"></span><span style="background:#1D5BF2"></span><span style="background:#FF4FA8"></span></div>
     </div>
     <p class="cargo">Candidato a la Alcaldía de Santo Domingo</p>
-
-    <div class="redes">
-      <a id="lnk-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" data-track="red" data-detalle="facebook">
-        <svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>
-      </a>
-      <a id="lnk-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram" data-track="red" data-detalle="instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>
-      </a>
-      <a id="lnk-tt" href="#" target="_blank" rel="noopener" aria-label="TikTok" data-track="red" data-detalle="tiktok">
-        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-      </a>
-    </div>
-
-    <nav class="botones">
-      <a class="btn prim" href="#propuestas" data-track="boton" data-detalle="propuestas">
-        <span class="ic">📋</span><span>Conoce mis propuestas<small>Lo que haremos juntos por Santo Domingo</small></span><span class="fl">›</span>
-      </a>
-      <a class="btn" href="#unete" data-track="boton" data-detalle="unete">
-        <span class="ic">🤝</span><span>Únete a mi equipo<small>Súmate como voluntario en tu barrio</small></span><span class="fl">›</span>
-      </a>
-      <a class="btn" href="#videos" data-track="boton" data-detalle="videos">
-        <span class="ic">🎥</span><span>Mira mis videos<small>Escúchame de cerca</small></span><span class="fl">›</span>
-      </a>
-      <a class="btn" href="#agenda" data-track="boton" data-detalle="agenda">
-        <span class="ic">🗓️</span><span>Agenda de medios<small>Dónde escucharme y verme</small></span><span class="fl">›</span>
-      </a>
-      <a class="btn" href="#bio" data-track="boton" data-detalle="bio">
-        <span class="ic">💙</span><span>Conoce a Moreta<small>Mi historia con La Tierrita</small></span><span class="fl">›</span>
-      </a>
-    </nav>
   </div>
 </header>
 
-<!-- ================= VIDEOS ================= -->
-<section id="videos">
+<!-- ================= 2. MEJORA TU HOGAR (bloqueado) ================= -->
+<section id="mejora">
   <div class="wrap">
-    <h2>Escúchame <em>de cerca</em></h2>
-    <p class="sub">Desliza para ver más videos.</p>
-    <div class="carrusel" id="lista-videos"></div>
+    <div class="mth bloqueado" id="mth">
+      <div class="mth-cab">
+        <span class="et">🏠 Propuesta Mejora tu Hogar</span>
+        <h2>Registra tu hogar</h2>
+        <p>Déjanos tus datos para ser parte del programa Mejora tu Hogar.</p>
+      </div>
+      <div class="mth-cuerpo">
+        <div class="candado">
+          <div class="ic">🔒</div>
+          <h3>Mira el video completo</h3>
+          <p>El registro se desbloquea cuando termines de ver el mensaje de Miguel Ángel Moreta.</p>
+          <a class="btn-sec" href="#inicio" data-track="boton" data-detalle="ir-al-video">▶ Ir al video</a>
+        </div>
+
+        <div class="form-in">
+          <form class="form" id="form-mth" novalidate>
+            <label class="l" for="m-nombre">Nombres y apellidos</label>
+            <input type="text" id="m-nombre" maxlength="120" autocomplete="name" placeholder="Ej: María Pérez">
+
+            <div class="dos">
+              <div>
+                <label class="l" for="m-cedula">Cédula</label>
+                <input type="tel" id="m-cedula" maxlength="10" inputmode="numeric" placeholder="10 dígitos">
+              </div>
+              <div>
+                <label class="l" for="m-tel">Celular</label>
+                <input type="tel" id="m-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
+              </div>
+            </div>
+
+            <label class="l" for="m-parroquia">Parroquia</label>
+            <select id="m-parroquia" class="sel-parroquia"></select>
+
+            <label class="l" for="m-barrio">Barrio o sector</label>
+            <input type="text" id="m-barrio" maxlength="120" placeholder="Ej: Cooperativa 30 de Julio">
+
+            <label class="l" for="m-direccion">Dirección</label>
+            <input type="text" id="m-direccion" maxlength="250" autocomplete="street-address" placeholder="Calle principal, número y una referencia">
+
+            <div class="dos">
+              <div>
+                <label class="l" for="m-vivienda">La vivienda es…</label>
+                <select id="m-vivienda">
+                  <option value="">Selecciona</option>
+                  <option>Propia</option><option>Familiar</option><option>Arrendada</option><option>Otra</option>
+                </select>
+              </div>
+              <div>
+                <label class="l" for="m-personas">Personas en casa</label>
+                <input type="tel" id="m-personas" maxlength="2" inputmode="numeric" placeholder="Ej: 4">
+              </div>
+            </div>
+
+            <label class="l">¿Qué necesita mejorar?</label>
+            <div class="chips" id="m-mejoras">
+              <label class="chip"><input type="checkbox" value="Techo"><span>Techo</span></label>
+              <label class="chip"><input type="checkbox" value="Piso"><span>Piso</span></label>
+              <label class="chip"><input type="checkbox" value="Paredes"><span>Paredes</span></label>
+              <label class="chip"><input type="checkbox" value="Baño"><span>Baño</span></label>
+              <label class="chip"><input type="checkbox" value="Cocina"><span>Cocina</span></label>
+              <label class="chip"><input type="checkbox" value="Pintura"><span>Pintura</span></label>
+              <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
+            </div>
+
+            <label class="l">Fotos de tu hogar <span class="opc">(opcional, hasta 2)</span></label>
+            <div class="fotos">
+              <div class="foto-slot" id="slot-0">
+                <span class="ic">📷</span>Tomar o subir foto
+                <input type="file" accept="image/*" data-slot="0">
+                <img alt="">
+                <span class="peso"></span>
+                <button type="button" class="quitar" data-quitar="0" aria-label="Quitar foto">×</button>
+              </div>
+              <div class="foto-slot" id="slot-1">
+                <span class="ic">📷</span>Tomar o subir foto
+                <input type="file" accept="image/*" data-slot="1">
+                <img alt="">
+                <span class="peso"></span>
+                <button type="button" class="quitar" data-quitar="1" aria-label="Quitar foto">×</button>
+              </div>
+            </div>
+            <p class="ayuda">Muestra la parte de tu casa que necesita mejorar.</p>
+
+            <label class="consent">
+              <input type="checkbox" id="m-consent">
+              <span>Acepto que la campaña use mis datos para contactarme sobre la propuesta Mejora tu Hogar, según el aviso de privacidad al final de esta página.</span>
+            </label>
+
+            <button type="submit" class="enviar" id="m-enviar">Registrar mi hogar</button>
+            <p class="err" id="m-err"></p>
+          </form>
+
+          <div class="listo" id="m-listo">
+            <div class="big">🏠</div>
+            <h3>¡Tu hogar quedó registrado!</h3>
+            <p>Te contactaremos por WhatsApp. Comparte esta página para que más familias se registren.</p>
+            <a class="btn-sec" href="#comparte" style="background:#25D366">Compartir con mi familia</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ================= PROPUESTAS ================= -->
-<section id="propuestas" style="padding-top:10px">
+<!-- ================= 3. TESTIMONIOS ================= -->
+<section id="testimonios" style="padding-top:10px">
   <div class="wrap">
-    <h2>Mis <em>propuestas</em></h2>
-    <p class="sub">Compromisos concretos para nuestra Tierrita.</p>
-    <div id="lista-propuestas"></div>
+    <h2>Lo que dice <em>la gente</em></h2>
+    <p class="sub">Testimonios de nuestra Tierrita. Desliza para ver más.</p>
+    <div class="carrusel" id="lista-testimonios"></div>
   </div>
 </section>
 
-<!-- ================= BIO ================= -->
-<section id="bio" class="bio">
+<!-- ================= 4. CONOCE A MORETA ================= -->
+<section id="conoce" class="bio">
   <div class="wrap">
     <h2>Conoce a <em>Moreta</em></h2>
     <div class="texto" id="texto-bio"></div>
   </div>
 </section>
 
-<!-- ================= AGENDA ================= -->
-<section id="agenda">
+<!-- ================= 5. PROPUESTAS (videos) ================= -->
+<section id="propuestas">
+  <div class="wrap">
+    <h2>Mis <em>propuestas</em></h2>
+    <p class="sub">Compromisos concretos para nuestra Tierrita.</p>
+    <div id="lista-prop-txt"></div>
+    <div id="bloque-prop-videos">
+      <p class="subtit">🎥 Te las explico en video</p>
+      <div class="carrusel" id="lista-propuestas"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. AGENDA ================= -->
+<section id="agenda" style="padding-top:10px">
   <div class="wrap">
     <h2>Agenda de <em>medios</em></h2>
     <p class="sub">Sintoniza y acompáñanos.</p>
@@ -210,61 +386,83 @@ footer .pie{margin-top:18px;opacity:.6}
   </div>
 </section>
 
-<!-- ================= ÚNETE ================= -->
+<!-- ================= 7. VOLUNTARIADO ================= -->
 <section id="unete" style="padding-top:10px">
   <div class="wrap">
-    <h2>Únete a <em>mi equipo</em></h2>
-    <p class="sub">Juntos llegamos a cada barrio. Déjanos tus datos y te contactamos.</p>
+    <div class="vol">
+      <span class="et">🤝 Voluntariado de campaña</span>
+      <h2>Únete a <em>mi equipo</em></h2>
+      <p class="sub">¿Quieres ayudar a que La Tierrita gane? Súmate como voluntario en tu barrio.</p>
+      <div class="aviso-vol"><span>ℹ️</span><div>Este registro es solo para <b>voluntarios de la campaña</b>. Si quieres postular a Mejora tu Hogar, <a href="#mejora">regístrate aquí</a>.</div></div>
 
-    <div class="form">
-      <form id="form-unete" novalidate>
-        <label class="l" for="f-nombre">Nombre y apellido</label>
-        <input type="text" id="f-nombre" maxlength="120" autocomplete="name" placeholder="Ej: María Pérez">
+      <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-voluntariado">Quiero ser voluntario</button>
 
-        <label class="l" for="f-tel">Celular / WhatsApp</label>
-        <input type="tel" id="f-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
+      <div class="caja-form oculto" id="caja-vol">
+        <form class="form" id="form-unete" novalidate>
+          <label class="l" for="f-nombre">Nombre y apellido</label>
+          <input type="text" id="f-nombre" maxlength="120" autocomplete="name" placeholder="Ej: María Pérez">
 
-        <label class="l" for="f-parroquia">Parroquia</label>
-        <select id="f-parroquia">
-          <option value="">Selecciona tu parroquia</option>
-          <optgroup label="Urbanas">
-            <option>Abraham Calazacón</option><option>Bombolí</option><option>Chiguilpe</option>
-            <option>Río Toachi</option><option>Río Verde</option><option>Santo Domingo</option><option>Zaracay</option>
-          </optgroup>
-          <optgroup label="Rurales">
-            <option>Alluriquín</option><option>El Esfuerzo</option><option>Luz de América</option>
-            <option>Puerto Limón</option><option>San Jacinto del Búa</option><option>Santa María del Toachi</option><option>Valle Hermoso</option>
-          </optgroup>
-          <option>Otra</option>
-        </select>
+          <label class="l" for="f-tel">Celular / WhatsApp</label>
+          <input type="tel" id="f-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
 
-        <label class="l" for="f-barrio">Barrio o sector</label>
-        <input type="text" id="f-barrio" maxlength="120" placeholder="Ej: Cooperativa 30 de Julio">
+          <label class="l" for="f-parroquia">Parroquia</label>
+          <select id="f-parroquia" class="sel-parroquia"></select>
 
-        <label class="l">¿Cómo te gustaría ayudar?</label>
-        <div class="chips" id="f-ayuda">
-          <label class="chip"><input type="checkbox" value="Voluntario en territorio"><span>Voluntario en territorio</span></label>
-          <label class="chip"><input type="checkbox" value="Redes sociales"><span>Redes sociales</span></label>
-          <label class="chip"><input type="checkbox" value="Eventos y caravanas"><span>Eventos y caravanas</span></label>
-          <label class="chip"><input type="checkbox" value="Delegado de recinto"><span>Delegado de recinto</span></label>
-          <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
+          <label class="l" for="f-barrio">Barrio o sector</label>
+          <input type="text" id="f-barrio" maxlength="120" placeholder="Ej: Cooperativa 30 de Julio">
+
+          <label class="l">¿Cómo te gustaría ayudar?</label>
+          <div class="chips" id="f-ayuda">
+            <label class="chip"><input type="checkbox" value="Voluntario en territorio"><span>Voluntario en territorio</span></label>
+            <label class="chip"><input type="checkbox" value="Redes sociales"><span>Redes sociales</span></label>
+            <label class="chip"><input type="checkbox" value="Eventos y caravanas"><span>Eventos y caravanas</span></label>
+            <label class="chip"><input type="checkbox" value="Delegado de recinto"><span>Delegado de recinto</span></label>
+            <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
+          </div>
+
+          <label class="consent">
+            <input type="checkbox" id="f-consent">
+            <span>Acepto que la campaña use mis datos para contactarme sobre actividades de la campaña, según el aviso de privacidad al final de esta página.</span>
+          </label>
+
+          <button type="submit" class="enviar" id="f-enviar">Sumarme como voluntario</button>
+          <p class="err" id="f-err"></p>
+        </form>
+
+        <div class="listo" id="f-listo">
+          <div class="big">🙌</div>
+          <h3>¡Gracias por sumarte!</h3>
+          <p>Pronto te contactaremos por WhatsApp para coordinar.</p>
         </div>
-
-        <label class="consent">
-          <input type="checkbox" id="f-consent">
-          <span>Acepto que la campaña use mis datos para contactarme sobre actividades de la campaña, según el aviso de privacidad al final de esta página.</span>
-        </label>
-
-        <button type="submit" class="enviar" id="f-enviar">¡Quiero sumarme!</button>
-        <p class="err" id="f-err"></p>
-      </form>
-
-      <div class="listo" id="f-listo">
-        <div class="big">🙌</div>
-        <h3>¡Gracias por sumarte!</h3>
-        <p>Pronto te contactaremos por WhatsApp. Ayúdanos a llegar a más personas compartiendo esta página.</p>
-        <a class="compartir" href="#" data-share="1" data-track="compartir" data-detalle="tras-registro">Compartir por WhatsApp</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8. DESCARGABLES ================= -->
+<section id="descargables" style="padding-top:10px">
+  <div class="wrap">
+    <h2>Material para <em>descargar</em></h2>
+    <p class="sub">Descarga, imprime y comparte.</p>
+    <div id="lista-descargables"></div>
+  </div>
+</section>
+
+<!-- ================= 9. COMPARTIR ================= -->
+<section id="comparte" style="padding-top:10px">
+  <div class="wrap">
+    <div class="comp">
+      <h2>Comparte <em>la Tierrita</em></h2>
+      <p class="sub">Publica esta página en tu perfil y ayúdanos a llegar a más familias.</p>
+      <a class="bt-comp bt-fb" href="#" data-compartir="facebook" data-track="compartir" data-detalle="facebook">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>
+        Publicar en mi Facebook
+      </a>
+      <a class="bt-comp bt-wa" href="#" data-compartir="whatsapp" data-track="compartir" data-detalle="whatsapp">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.43 9.43 0 01-4.8-1.32l-.35-.2-3.57.93.95-3.48-.22-.36a9.4 9.4 0 01-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.99 6.67 2.77a9.37 9.37 0 012.76 6.68c0 5.21-4.24 9.44-9.44 9.44zM20.08 3.9A11.3 11.3 0 0012.04.57C5.78.57.68 5.67.67 11.93c0 2 .52 3.95 1.52 5.67L.57 23.5l6.03-1.58a11.33 11.33 0 005.43 1.38h.01c6.26 0 11.36-5.1 11.36-11.36 0-3.04-1.18-5.89-3.32-8.04z"/></svg>
+        Enviar por WhatsApp
+      </a>
+      <button class="bt-comp bt-cp" data-compartir="copiar" data-track="compartir" data-detalle="copiar-enlace">🔗 <span id="txt-copiar" style="margin-left:8px">Copiar enlace</span></button>
     </div>
   </div>
 </section>
@@ -273,15 +471,39 @@ footer .pie{margin-top:18px;opacity:.6}
 <footer>
   <div class="wrap">
     <img class="logo" src="img/logo-tierrita.png" alt="La Tierrita nos une" style="width:240px">
-    <br>
-    <a class="compartir" href="#" data-share="1" data-track="compartir" data-detalle="footer">Comparte con tu familia</a>
     <details>
       <summary>Aviso de privacidad</summary>
-      <p style="margin-top:10px">Los datos que nos entregas (nombre, celular, parroquia, barrio y forma de ayuda) se usan únicamente para coordinar actividades de la campaña de Miguel Ángel Moreta. No se venden ni se comparten con terceros. Puedes pedir que se corrijan o eliminen escribiendo a <span id="correo-priv">nuestro equipo</span>, conforme a la Ley Orgánica de Protección de Datos Personales del Ecuador.</p>
+      <p style="margin-top:10px">Los datos que nos entregas (nombre, cédula, celular, dirección, información y fotos de tu vivienda) se usan únicamente para la campaña de Miguel Ángel Moreta y su propuesta Mejora tu Hogar. Las fotos se guardan de forma privada y solo las ve el equipo de la campaña. No se venden ni se comparten con terceros. Puedes pedir que se corrijan o eliminen escribiendo a <span id="correo-priv">nuestro equipo</span>, conforme a la Ley Orgánica de Protección de Datos Personales del Ecuador.</p>
     </details>
     <p class="pie">Santo Domingo, Ecuador</p>
   </div>
 </footer>
+
+<!-- ================= FLOTANTES ================= -->
+<div class="redes-flot">
+  <a class="rf-fb" id="lnk-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" data-track="red" data-detalle="facebook">
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>
+  </a>
+  <a class="rf-ig" id="lnk-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram" data-track="red" data-detalle="instagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>
+  </a>
+  <a class="rf-tt" id="lnk-tt" href="#" target="_blank" rel="noopener" aria-label="TikTok" data-track="red" data-detalle="tiktok">
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+  </a>
+</div>
+
+<div class="guia" id="guia">
+  <div class="guia-burbuja" id="guia-burbuja">
+    <button class="x" id="guia-x" aria-label="Cerrar">×</button>
+    <span id="guia-txt">¡Hola! 👋 Mira mi video completo y desbloquea tu registro a Mejora tu Hogar.</span>
+    <span class="ir" id="guia-ir">Ver ↓</span>
+  </div>
+  <div class="guia-foto" id="guia-foto">
+    <span class="ini">MM</span>
+    <!-- Cuando tengas la imagen o GIF de Moreta, guárdala como img/moreta-guia.png (o .gif y cambia el nombre aquí) -->
+    <img src="img/moreta-guia.png" alt="Miguel Ángel Moreta" onerror="this.style.display='none'">
+  </div>
+</div>
 
 <script>
 /* =========================================================
@@ -292,30 +514,54 @@ footer .pie{margin-top:18px;opacity:.6}
   var C = window.CONFIG || {};
   var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   var TIPOS = { radio: 'Radio', tv: 'Televisión', digital: 'Digital', evento: 'Evento' };
+  var PARROQUIAS = [
+    ['Urbanas', ['Abraham Calazacón','Bombolí','Chiguilpe','Río Toachi','Río Verde','Santo Domingo','Zaracay']],
+    ['Rurales', ['Alluriquín','El Esfuerzo','Luz de América','Puerto Limón','San Jacinto del Búa','Santa María del Toachi','Valle Hermoso']]
+  ];
 
-  /* ---------- Datos de ejemplo (se usan hasta conectar Supabase) ---------- */
+  /* ---------- Contenido de referencia (hasta cargar el real) ---------- */
   var DEMO = {
-    videos: [
-      { titulo: 'Video de presentación', youtube_url: '', formato: 'vertical' },
-      { titulo: 'Mejora tu Hogar', youtube_url: '', formato: 'vertical' },
-      { titulo: 'Recorrido por los barrios', youtube_url: '', formato: 'vertical' }
+    testimonios: [
+      { titulo: 'Testimonio 1 · Vecina de Bombolí', youtube_url: '', formato: 'vertical' },
+      { titulo: 'Testimonio 2 · Comerciante del centro', youtube_url: '', formato: 'vertical' },
+      { titulo: 'Testimonio 3 · Joven de Zaracay', youtube_url: '', formato: 'vertical' }
+    ],
+    propTxt: [
+      { numero: 1, titulo: 'Mejora tu Hogar', descripcion: 'Texto corto de ejemplo. Aquí irá la descripción de la propuesta.' },
+      { numero: 2, titulo: 'Propuesta 2', descripcion: 'Texto corto de ejemplo. Aquí irá la descripción de la propuesta.' },
+      { numero: 3, titulo: 'Propuesta 3', descripcion: 'Texto corto de ejemplo. Aquí irá la descripción de la propuesta.' },
+      { numero: 4, titulo: 'Propuesta 4', descripcion: 'Texto corto de ejemplo. Aquí irá la descripción de la propuesta.' },
+      { numero: 5, titulo: 'Propuesta 5', descripcion: 'Texto corto de ejemplo. Aquí irá la descripción de la propuesta.' }
     ],
     propuestas: [
-      { numero: 1, titulo: 'Mejora tu Hogar', descripcion: 'Texto de ejemplo. Aquí irá la descripción de la propuesta.' },
-      { numero: 2, titulo: 'Propuesta 2', descripcion: 'Texto de ejemplo. Aquí irá la descripción de la propuesta.' },
-      { numero: 3, titulo: 'Propuesta 3', descripcion: 'Texto de ejemplo. Aquí irá la descripción de la propuesta.' },
-      { numero: 4, titulo: 'Propuesta 4', descripcion: 'Texto de ejemplo. Aquí irá la descripción de la propuesta.' },
-      { numero: 5, titulo: 'Propuesta 5', descripcion: 'Texto de ejemplo. Aquí irá la descripción de la propuesta.' }
+      { titulo: 'Propuesta 1 · Mejora tu Hogar', youtube_url: '', formato: 'vertical' },
+      { titulo: 'Propuesta 2', youtube_url: '', formato: 'vertical' },
+      { titulo: 'Propuesta 3', youtube_url: '', formato: 'vertical' },
+      { titulo: 'Propuesta 4', youtube_url: '', formato: 'vertical' },
+      { titulo: 'Propuesta 5', youtube_url: '', formato: 'vertical' }
+    ],
+    descargables: [
+      { icono: '📄', titulo: 'Plan de trabajo', detalle: 'PDF · Las propuestas completas', url: '' },
+      { icono: '🖼️', titulo: 'Fondos de pantalla', detalle: 'Imágenes para tu celular', url: '' },
+      { icono: '💬', titulo: 'Stickers para WhatsApp', detalle: 'Paquete de stickers de la campaña', url: '' },
+      { icono: '🖨️', titulo: 'Flyer para imprimir', detalle: 'PDF tamaño A5', url: '' }
     ],
     agenda: [ { fecha: '2026-10-06', hora: '7:00 am', medio: 'Radio Ritmo', detalle: '98.5 FM', tipo: 'radio' } ],
-    bio: 'Aquí irá la biografía del Dr. Miguel Ángel Moreta: quién es, su trayectoria y su vínculo con Santo Domingo.'
+    bio: 'Aquí irá la biografía corta del Dr. Miguel Ángel Moreta: quién es, su trayectoria y su vínculo con Santo Domingo.'
   };
 
   function $(id) { return document.getElementById(id); }
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
+  function trim(s) { return String(s || '').replace(/^\s+|\s+$/g, ''); }
   function conectado() { return !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY); }
+  function guardar(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function leer(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function irA(id) {
+    var el = $(id); if (!el) { return; }
+    try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) { el.scrollIntoView(); }
+  }
 
   /* ---------- Fuente de la visita (?src=qr-flyer, ?src=instagram ...) ---------- */
   var fuente = 'directo';
@@ -326,6 +572,8 @@ footer .pie{margin-top:18px;opacity:.6}
       else if (sessionStorage.getItem('src')) { fuente = sessionStorage.getItem('src'); }
     } catch (e) { if (m) { fuente = decodeURIComponent(m[1]).slice(0, 60); } }
   })();
+  // Para probar de nuevo el bloqueo: abre la página con ?reset=1
+  if (/[?&]reset=1/.test(location.search)) { try { localStorage.removeItem('moreta_video_ok'); } catch (e) {} }
 
   /* ---------- API Supabase ---------- */
   function api(ruta, metodo, cuerpo, cb) {
@@ -333,7 +581,6 @@ footer .pie{margin-top:18px;opacity:.6}
     var x = new XMLHttpRequest();
     x.open(metodo, C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '') + '/rest/v1/' + ruta, true);
     x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
-    // Las claves antiguas (eyJ...) también van en Authorization; las nuevas (sb_publishable_...) solo en apikey
     if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
     if (cuerpo) {
       x.setRequestHeader('Content-Type', 'application/json');
@@ -368,12 +615,111 @@ footer .pie{margin-top:18px;opacity:.6}
     }
   }
 
-  /* ---------- Videos ---------- */
   function ytId(u) {
     var m = String(u || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/|live\/)([A-Za-z0-9_-]{11})/);
     return m ? m[1] : null;
   }
-  function pintarVideos(lista) {
+
+  /* =========================================================
+     VIDEO PRINCIPAL — no se puede adelantar ni saltar
+     ========================================================= */
+  var desbloqueado = leer('moreta_video_ok') === '1';
+  var vmIniciado = false;
+
+  function textoVideo(t, ok) { var e = $('vm-txt'); e.innerHTML = t; e.className = 'vm-txt' + (ok ? ' ok' : ''); }
+  function avance(p) { $('vm-avance').style.width = Math.min(100, Math.max(0, p)) + '%'; }
+  function mmss(s) { s = Math.max(0, Math.round(s)); var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
+
+  function desbloquear(desdeVideo) {
+    $('mth').className = 'mth';
+    textoVideo('✔ ¡Listo! Ya puedes registrarte abajo 👇', true);
+    avance(100);
+    if (desdeVideo && !desbloqueado) {
+      desbloqueado = true; guardar('moreta_video_ok', '1');
+      track('video-principal', 'completo');
+      decir('¡Gracias por ver el video! 🙌 Ahora registra tu hogar aquí abajo.', 'mejora', true);
+      setTimeout(function () { irA('mejora'); }, 900);
+    }
+  }
+  if (desbloqueado) { desbloquear(false); }
+
+  function iniciarVideo(url, formato) {
+    if (formato === 'horizontal') { $('vm').className = 'vm h'; }
+    var id = ytId(url);
+    if (!id) { videoDemo(); return; }
+
+    var player = null, listo = false, maxVisto = 0, duracion = 0, reproduciendo = false;
+    var capa = $('vm-capa');
+
+    // Si YouTube no carga (bloqueado o sin internet) no dejamos a la gente sin formulario
+    var respaldo = setTimeout(function () { if (!listo) { desbloquear(true); } }, 15000);
+
+    window.onYouTubeIframeAPIReady = function () {
+      player = new YT.Player('yt-player', {
+        videoId: id,
+        playerVars: { controls: 0, disablekb: 1, rel: 0, playsinline: 1, modestbranding: 1, fs: 0, iv_load_policy: 3 },
+        events: {
+          onReady: function () { listo = true; clearTimeout(respaldo); duracion = player.getDuration() || 0; },
+          onStateChange: function (e) {
+            reproduciendo = e.data === 1;
+            capa.className = 'vm-capa' + (reproduciendo ? ' reproduciendo' : '');
+            if (e.data === 1 && !vmIniciado) { vmIniciado = true; track('video-principal', 'inicio'); }
+            if (e.data === 0) {
+              duracion = player.getDuration() || duracion;
+              if (maxVisto >= duracion - 3) { desbloquear(true); }
+              else { player.seekTo(maxVisto, true); player.playVideo(); }
+            }
+          }
+        }
+      });
+    };
+    var s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(s);
+
+    // Tocar el video = reproducir / pausar (los controles de YouTube quedan tapados)
+    capa.onclick = function () {
+      if (!player || !listo) { return; }
+      if (reproduciendo) { player.pauseVideo(); } else { player.playVideo(); }
+    };
+
+    // Vigilante: si alguien intenta adelantar, lo regresa
+    setInterval(function () {
+      if (!player || !listo || !player.getCurrentTime) { return; }
+      var t = player.getCurrentTime();
+      if (!duracion) { duracion = player.getDuration() || 0; }
+      if (t > maxVisto + 1.5) { player.seekTo(maxVisto, true); return; }
+      if (t > maxVisto) { maxVisto = t; }
+      if (desbloqueado) { return; }
+      if (duracion) {
+        avance(maxVisto / duracion * 100);
+        if (reproduciendo) { textoVideo('⏳ Faltan ' + mmss(duracion - maxVisto) + ' para desbloquear tu registro'); }
+      }
+    }, 400);
+  }
+
+  // Mientras no haya video real: simulación de 12 segundos para ver cómo funciona
+  function videoDemo() {
+    var cont = $('yt-player');
+    cont.className = 'vm-demo';
+    cont.innerHTML = '<span style="margin-top:150px">Aquí irá el video de campaña<br><span style="font-weight:600;font-size:12px;opacity:.75">(simulación de 12 segundos)</span></span>';
+    var capa = $('vm-capa'), t = 0, total = 12, corriendo = false, reloj = null;
+    capa.onclick = function () {
+      corriendo = !corriendo;
+      capa.className = 'vm-capa' + (corriendo ? ' reproduciendo' : '');
+      if (corriendo && !vmIniciado) { vmIniciado = true; }
+      if (corriendo && !reloj) {
+        reloj = setInterval(function () {
+          if (!corriendo) { return; }
+          t += 0.25;
+          if (!desbloqueado) { avance(t / total * 100); textoVideo('⏳ Faltan ' + mmss(total - t) + ' para desbloquear tu registro'); }
+          if (t >= total) { clearInterval(reloj); corriendo = false; capa.className = 'vm-capa'; desbloquear(true); }
+        }, 250);
+      }
+    };
+  }
+
+  /* ---------- Carruseles de video ---------- */
+  function pintarVideos(cont, lista) {
     var h = '', i, v, id;
     for (i = 0; i < lista.length; i++) {
       v = lista[i]; id = ytId(v.youtube_url);
@@ -382,17 +728,7 @@ footer .pie{margin-top:18px;opacity:.6}
       else { h += '<div class="vacio">Aquí irá el video</div>'; }
       h += '</div><p class="vtit">' + esc(v.titulo) + '</p></div>';
     }
-    $('lista-videos').innerHTML = h;
-  }
-
-  /* ---------- Propuestas ---------- */
-  function pintarPropuestas(lista) {
-    var h = '', i, p;
-    for (i = 0; i < lista.length; i++) {
-      p = lista[i];
-      h += '<div class="prop"><div class="num">' + esc(p.numero) + '</div><div><h3>' + esc(p.titulo) + '</h3><p>' + esc(p.descripcion) + '</p></div></div>';
-    }
-    $('lista-propuestas').innerHTML = h;
+    $(cont).innerHTML = h;
   }
 
   /* ---------- Agenda ---------- */
@@ -411,64 +747,318 @@ footer .pie{margin-top:18px;opacity:.6}
     $('lista-agenda').innerHTML = h || '<div class="vacia">Muy pronto anunciaremos nuevas fechas.</div>';
   }
 
+  /* ---------- Descargables ---------- */
+  function pintarDescargables(lista) {
+    var h = '', i, d;
+    for (i = 0; i < lista.length; i++) {
+      d = lista[i];
+      h += '<a class="desc" href="' + esc(d.url || '#') + '"' + (d.url ? ' target="_blank" rel="noopener"' : '') +
+           ' data-track="descarga" data-detalle="' + esc(d.titulo) + '">' +
+           '<span class="ic">' + esc(d.icono) + '</span><span class="tx"><b>' + esc(d.titulo) + '</b><small>' + esc(d.detalle) + '</small></span>' +
+           '<span class="bajar">↓</span></a>';
+    }
+    $('lista-descargables').innerHTML = h;
+  }
+
+  /* ---------- Propuestas (tarjetas) ---------- */
+  function pintarPropTxt(lista) {
+    var h = '', i, p;
+    for (i = 0; i < lista.length; i++) {
+      p = lista[i];
+      h += '<div class="prop"><div class="num">' + esc(p.numero) + '</div><div><h3>' + esc(p.titulo) + '</h3><p>' + esc(p.descripcion) + '</p></div></div>';
+    }
+    $('lista-prop-txt').innerHTML = h;
+  }
+  function esconder(id, si) { $(id).style.display = si ? 'none' : ''; }
+  function revisarPropuestas() {
+    var sinTxt = !$('lista-prop-txt').innerHTML, sinVid = !$('lista-propuestas').innerHTML;
+    esconder('bloque-prop-videos', sinVid);
+    esconder('propuestas', sinTxt && sinVid);
+  }
+
   /* ---------- Carga de contenido ---------- */
   function cargar() {
     if (!conectado()) {
-      pintarVideos(DEMO.videos); pintarPropuestas(DEMO.propuestas);
+      pintarVideos('lista-testimonios', DEMO.testimonios);
+      pintarDescargables(DEMO.descargables);
+      pintarPropTxt(DEMO.propTxt);
+      pintarVideos('lista-propuestas', DEMO.propuestas);
       pintarAgenda(DEMO.agenda); $('texto-bio').textContent = DEMO.bio;
+      iniciarVideo(C.VIDEO_PRINCIPAL || '', C.VIDEO_PRINCIPAL_FORMATO || 'vertical');
       return;
     }
-    api('videos?select=titulo,youtube_url,formato&activo=eq.true&order=orden.asc', 'GET', null, function (ok, d) {
-      pintarVideos(ok && d && d.length ? d : DEMO.videos);
+    // Las secciones sin contenido se esconden solas
+    api('videos?select=titulo,youtube_url,formato,seccion&activo=eq.true&order=orden.asc,id.asc', 'GET', null, function (ok, d) {
+      var tes = [], pro = [], i;
+      if (ok && d) { for (i = 0; i < d.length; i++) { (d[i].seccion === 'testimonios' ? tes : pro).push(d[i]); } }
+      pintarVideos('lista-testimonios', tes); esconder('testimonios', !tes.length);
+      pintarVideos('lista-propuestas', pro); revisarPropuestas();
     });
     api('propuestas?select=numero,titulo,descripcion&activo=eq.true&order=orden.asc,numero.asc', 'GET', null, function (ok, d) {
-      pintarPropuestas(ok && d && d.length ? d : DEMO.propuestas);
+      pintarPropTxt(ok && d ? d : []); revisarPropuestas();
+    });
+    api('descargables?select=icono,titulo,detalle,url&activo=eq.true&order=orden.asc,id.asc', 'GET', null, function (ok, d) {
+      var l = ok && d ? d : [];
+      pintarDescargables(l); esconder('descargables', !l.length);
     });
     api('agenda?select=fecha,hora,medio,detalle,tipo&activo=eq.true&fecha=gte.' + hoyISO() + '&order=fecha.asc&limit=6', 'GET', null, function (ok, d) {
       pintarAgenda(ok && d ? d : []);
     });
     api('contenido?select=clave,valor', 'GET', null, function (ok, d) {
-      var bio = DEMO.bio, i;
-      if (ok && d) { for (i = 0; i < d.length; i++) { if (d[i].clave === 'bio' && d[i].valor) { bio = d[i].valor; } } }
-      $('texto-bio').textContent = bio;
+      var c = {}, i;
+      if (ok && d) { for (i = 0; i < d.length; i++) { c[d[i].clave] = d[i].valor; } }
+      $('texto-bio').textContent = c.bio || DEMO.bio;
+      iniciarVideo(c.video_principal || C.VIDEO_PRINCIPAL || '', c.video_principal_formato || C.VIDEO_PRINCIPAL_FORMATO || 'vertical');
     });
   }
 
-  /* ---------- Formulario Únete ---------- */
-  function errorForm(msg) { var e = $('f-err'); e.textContent = msg; e.style.display = msg ? 'block' : 'none'; }
+  /* ---------- Parroquias en los selects ---------- */
+  (function () {
+    var h = '<option value="">Selecciona tu parroquia</option>', i, j;
+    for (i = 0; i < PARROQUIAS.length; i++) {
+      h += '<optgroup label="' + PARROQUIAS[i][0] + '">';
+      for (j = 0; j < PARROQUIAS[i][1].length; j++) { h += '<option>' + PARROQUIAS[i][1][j] + '</option>'; }
+      h += '</optgroup>';
+    }
+    h += '<option>Otra</option>';
+    var sels = document.querySelectorAll('.sel-parroquia');
+    for (i = 0; i < sels.length; i++) { sels[i].innerHTML = h; }
+  })();
+
+  function marcados(id) {
+    var c = $(id).getElementsByTagName('input'), r = [], i;
+    for (i = 0; i < c.length; i++) { if (c[i].checked) { r.push(c[i].value); } }
+    return r;
+  }
+  function mostrarError(id, msg) { var e = $(id); e.textContent = msg; e.style.display = msg ? 'block' : 'none'; return false; }
+
+  /* =========================================================
+     FOTOS: se comprimen y pasan a WebP en el celular antes de subir
+     ========================================================= */
+  var FOTO_MAX_LADO = 1280;          // píxeles del lado más largo
+  var FOTO_MAX_PESO = 400 * 1024;    // objetivo: menos de 400 KB por foto
+  var fotos = [null, null];          // { blob, ext }
+
+  function dataUrlABlob(url) {
+    var p = url.split(','), tipo = p[0].match(/:(.*?);/)[1], bin = atob(p[1]), n = bin.length, arr = new Uint8Array(n);
+    while (n--) { arr[n] = bin.charCodeAt(n); }
+    return new Blob([arr], { type: tipo });
+  }
+  function aBlob(canvas, tipo, calidad, cb) {
+    if (canvas.toBlob) { canvas.toBlob(function (b) { cb(b || dataUrlABlob(canvas.toDataURL(tipo, calidad))); }, tipo, calidad); }
+    else { cb(dataUrlABlob(canvas.toDataURL(tipo, calidad))); }
+  }
+  function comprimir(archivo, cb) {
+    var URLx = window.URL || window.webkitURL, img = new Image(), src = URLx.createObjectURL(archivo);
+    img.onerror = function () { URLx.revokeObjectURL(src); cb(null); };
+    img.onload = function () {
+      var w = img.naturalWidth || img.width, h = img.naturalHeight || img.height, k = Math.min(1, FOTO_MAX_LADO / Math.max(w, h));
+      var c = document.createElement('canvas');
+      c.width = Math.round(w * k); c.height = Math.round(h * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URLx.revokeObjectURL(src);
+      var calidades = [0.72, 0.6, 0.48, 0.38], i = 0;
+      function intentar() {
+        aBlob(c, 'image/webp', calidades[i], function (b) {
+          // Algunos iPhone antiguos no generan WebP: en ese caso usamos JPG comprimido
+          if (b.type !== 'image/webp') {
+            aBlob(c, 'image/jpeg', calidades[i], function (j) { fin(j, 'jpg'); });
+          } else { fin(b, 'webp'); }
+        });
+      }
+      function fin(b, ext) {
+        if (b.size > FOTO_MAX_PESO && i < calidades.length - 1) { i++; intentar(); return; }
+        cb({ blob: b, ext: ext });
+      }
+      intentar();
+    };
+    img.src = src;
+  }
+  function kb(n) { return n > 1024 * 1024 ? (n / 1048576).toFixed(1) + ' MB' : Math.round(n / 1024) + ' KB'; }
+
+  function ponerFoto(i, f) {
+    var slot = $('slot-' + i), img = slot.getElementsByTagName('img')[0], URLx = window.URL || window.webkitURL;
+    fotos[i] = f;
+    if (img.src && img.src.indexOf('blob:') === 0) { URLx.revokeObjectURL(img.src); }
+    if (f) {
+      img.src = URLx.createObjectURL(f.blob);
+      slot.getElementsByClassName('peso')[0].textContent = kb(f.blob.size);
+      slot.className = 'foto-slot lleno';
+    } else {
+      img.removeAttribute('src');
+      slot.className = 'foto-slot';
+      slot.getElementsByTagName('input')[0].value = '';
+    }
+  }
+  (function () {
+    var ins = document.querySelectorAll('.foto-slot input'), bts = document.querySelectorAll('.foto-slot .quitar'), k;
+    for (k = 0; k < ins.length; k++) {
+      ins[k].onchange = function () {
+        var input = this, i = +input.getAttribute('data-slot'), archivo = input.files && input.files[0];
+        if (!archivo) { return; }
+        if (archivo.type && archivo.type.indexOf('image/') !== 0) { input.value = ''; return mostrarError('m-err', 'Ese archivo no es una foto.'); }
+        mostrarError('m-err', '');
+        $('slot-' + i).className = 'foto-slot';
+        $('slot-' + i).getElementsByClassName('ic')[0].textContent = '⏳';
+        comprimir(archivo, function (f) {
+          $('slot-' + i).getElementsByClassName('ic')[0].textContent = '📷';
+          if (!f) { input.value = ''; return mostrarError('m-err', 'No pudimos leer esa foto. Intenta con otra.'); }
+          ponerFoto(i, f);
+        });
+      };
+    }
+    for (k = 0; k < bts.length; k++) { bts[k].onclick = function () { ponerFoto(+this.getAttribute('data-quitar'), null); }; }
+  })();
+
+  function subirFoto(ruta, blob, cb) {
+    var x = new XMLHttpRequest();
+    x.open('POST', C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '') + '/storage/v1/object/fotos-hogares/' + ruta, true);
+    x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
+    if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
+    x.setRequestHeader('Content-Type', blob.type);
+    x.onreadystatechange = function () { if (x.readyState === 4) { cb(x.status >= 200 && x.status < 300); } };
+    x.send(blob);
+  }
+  function aleatorio() { return Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6); }
+
+  /* ---------- Validación de cédula ecuatoriana ---------- */
+  function cedulaValida(c) {
+    if (!/^\d{10}$/.test(c)) { return false; }
+    var prov = +c.slice(0, 2), suma = 0, i, d;
+    if (!((prov >= 1 && prov <= 24) || prov === 30) || +c.charAt(2) > 5) { return false; }
+    for (i = 0; i < 9; i++) {
+      d = +c.charAt(i) * (i % 2 === 0 ? 2 : 1);
+      suma += d > 9 ? d - 9 : d;
+    }
+    return (10 - (suma % 10)) % 10 === +c.charAt(9);
+  }
+
+  /* ---------- Formulario Mejora tu Hogar ---------- */
+  $('form-mth').onsubmit = function (ev) {
+    ev.preventDefault();
+    if (!desbloqueado) { return mostrarError('m-err', 'Primero mira el video completo.'); }
+    var d = {
+      nombre: trim($('m-nombre').value),
+      cedula: $('m-cedula').value.replace(/\D/g, ''),
+      telefono: $('m-tel').value.replace(/\D/g, ''),
+      parroquia: $('m-parroquia').value,
+      barrio: trim($('m-barrio').value) || null,
+      direccion: trim($('m-direccion').value),
+      vivienda: $('m-vivienda').value,
+      personas: parseInt($('m-personas').value.replace(/\D/g, ''), 10),
+      mejoras: marcados('m-mejoras').join(', '),
+      fuente: fuente, consentimiento: true, fotos: []
+    };
+    if (d.nombre.length < 2) { return mostrarError('m-err', 'Escribe tus nombres y apellidos.'); }
+    if (!cedulaValida(d.cedula)) { return mostrarError('m-err', 'Revisa tu número de cédula, no es válido.'); }
+    if (!/^0\d{9}$/.test(d.telefono)) { return mostrarError('m-err', 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
+    if (!d.parroquia) { return mostrarError('m-err', 'Selecciona tu parroquia.'); }
+    if (d.direccion.length < 5) { return mostrarError('m-err', 'Escribe la dirección de tu hogar con una referencia.'); }
+    if (!d.vivienda) { return mostrarError('m-err', 'Indica si la vivienda es propia, familiar o arrendada.'); }
+    if (!(d.personas >= 1 && d.personas <= 30)) { return mostrarError('m-err', 'Indica cuántas personas viven en el hogar.'); }
+    if (!d.mejoras) { return mostrarError('m-err', 'Marca al menos una mejora que necesite tu hogar.'); }
+    if (!$('m-consent').checked) { return mostrarError('m-err', 'Para continuar, acepta el uso de tus datos.'); }
+    if (!conectado()) { return mostrarError('m-err', 'El formulario aún no está conectado. Intenta más tarde.'); }
+    mostrarError('m-err', '');
+
+    var boton = $('m-enviar');
+    function falla(msg) { boton.disabled = false; boton.textContent = 'Registrar mi hogar'; mostrarError('m-err', msg); }
+    boton.disabled = true;
+
+    var pendientes = [], i, hoy = new Date(), mes = hoy.getFullYear() + '-' + (hoy.getMonth() < 9 ? '0' : '') + (hoy.getMonth() + 1);
+    for (i = 0; i < fotos.length; i++) { if (fotos[i]) { pendientes.push(fotos[i]); } }
+
+    // 1) Subimos las fotos una por una
+    function subirSiguiente(n) {
+      if (n >= pendientes.length) { guardarRegistro(); return; }
+      boton.textContent = 'Subiendo foto ' + (n + 1) + ' de ' + pendientes.length + '...';
+      var ruta = 'hogares/' + mes + '/' + Date.now() + '-' + aleatorio() + '.' + pendientes[n].ext;
+      subirFoto(ruta, pendientes[n].blob, function (ok) {
+        if (!ok) { return falla('No pudimos subir la foto. Revisa tu conexión e inténtalo otra vez.'); }
+        d.fotos.push(ruta); subirSiguiente(n + 1);
+      });
+    }
+    // 2) Guardamos el registro
+    function guardarRegistro() {
+      boton.textContent = 'Guardando...';
+      var x = new XMLHttpRequest();
+      x.open('POST', C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '') + '/rest/v1/hogares', true);
+      x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
+      if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
+      x.setRequestHeader('Content-Type', 'application/json');
+      x.setRequestHeader('Prefer', 'return=minimal');
+      x.onreadystatechange = function () {
+        if (x.readyState !== 4) { return; }
+        if (x.status >= 200 && x.status < 300) {
+          $('form-mth').style.display = 'none'; $('m-listo').style.display = 'block';
+          track('registro', 'mejora-tu-hogar');
+          if (window.fbq) { window.fbq('track', 'Lead'); }
+          decir('¡Listo! 🏠 Tu hogar quedó registrado. ¡Comparte con tu familia!', 'comparte', true);
+        } else if (x.status === 409) {
+          falla('Esta cédula ya está registrada en Mejora tu Hogar.');
+        } else {
+          falla('No pudimos guardar tus datos. Revisa tu conexión e inténtalo otra vez.');
+        }
+      };
+      x.send(JSON.stringify(d));
+    }
+    subirSiguiente(0);
+  };
+
+  /* ---------- Formulario Voluntarios ---------- */
+  $('btn-vol').onclick = function () {
+    $('btn-vol').className = 'btn-vol oculto';
+    $('caja-vol').className = 'caja-form';
+  };
   $('form-unete').onsubmit = function (ev) {
     ev.preventDefault();
-    var nombre = $('f-nombre').value.replace(/^\s+|\s+$/g, '');
+    var nombre = trim($('f-nombre').value);
     var tel = $('f-tel').value.replace(/\D/g, '');
     var parroquia = $('f-parroquia').value;
-    var barrio = $('f-barrio').value.replace(/^\s+|\s+$/g, '');
-    var checks = $('f-ayuda').getElementsByTagName('input'), ayuda = [], i;
-    for (i = 0; i < checks.length; i++) { if (checks[i].checked) { ayuda.push(checks[i].value); } }
+    var barrio = trim($('f-barrio').value);
+    var ayuda = marcados('f-ayuda');
 
-    if (nombre.length < 2) { return errorForm('Escribe tu nombre y apellido.'); }
-    if (!/^0\d{9}$/.test(tel)) { return errorForm('Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
-    if (!parroquia) { return errorForm('Selecciona tu parroquia.'); }
-    if (!$('f-consent').checked) { return errorForm('Para continuar, acepta el uso de tus datos.'); }
-    errorForm('');
+    if (nombre.length < 2) { return mostrarError('f-err', 'Escribe tu nombre y apellido.'); }
+    if (!/^0\d{9}$/.test(tel)) { return mostrarError('f-err', 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
+    if (!parroquia) { return mostrarError('f-err', 'Selecciona tu parroquia.'); }
+    if (!$('f-consent').checked) { return mostrarError('f-err', 'Para continuar, acepta el uso de tus datos.'); }
+    mostrarError('f-err', '');
 
-    var boton = $('f-enviar'); boton.disabled = true; boton.textContent = 'Enviando...';
-    function exito() {
-      $('form-unete').style.display = 'none'; $('f-listo').style.display = 'block';
-      track('registro', 'unete');
-      if (window.fbq) { window.fbq('track', 'Lead'); }
-    }
-    if (!conectado()) { // sin Supabase configurado: no fingir que se guardó
-      boton.disabled = false; boton.textContent = '¡Quiero sumarme!';
-      return errorForm('El formulario aún no está conectado. Intenta más tarde.');
-    }
+    var boton = $('f-enviar');
+    if (!conectado()) { return mostrarError('f-err', 'El formulario aún no está conectado. Intenta más tarde.'); }
+    boton.disabled = true; boton.textContent = 'Enviando...';
     api('voluntarios', 'POST', {
       nombre: nombre, telefono: tel, parroquia: parroquia, barrio: barrio || null,
       ayuda: ayuda.join(', ') || null, fuente: fuente, consentimiento: true
     }, function (ok) {
-      if (ok) { exito(); }
-      else { boton.disabled = false; boton.textContent = '¡Quiero sumarme!'; errorForm('No pudimos enviar tus datos. Revisa tu conexión e inténtalo otra vez.'); }
+      if (ok) {
+        $('form-unete').style.display = 'none'; $('f-listo').style.display = 'block';
+        track('registro', 'unete');
+      } else {
+        boton.disabled = false; boton.textContent = 'Sumarme como voluntario';
+        mostrarError('f-err', 'No pudimos enviar tus datos. Revisa tu conexión e inténtalo otra vez.');
+      }
     });
   };
+
+  /* ---------- Compartir ---------- */
+  function urlCompartir(red) { return location.origin + location.pathname + '?src=compartido-' + red; }
+  function copiar(texto) {
+    var ok = false;
+    try {
+      var t = document.createElement('textarea'); t.value = texto; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select(); ok = document.execCommand('copy'); document.body.removeChild(t);
+    } catch (e) {}
+    if (!ok && navigator.clipboard) { navigator.clipboard.writeText(texto); ok = true; }
+    $('txt-copiar').textContent = ok ? '¡Enlace copiado!' : urlCompartir('copiado');
+    setTimeout(function () { $('txt-copiar').textContent = 'Copiar enlace'; }, 2500);
+  }
+  function compartir(red) {
+    var msj = C.TEXTO_COMPARTIR || '';
+    if (red === 'facebook') { window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(urlCompartir('facebook')), '_blank', 'width=600,height=500'); }
+    if (red === 'whatsapp') { window.open('https://wa.me/?text=' + encodeURIComponent(msj + ' ' + urlCompartir('whatsapp')), '_blank'); }
+    if (red === 'copiar') { copiar(urlCompartir('copiado')); }
+  }
 
   /* ---------- Clics (medición, videos y compartir) ---------- */
   document.addEventListener('click', function (e) {
@@ -482,16 +1072,82 @@ footer .pie{margin-top:18px;opacity:.6}
           track('video', id);
           return;
         }
-        if (t.getAttribute('data-share')) {
-          e.preventDefault();
-          var url = location.origin + location.pathname + '?src=compartido';
-          window.open('https://wa.me/?text=' + encodeURIComponent((C.TEXTO_COMPARTIR || '') + ' ' + url), '_blank');
-        }
+        if (t.getAttribute('data-compartir')) { e.preventDefault(); compartir(t.getAttribute('data-compartir')); }
+        if (t.getAttribute('href') === '#' && t.className === 'desc') { e.preventDefault(); }
         if (t.getAttribute('data-track')) { track('clic-' + t.getAttribute('data-track'), t.getAttribute('data-detalle')); return; }
       }
       t = t.parentNode;
     }
   });
+
+  /* =========================================================
+     MORETA GUÍA (abajo a la derecha)
+     ========================================================= */
+  var MENSAJES = {
+    inicio:       ['¡Hola! 👋 Mira mi video completo y desbloquea tu registro a Mejora tu Hogar.', 'inicio'],
+    mejora:       ['Llena tus datos para registrar tu hogar 🏠', 'mejora'],
+    testimonios:  ['Escucha lo que dice nuestra gente 💬', 'testimonios'],
+    conoce:       ['Te cuento un poco de mí 💙', 'conoce'],
+    propuestas:   ['Estas son mis propuestas para la Tierrita 📋', 'propuestas'],
+    agenda:       ['¡Sintonízame! Aquí está mi agenda 📻', 'agenda'],
+    unete:        ['¿Quieres ayudar? Súmate al equipo 🤝', 'unete'],
+    descargables: ['Descarga el material y compártelo 📲', 'descargables'],
+    comparte:     ['¡Publica esta página en tu Facebook! 🙌', 'comparte']
+  };
+  var ORDEN = ['inicio','mejora','testimonios','conoce','propuestas','agenda','unete','descargables','comparte'];
+  var actual = '', cerrada = false, ocultarT = null, destino = 'mejora';
+
+  function decir(texto, ir, forzar) {
+    var b = $('guia-burbuja');
+    $('guia-txt').textContent = texto;
+    destino = ir;
+    $('guia-ir').style.display = ir ? 'block' : 'none';
+    if (cerrada && !forzar) { return; }
+    b.className = 'guia-burbuja';
+    clearTimeout(ocultarT);
+    ocultarT = setTimeout(function () { b.className = 'guia-burbuja escondida'; }, 7000);
+  }
+  function siguiente(id) {
+    var i = ORDEN.indexOf(id) + 1;
+    while (i < ORDEN.length && !$(ORDEN[i]).offsetHeight) { i++; }
+    return ORDEN[i] || null;
+  }
+
+  function seccionVisible() {
+    var mitad = (window.innerHeight || 600) * 0.45, vis = 'inicio', i, el;
+    for (i = 0; i < ORDEN.length; i++) {
+      el = $(ORDEN[i]);
+      if (el && el.offsetHeight && el.getBoundingClientRect().top < mitad) { vis = ORDEN[i]; }
+    }
+    return vis;
+  }
+  var revisando = false;
+  function alHacerScroll() {
+    if (revisando) { return; }
+    revisando = true;
+    setTimeout(function () {
+      revisando = false;
+      var s = seccionVisible();
+      if (s === actual) { return; }
+      actual = s;
+      var m = MENSAJES[s];
+      var texto = m[0];
+      if (s === 'inicio' && desbloqueado) { texto = '¡Ya viste mi video! 🙌 Registra tu hogar aquí abajo.'; }
+      if (s === 'mejora' && !desbloqueado) { texto = '🔒 Primero mira mi video arriba para desbloquear el registro.'; }
+      var ir = s === 'inicio' ? (desbloqueado ? 'mejora' : null) : (s === 'mejora' && !desbloqueado ? 'inicio' : siguiente(s));
+      decir(texto, ir);
+    }, 150);
+  }
+  window.addEventListener('scroll', alHacerScroll);
+
+  $('guia-x').onclick = function (e) { e.stopPropagation(); cerrada = true; $('guia-burbuja').className = 'guia-burbuja escondida'; };
+  $('guia-burbuja').onclick = function () { if (destino) { irA(destino); track('clic-guia', destino); } };
+  $('guia-foto').onclick = function () {
+    cerrada = false;
+    var b = $('guia-burbuja');
+    if (b.className.indexOf('escondida') > -1) { decir($('guia-txt').textContent, destino, true); }
+    else { b.className = 'guia-burbuja escondida'; }
+  };
 
   /* ---------- Inicio ---------- */
   $('lnk-fb').href = C.FACEBOOK || '#';
@@ -501,6 +1157,7 @@ footer .pie{margin-top:18px;opacity:.6}
   cargarPixeles();
   cargar();
   track('visita', null);
+  setTimeout(function () { actual = ''; alHacerScroll(); }, 1200);
 })();
 </script>
 </body>

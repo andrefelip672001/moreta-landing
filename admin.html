@@ -174,7 +174,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
     <nav class="tabs" id="tabs">
       <button data-tab="stats" class="on">📊 Estadísticas</button>
       <button data-tab="hogares">🏠 Mejora tu Hogar</button>
-      <button data-tab="voluntarios">🤝 Voluntarios</button>
+      <button data-tab="voluntarios">🦸 Héroes del Barrio</button>
       <button data-tab="bio">⭐ Video principal y bio</button>
       <button data-tab="videos">🎥 Videos</button>
       <button data-tab="propuestas">📋 Propuestas</button>
@@ -198,6 +198,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
           </select>
           <button class="btn sec" id="st-recargar">↻ Actualizar</button>
           <button class="btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+          <button class="btn mag" id="st-excel">📊 Exportar todo a Excel</button>
         </div>
       </div>
       <div id="st-alerta"></div>
@@ -205,13 +206,16 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
       <div class="card" style="margin-top:12px">
         <h3>Visitas y registros por día</h3>
         <div class="columnas" id="st-dias"></div>
-        <div class="leyenda"><span><i style="background:var(--azul)"></i>Visitas</span><span><i style="background:var(--magenta)"></i>Hogares</span><span><i style="background:var(--verde)"></i>Voluntarios</span></div>
+        <div class="leyenda"><span><i style="background:var(--azul)"></i>Visitas</span><span><i style="background:var(--magenta)"></i>Hogares</span><span><i style="background:var(--verde)"></i>Héroes</span></div>
       </div>
       <div class="grid2">
         <div class="card"><h3>¿De dónde llegan?</h3><div id="st-fuentes"></div></div>
         <div class="card"><h3>Botones más usados</h3><div id="st-botones"></div></div>
         <div class="card"><h3>Hogares por parroquia</h3><div id="st-parroquias"></div></div>
-        <div class="card"><h3>Voluntarios por parroquia</h3><div id="st-parroquias-vol"></div></div>
+        <div class="card"><h3>Héroes por parroquia</h3><div id="st-parroquias-vol"></div></div>
+        <div class="card"><h3>🏆 Héroes que más familias registraron</h3><div id="st-ranking"></div></div>
+        <div class="card"><h3>Hogares: sexo de quien registra</h3><div id="st-sexo"></div></div>
+        <div class="card"><h3>Hogares: edad de quien registra</h3><div id="st-edad"></div></div>
       </div>
     </section>
 
@@ -231,7 +235,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
     <!-- Voluntarios -->
     <section data-sec="voluntarios" class="oculto">
       <div class="cab">
-        <div><h2>Voluntarios</h2><p class="sub" id="vo-total">—</p></div>
+        <div><h2>Héroes del Barrio</h2><p class="sub" id="vo-total">—</p></div>
         <div class="fila">
           <input class="in" id="vo-buscar" placeholder="Buscar nombre, celular, barrio…" style="width:240px">
           <select class="in" id="vo-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
@@ -240,7 +244,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
       </div>
       <div class="tabla-wrap">
         <table>
-          <thead><tr><th>Fecha</th><th>Nombre</th><th>Celular</th><th>Parroquia</th><th>Barrio</th><th>Quiere ayudar en</th><th>Llegó por</th><th></th></tr></thead>
+          <thead><tr><th>Fecha</th><th>Nombre</th><th>Celular</th><th>Parroquia</th><th>Barrio</th><th>Quiere ayudar en</th><th>Familias</th><th>Código</th><th></th></tr></thead>
           <tbody id="vo-filas"></tbody>
         </table>
       </div>
@@ -409,9 +413,16 @@ const NOMBRES = {
   directo: 'Link directo', compartido: 'Compartido por WhatsApp',
   'compartido-facebook': 'Compartido en Facebook', 'compartido-whatsapp': 'Compartido por WhatsApp',
   'compartido-copiado': 'Enlace copiado', whatsapp: 'Compartir por WhatsApp', 'copiar-enlace': 'Copiar enlace',
-  'ir-al-video': 'Ir al video (candado)', telegram: 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers'
+  'ir-al-video': 'Ir al video (candado)', 'abrir-heroe': 'Quiero ser Héroe del Barrio', 'compartir-whatsapp': 'Héroe compartió su link (WhatsApp)', 'compartir-facebook': 'Héroe compartió su link (Facebook)', 'copiar-link': 'Héroe copió su link', 'comunidad-whatsapp': 'Comunidad de WhatsApp', 'comunidad-telegram': 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers'
 };
-const nombre = n => NOMBRES[n] || n;
+const nombre = n => {
+  if (NOMBRES[n]) return NOMBRES[n];
+  if (String(n).indexOf('heroe-') === 0) {
+    const v = (typeof voluntarios !== 'undefined' ? voluntarios : []).find(x => x.codigo === n.slice(6));
+    return '🦸 Link de ' + (v ? v.nombre : 'héroe ' + n.slice(6));
+  }
+  return n;
+};
 
 function barras(el, lista) {
   if (!lista.length) { el.innerHTML = '<p class="vacio">Aún no hay datos en este periodo.</p>'; return; }
@@ -425,12 +436,14 @@ cargadores.stats = async () => {
   const dias = +$('#st-rango').value;
   $('#st-rango-txt').textContent = $('#st-rango').selectedOptions[0].text;
   const s = await api('rpc/estadisticas', { method: 'POST', body: { dias } });
+  ultimoResumen = { s };
+  try { await cargarVoluntarios(); } catch (e) {} // para mostrar nombres de héroes en las fuentes
   const pct = (a, b) => b ? (a / b * 100).toFixed(1) + '%' : '0%';
   $('#st-kpis').innerHTML = `
     <div class="card kpi"><div class="t">Visitas</div><div class="n">${s.visitas}</div><div class="d">veces que se abrió la página</div></div>
     <div class="card kpi"><div class="t">Video completo</div><div class="n">${s.video_completo ?? 0}</div><div class="d">de ${s.video_inicio ?? 0} que le dieron play (${pct(s.video_completo, s.video_inicio)})</div></div>
     <div class="card kpi dest"><div class="t">Hogares registrados</div><div class="n">${s.hogares ?? 0}</div><div class="d">${s.total_hogares ?? 0} en total · ${pct(s.hogares, s.visitas)} de las visitas</div></div>
-    <div class="card kpi"><div class="t">Voluntarios</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
+    <div class="card kpi"><div class="t">Héroes del Barrio</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
     <div class="card kpi"><div class="t">Compartidos</div><div class="n">${s.compartidos}</div><div class="d">clics en los botones de compartir</div></div>
     <div class="card kpi"><div class="t">🛡️ Intentos bloqueados</div><div class="n">${s.bloqueados ?? 0}</div><div class="d">${s.bloqueados_captcha ?? 0} robots · ${s.bloqueados_limite ?? 0} por exceso de envíos</div></div>`;
 
@@ -452,7 +465,7 @@ cargadores.stats = async () => {
     const max = Math.max(...dias_.map(d => d.visitas + (d.hogares || 0) + d.registros), 1);
     $('#st-dias').innerHTML = dias_.map(d => {
       const p = d.dia.split('-');
-      return `<div class="col" title="${d.visitas} visitas · ${d.hogares || 0} hogares · ${d.registros} voluntarios">
+      return `<div class="col" title="${d.visitas} visitas · ${d.hogares || 0} hogares · ${d.registros} héroes">
         <div class="h" style="height:${d.registros / max * 140}px"></div>
         <div class="r" style="height:${(d.hogares || 0) / max * 140}px"></div>
         <div class="v" style="height:${d.visitas / max * 140}px"></div>
@@ -463,6 +476,83 @@ cargadores.stats = async () => {
   barras($('#st-botones'), s.botones || []);
   barras($('#st-parroquias'), s.parroquias || []);
   barras($('#st-parroquias-vol'), s.parroquias_vol || []);
+  await pintarExtra(dias);
+};
+
+// ---------- Sexo, edad y ranking (se calculan con los registros del periodo) ----------
+const RANGOS_EDAD = [[18, 29, '18 a 29 años'], [30, 44, '30 a 44 años'], [45, 59, '45 a 59 años'], [60, 200, '60 años o más']];
+let ultimoResumen = null;
+function contar(lista, f) {
+  const m = {};
+  lista.forEach(x => { const k = f(x); if (k) m[k] = (m[k] || 0) + 1; });
+  return Object.entries(m).map(([nombre, total]) => ({ nombre, total })).sort((a, b) => b.total - a.total);
+}
+async function calcularExtra(dias) {
+  const desde = new Date(Date.now() - dias * 864e5).toISOString();
+  let hog = [];
+  for (let o = 0; ; o += 1000) {
+    const parte = await api(`hogares?select=sexo,edad&creado=gte.${encodeURIComponent(desde)}&limit=1000&offset=${o}`);
+    hog = hog.concat(parte); if (parte.length < 1000) break;
+  }
+  if (!voluntarios.length) await cargarVoluntarios();
+  const sexo = contar(hog, h => h.sexo || 'Sin dato');
+  const edad = RANGOS_EDAD.map(([a, b, n]) => ({ nombre: n, total: hog.filter(h => h.edad >= a && h.edad <= b).length }));
+  const sinEdad = hog.filter(h => !h.edad).length;
+  if (sinEdad) edad.push({ nombre: 'Sin dato', total: sinEdad });
+  const ranking = voluntarios.map(v => ({ nombre: v.nombre, parroquia: v.parroquia, codigo: v.codigo, total: familias(v) }))
+    .filter(v => v.total > 0).sort((a, b) => b.total - a.total);
+  return { sexo, edad: edad.filter(e => e.total), ranking };
+}
+async function pintarExtra(dias) {
+  const x = await calcularExtra(dias);
+  ultimoResumen.extra = x;
+  barras($('#st-sexo'), x.sexo);
+  barras($('#st-edad'), x.edad);
+  $('#st-ranking').innerHTML = x.ranking.length
+    ? x.ranking.slice(0, 10).map((r, i) => `<div class="barra-h"><div class="et"><span>${['🥇', '🥈', '🥉'][i] || (i + 1) + '.'} ${esc(r.nombre)} <small style="color:var(--gris);font-weight:500">· ${esc(r.parroquia)}</small></span><b>${r.total} familia${r.total === 1 ? '' : 's'}</b></div></div>`).join('')
+    : '<p class="vacio">Todavía ningún héroe ha registrado familias con su link.</p>';
+}
+
+$('#st-excel').onclick = async () => {
+  const btn = $('#st-excel'); btn.disabled = true; btn.textContent = '⏳ Preparando…';
+  try {
+    if (!ultimoResumen || !ultimoResumen.extra) await cargadores.stats();
+    const s = ultimoResumen.s, x = ultimoResumen.extra, periodo = $('#st-rango').selectedOptions[0].text;
+    let todosHogares = [];
+    for (let o = 0; ; o += 1000) {
+      const parte = await api(`hogares?select=*&order=creado.desc&limit=1000&offset=${o}`);
+      todosHogares = todosHogares.concat(parte); if (parte.length < 1000) break;
+    }
+    const pct = (a, b) => b ? Math.round(a / b * 1000) / 10 + '%' : '0%';
+    const lista = (l, cab) => ({ cab, filas: (l || []).map(r => [nombre(r.nombre), r.total]) });
+    const generado = 'Generado el ' + new Date().toLocaleString('es-EC') + ' · Periodo: ' + periodo;
+    await descargarExcel(`reporte-campana-moreta-${hoyArchivo()}.xlsx`, [
+      { nombre: 'Resumen', titulo: 'Reporte de campaña · Miguel Ángel Moreta · ' + generado, cab: ['Indicador', 'Valor'], filas: [
+        ['Visitas a la página', s.visitas],
+        ['Le dieron play al video principal', s.video_inicio ?? 0],
+        ['Vieron el video completo', s.video_completo ?? 0],
+        ['% que termina el video', pct(s.video_completo, s.video_inicio)],
+        ['Hogares registrados (periodo)', s.hogares ?? 0],
+        ['Hogares registrados (total)', s.total_hogares ?? 0],
+        ['% de visitas que registran su hogar', pct(s.hogares, s.visitas)],
+        ['Héroes del Barrio (periodo)', s.registros],
+        ['Héroes del Barrio (total)', s.total_voluntarios],
+        ['Familias registradas por héroes', x.ranking.reduce((a, r) => a + r.total, 0)],
+        ['Clics en compartir', s.compartidos],
+        ['Intentos bloqueados (seguridad)', s.bloqueados ?? 0]
+      ] },
+      { nombre: 'Por día', cab: ['Fecha', 'Visitas', 'Hogares', 'Héroes'], filas: (s.por_dia || []).map(d => [d.dia, d.visitas, d.hogares || 0, d.registros]) },
+      Object.assign({ nombre: 'Origen de visitas' }, lista(s.por_fuente, ['De dónde llegan', 'Visitas'])),
+      Object.assign({ nombre: 'Botones' }, lista(s.botones, ['Botón', 'Clics'])),
+      Object.assign({ nombre: 'Hogares por parroquia' }, lista(s.parroquias, ['Parroquia', 'Hogares'])),
+      Object.assign({ nombre: 'Héroes por parroquia' }, lista(s.parroquias_vol, ['Parroquia', 'Héroes'])),
+      { nombre: 'Sexo y edad', cab: ['Grupo', 'Hogares'], filas: [['SEXO', '']].concat(x.sexo.map(r => [r.nombre, r.total]), [['', ''], ['EDAD', '']], x.edad.map(r => [r.nombre, r.total])) },
+      { nombre: 'Ranking de héroes', cab: ['Puesto', 'Héroe', 'Parroquia', 'Familias registradas', 'Código'], filas: x.ranking.map((r, i) => [i + 1, r.nombre, r.parroquia, r.total, r.codigo]) },
+      { nombre: 'Mejora tu Hogar', cab: CAB_HOGARES, filas: todosHogares.map(filaHogar) },
+      { nombre: 'Héroes del Barrio', cab: CAB_HEROES, filas: voluntarios.map(filaHeroe) }
+    ]);
+  } catch (e) { aviso(e.message, true); }
+  btn.disabled = false; btn.textContent = '📊 Exportar todo a Excel';
 };
 $('#st-rango').onchange = () => cargadores.stats().catch(x => aviso(x.message, true));
 $('#st-recargar').onclick = () => cargadores.stats().then(() => aviso('Actualizado')).catch(x => aviso(x.message, true));
@@ -497,7 +587,7 @@ let hogares = [], urlsFotos = {};
 function hogFiltrados() {
   const q = $('#ho-buscar').value.toLowerCase().trim(), p = $('#ho-parroquia').value;
   return hogares.filter(h => (!p || h.parroquia === p) &&
-    (!q || [h.nombre, h.cedula, h.telefono, h.correo, h.barrio, h.direccion, h.mejoras].join(' ').toLowerCase().includes(q)));
+    (!q || [h.nombre, h.cedula, h.telefono, h.correo, h.sexo, h.barrio, h.direccion, h.mejoras].join(' ').toLowerCase().includes(q)));
 }
 function pintarHogares() {
   const lista = hogFiltrados();
@@ -509,6 +599,7 @@ function pintarHogares() {
         <div class="meta">${esc(fecha(h.creado))} · llegó por ${esc(nombre(h.fuente || 'directo'))}</div>
         <dl>
           <dt>Cédula</dt><dd>${esc(h.cedula)}</dd>
+          <dt>Persona</dt><dd>${h.sexo ? esc(h.sexo) : '—'}${h.edad ? ' · ' + h.edad + ' años' : ''}</dd>
           <dt>Celular</dt><dd><a href="https://wa.me/593${esc(h.telefono.slice(1))}" target="_blank">${esc(h.telefono)} (WhatsApp)</a></dd>
           <dt>Correo</dt><dd>${h.correo ? `<a href="mailto:${esc(h.correo)}" style="color:var(--azul)">${esc(h.correo)}</a>` : '<span style="color:var(--gris);font-weight:500">No dejó correo</span>'}</dd>
           <dt>Parroquia</dt><dd>${esc(h.parroquia)}${h.barrio ? ' · ' + esc(h.barrio) : ''}</dd>
@@ -553,55 +644,71 @@ $('#ho-lista').addEventListener('click', async e => {
     aviso('Registro eliminado'); cargadores.hogares();
   } catch (x) { aviso(x.message, true); }
 });
-$('#ho-excel').onclick = () => {
+const CAB_HOGARES = ['Fecha', 'Nombre', 'Cédula', 'Sexo', 'Edad', 'Celular', 'Correo', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Fotos', 'Llegó por', 'Héroe que lo invitó'];
+function filaHogar(h) {
+  const cod = (h.fuente || '').indexOf('heroe-') === 0 ? h.fuente.slice(6) : '';
+  const v = cod && voluntarios.find(x => x.codigo === cod);
+  const heroe = cod ? (v ? v.nombre : cod) : '';
+  return [fecha(h.creado), h.nombre, h.cedula, h.sexo || '', h.edad ?? '', h.telefono, h.correo || '', h.parroquia, h.barrio || '', h.direccion, h.vivienda, h.personas, h.mejoras, (h.fotos || []).length, nombre(h.fuente || 'directo'), heroe];
+}
+$('#ho-excel').onclick = async () => {
   const lista = hogFiltrados();
+  if (!voluntarios.length) { try { await cargarVoluntarios(); } catch (e) {} }
   if (!lista.length) return aviso('No hay registros para descargar', true);
-  descargarCSV(`mejora-tu-hogar-${new Date().toISOString().slice(0, 10)}.csv`,
-    ['Fecha', 'Nombre', 'Cédula', 'Celular', 'Correo', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Fotos', 'Llegó por'],
-    lista.map(h => [fecha(h.creado), h.nombre, { txt: h.cedula }, { txt: h.telefono }, h.correo || '', h.parroquia, h.barrio, h.direccion, h.vivienda, h.personas, h.mejoras, (h.fotos || []).length, nombre(h.fuente || 'directo')]));
+  await descargarExcel(`mejora-tu-hogar-${hoyArchivo()}.xlsx`, [{ nombre: 'Mejora tu Hogar', cab: CAB_HOGARES, filas: lista.map(filaHogar) }]);
 };
 
-// Excel (CSV que Excel abre con tildes y sin perder los ceros iniciales)
-function descargarCSV(archivo, cab, filas) {
-  const c = v => v && v.txt !== undefined ? '="' + v.txt + '"' : '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-  const txt = [cab.map(c).join(';')].concat(filas.map(f => f.map(c).join(';'))).join('\r\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(['﻿' + txt], { type: 'text/csv;charset=utf-8' }));
-  a.download = archivo; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-}
-
 /* =========================================================
-   VOLUNTARIOS
+   HÉROES DEL BARRIO (voluntarios)
    ========================================================= */
 let voluntarios = [];
 function fecha(iso) {
   const d = new Date(iso);
   return d.toLocaleDateString('es-EC', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' });
 }
+// Cuántas familias registró cada héroe (hogares que llegaron con ?src=heroe-CODIGO)
+let familiasPorCodigo = {};
+async function contarFamilias() {
+  familiasPorCodigo = {};
+  for (let o = 0; ; o += 1000) {
+    const parte = await api(`hogares?select=fuente&fuente=like.heroe-*&limit=1000&offset=${o}`);
+    parte.forEach(h => { const c = h.fuente.slice(6); familiasPorCodigo[c] = (familiasPorCodigo[c] || 0) + 1; });
+    if (parte.length < 1000) break;
+  }
+}
+const familias = v => (v.codigo && familiasPorCodigo[v.codigo]) || 0;
 function filtrados() {
   const q = $('#vo-buscar').value.toLowerCase().trim(), p = $('#vo-parroquia').value;
   return voluntarios.filter(v => (!p || v.parroquia === p) &&
-    (!q || [v.nombre, v.telefono, v.barrio, v.ayuda].join(' ').toLowerCase().includes(q)));
+    (!q || [v.nombre, v.telefono, v.barrio, v.ayuda, v.codigo].join(' ').toLowerCase().includes(q)));
 }
 function pintarVoluntarios() {
   const lista = filtrados();
-  $('#vo-total').textContent = `${lista.length} de ${voluntarios.length} registrados`;
+  const total = Object.values(familiasPorCodigo).reduce((a, b) => a + b, 0);
+  $('#vo-total').textContent = `${lista.length} de ${voluntarios.length} héroes · ${total} familias registradas gracias a ellos`;
   $('#vo-filas').innerHTML = lista.length ? lista.map(v => `<tr>
     <td style="white-space:nowrap">${esc(fecha(v.creado))}</td>
     <td><b>${esc(v.nombre)}</b></td>
     <td><a href="https://wa.me/593${esc(v.telefono.slice(1))}" target="_blank">${esc(v.telefono)}</a></td>
     <td>${esc(v.parroquia)}</td><td>${esc(v.barrio || '')}</td><td>${esc(v.ayuda || '')}</td>
-    <td>${esc(nombre(v.fuente || 'directo'))}</td>
+    <td style="text-align:center"><b style="font-size:16px;color:${familias(v) ? 'var(--magenta)' : 'var(--gris)'}">${familias(v)}</b></td>
+    <td><code style="font-size:12px">${esc(v.codigo || '—')}</code></td>
     <td><button class="btn peq rojo" data-borrar-vol="${v.id}">Eliminar</button></td></tr>`).join('')
-    : '<tr><td colspan="8" class="vacio" style="text-align:center;padding:24px">No hay registros.</td></tr>';
+    : '<tr><td colspan="9" class="vacio" style="text-align:center;padding:24px">No hay registros.</td></tr>';
 }
-cargadores.voluntarios = async () => {
+async function cargarVoluntarios() {
   voluntarios = [];
   for (let o = 0; ; o += 1000) {
     const parte = await api(`voluntarios?select=*&order=creado.desc&limit=1000&offset=${o}`);
     voluntarios = voluntarios.concat(parte);
     if (parte.length < 1000) break;
   }
+  await contarFamilias();
+}
+cargadores.voluntarios = async () => {
+  await cargarVoluntarios();
+  // Ordenar: primero los héroes que más familias registraron
+  voluntarios.sort((a, b) => familias(b) - familias(a) || new Date(b.creado) - new Date(a.creado));
   const actual = $('#vo-parroquia').value;
   const ps = [...new Set(voluntarios.map(v => v.parroquia))].sort();
   $('#vo-parroquia').innerHTML = '<option value="">Todas las parroquias</option>' + ps.map(p => `<option ${p === actual ? 'selected' : ''}>${esc(p)}</option>`).join('');
@@ -616,13 +723,50 @@ $('#vo-filas').addEventListener('click', async e => {
   try { await api(`voluntarios?id=eq.${id}`, { method: 'DELETE' }); aviso('Registro eliminado'); cargadores.voluntarios(); }
   catch (x) { aviso(x.message, true); }
 });
-$('#vo-excel').onclick = () => {
+const filaHeroe = v => [fecha(v.creado), v.nombre, v.telefono, v.parroquia, v.barrio || '', v.ayuda || '', familias(v), v.codigo || '', v.codigo ? linkHeroe(v.codigo) : '', nombre(v.fuente || 'directo')];
+const CAB_HEROES = ['Fecha', 'Nombre', 'Celular', 'Parroquia', 'Barrio', 'Quiere ayudar en', 'Familias registradas', 'Código', 'Link personal', 'Llegó por'];
+function linkHeroe(codigo) { return new URL(`./?src=heroe-${codigo}`, location.href).href; }
+$('#vo-excel').onclick = async () => {
   const lista = filtrados();
   if (!lista.length) return aviso('No hay registros para descargar', true);
-  descargarCSV(`voluntarios-moreta-${new Date().toISOString().slice(0, 10)}.csv`,
-    ['Fecha', 'Nombre', 'Celular', 'Parroquia', 'Barrio', 'Quiere ayudar en', 'Llegó por'],
-    lista.map(v => [fecha(v.creado), v.nombre, { txt: v.telefono }, v.parroquia, v.barrio, v.ayuda, nombre(v.fuente || 'directo')]));
+  await descargarExcel(`heroes-del-barrio-${hoyArchivo()}.xlsx`, [{ nombre: 'Héroes del Barrio', cab: CAB_HEROES, filas: lista.map(filaHeroe) }]);
 };
+
+/* =========================================================
+   EXCEL (.xlsx real, con varias hojas)
+   ========================================================= */
+let xlsxCargado = null;
+function cargarXLSX() {
+  if (window.XLSX) return Promise.resolve();
+  if (!xlsxCargado) xlsxCargado = new Promise((ok, mal) => {
+    const sc = document.createElement('script');
+    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    sc.onload = ok; sc.onerror = () => { xlsxCargado = null; mal(new Error('No se pudo cargar el generador de Excel. Revisa tu internet.')); };
+    document.head.appendChild(sc);
+  });
+  return xlsxCargado;
+}
+const hoyArchivo = () => new Date().toLocaleDateString('en-CA');
+// hojas: [{ nombre, cab: [...], filas: [[...]], titulo? }]
+async function descargarExcel(archivo, hojas) {
+  try { await cargarXLSX(); } catch (x) { return aviso(x.message, true); }
+  const libro = XLSX.utils.book_new();
+  hojas.forEach(h => {
+    const datos = (h.titulo ? [[h.titulo], []] : []).concat([h.cab], h.filas);
+    const hoja = XLSX.utils.aoa_to_sheet(datos);
+    // Ancho de columnas según el contenido
+    hoja['!cols'] = h.cab.map((c, i) => ({ wch: Math.min(60, Math.max(String(c).length, ...h.filas.map(f => String(f[i] ?? '').length)) + 2) }));
+    // Que Excel no borre los ceros de cédulas y celulares
+    const rango = XLSX.utils.decode_range(hoja['!ref']);
+    for (let R = rango.s.r; R <= rango.e.r; R++) for (let C = rango.s.c; C <= rango.e.c; C++) {
+      const cel = hoja[XLSX.utils.encode_cell({ r: R, c: C })];
+      if (cel && cel.t === 's' && /^0\d+$/.test(cel.v)) cel.z = '@';
+    }
+    XLSX.utils.book_append_sheet(libro, hoja, h.nombre.slice(0, 31));
+  });
+  XLSX.writeFile(libro, archivo);
+  aviso('Excel descargado ✓');
+}
 
 /* =========================================================
    SECCIONES EDITABLES (videos, propuestas, agenda)

@@ -195,6 +195,13 @@ h2 em{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--magen
 .com-mini p{font-size:13.5px;font-weight:700;color:var(--marino)}
 .com-mini .bt-com{padding:12px;font-size:15px;margin-top:10px}
 
+/* Héroes del Barrio */
+.pasos-heroe{display:flex;margin:16px -4px 0}
+.pasos-heroe div{flex:1;margin:0 4px;background:rgba(255,255,255,.1);border-radius:12px;padding:10px 8px;text-align:center;font-size:12px;font-weight:700;line-height:1.3}
+.pasos-heroe b{display:block;width:26px;height:26px;border-radius:50%;background:var(--rosa);margin:0 auto 6px;line-height:26px;font-size:14px}
+.mi-link{background:var(--fondo);border:1.5px dashed var(--azul);border-radius:12px;padding:12px;margin-top:12px;font-weight:800;font-size:13.5px;color:var(--azul2);word-break:break-all}
+.bt-cp2{background:var(--marino)}
+
 /* Descargables */
 .desc{display:flex;align-items:center;background:#fff;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 4px 16px rgba(10,26,92,.07);text-decoration:none}
 .desc .ic{width:50px;height:50px;border-radius:13px;background:var(--fondo);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;margin-right:14px}
@@ -309,6 +316,20 @@ footer .pie{margin-top:18px;opacity:.6}
               </div>
             </div>
 
+            <div class="dos">
+              <div>
+                <label class="l" for="m-sexo">Sexo</label>
+                <select id="m-sexo">
+                  <option value="">Selecciona</option>
+                  <option>Hombre</option><option>Mujer</option><option>Prefiero no decirlo</option>
+                </select>
+              </div>
+              <div>
+                <label class="l" for="m-edad">Edad</label>
+                <input type="tel" id="m-edad" maxlength="3" inputmode="numeric" placeholder="Ej: 45">
+              </div>
+            </div>
+
             <label class="l" for="m-correo">Correo electrónico</label>
             <input type="email" id="m-correo" maxlength="120" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="nombre@correo.com">
 
@@ -339,10 +360,11 @@ footer .pie{margin-top:18px;opacity:.6}
             <div class="chips" id="m-mejoras">
               <label class="chip"><input type="checkbox" value="Techo"><span>Techo</span></label>
               <label class="chip"><input type="checkbox" value="Piso"><span>Piso</span></label>
-              <label class="chip"><input type="checkbox" value="Paredes"><span>Paredes</span></label>
+              <label class="chip"><input type="checkbox" value="Mesón de cocina"><span>Mesón de cocina</span></label>
               <label class="chip"><input type="checkbox" value="Baño"><span>Baño</span></label>
-              <label class="chip"><input type="checkbox" value="Cocina"><span>Cocina</span></label>
-              <label class="chip"><input type="checkbox" value="Pintura"><span>Pintura</span></label>
+              <label class="chip"><input type="checkbox" value="Protector de ventana"><span>Protector de ventana</span></label>
+              <label class="chip"><input type="checkbox" value="Protector de puerta"><span>Protector de puerta</span></label>
+              <label class="chip"><input type="checkbox" value="Pintura exterior"><span>Pintura exterior</span></label>
               <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
             </div>
 
@@ -380,7 +402,7 @@ footer .pie{margin-top:18px;opacity:.6}
             <h3>¡Tu hogar quedó registrado!</h3>
             <p>Te contactaremos por WhatsApp. Comparte esta página para que más familias se registren.</p>
             <a class="btn-sec" href="#comparte" style="background:var(--marino)">Compartir con mi familia</a>
-            <div class="com-mini" data-comunidad>
+            <div class="com-mini" data-comunidad style="display:none">
               <p>📲 Entérate primero de las novedades de Mejora tu Hogar:</p>
             </div>
           </div>
@@ -436,7 +458,7 @@ footer .pie{margin-top:18px;opacity:.6}
 </section>
 
 <!-- ================= 6b. COMUNIDAD WHATSAPP / TELEGRAM ================= -->
-<section id="comunidad" style="padding-top:10px">
+<section id="comunidad" style="padding-top:10px;display:none">
   <div class="wrap">
     <div class="com">
       <div class="com-ic">📲</div>
@@ -447,16 +469,21 @@ footer .pie{margin-top:18px;opacity:.6}
   </div>
 </section>
 
-<!-- ================= 7. VOLUNTARIADO ================= -->
+<!-- ================= 7. HÉROES DEL BARRIO (voluntariado) ================= -->
 <section id="unete" style="padding-top:10px">
   <div class="wrap">
     <div class="vol">
-      <span class="et">🤝 Voluntariado de campaña</span>
-      <h2>Únete a <em>mi equipo</em></h2>
-      <p class="sub">¿Quieres ayudar a que La Tierrita gane? Súmate como voluntario en tu barrio.</p>
-      <div class="aviso-vol"><span>ℹ️</span><div>Este registro es solo para <b>voluntarios de la campaña</b>. Si quieres postular a Mejora tu Hogar, <a href="#mejora">regístrate aquí</a>.</div></div>
+      <span class="et">🦸 Héroes del Barrio</span>
+      <h2>Sé el héroe <em>de tu barrio</em></h2>
+      <p class="sub">Muchas familias de tu barrio todavía no saben de Mejora tu Hogar. Tú puedes llegar a ellas: regístrate como Héroe del Barrio y recibe <b>tu propio link</b> para invitar a tus vecinos.</p>
+      <div class="pasos-heroe">
+        <div><b>1</b><span>Regístrate como héroe</span></div>
+        <div><b>2</b><span>Comparte tu link con tus vecinos</span></div>
+        <div><b>3</b><span>Mira cuántas familias registraste</span></div>
+      </div>
+      <div class="aviso-vol"><span>ℹ️</span><div>Este registro es para quienes quieren <b>ayudar a otras familias</b>. Si quieres registrar <b>tu propio hogar</b> en Mejora tu Hogar, <a href="#mejora">hazlo aquí</a>.</div></div>
 
-      <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-voluntariado">Quiero ser voluntario</button>
+      <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe del Barrio</button>
 
       <div class="caja-form oculto" id="caja-vol">
         <form class="form" id="form-unete" novalidate>
@@ -474,8 +501,8 @@ footer .pie{margin-top:18px;opacity:.6}
 
           <label class="l">¿Cómo te gustaría ayudar?</label>
           <div class="chips" id="f-ayuda">
-            <label class="chip"><input type="checkbox" value="Voluntario en territorio"><span>Voluntario en territorio</span></label>
-            <label class="chip"><input type="checkbox" value="Redes sociales"><span>Redes sociales</span></label>
+            <label class="chip"><input type="checkbox" value="Registrar a mis vecinos"><span>Registrar a mis vecinos</span></label>
+            <label class="chip"><input type="checkbox" value="Compartir en redes y WhatsApp"><span>Compartir en redes y WhatsApp</span></label>
             <label class="chip"><input type="checkbox" value="Eventos y caravanas"><span>Eventos y caravanas</span></label>
             <label class="chip"><input type="checkbox" value="Delegado de recinto"><span>Delegado de recinto</span></label>
             <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
@@ -487,15 +514,20 @@ footer .pie{margin-top:18px;opacity:.6}
           </label>
 
           <div class="captcha" id="cap-vol"></div>
-          <button type="submit" class="enviar" id="f-enviar">Sumarme como voluntario</button>
+          <button type="submit" class="enviar" id="f-enviar">¡Quiero ser héroe!</button>
           <p class="err" id="f-err"></p>
         </form>
 
         <div class="listo" id="f-listo">
-          <div class="big">🙌</div>
-          <h3>¡Gracias por sumarte!</h3>
-          <p>Pronto te contactaremos por WhatsApp para coordinar.</p>
-          <div class="com-mini" data-comunidad>
+          <div class="big">🦸</div>
+          <h3>¡Ya eres un Héroe del Barrio!</h3>
+          <p><b>Tu reto: ayuda a registrar 10 familias</b> de tu barrio. Este es tu link personal; cada familia que se registre con él suma a tu cuenta:</p>
+          <div class="mi-link"><span id="mi-link-txt"></span></div>
+          <a class="bt-comp bt-wa" href="#" id="heroe-wsp" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-whatsapp">Enviar mi link por WhatsApp</a>
+          <a class="bt-comp bt-fb" href="#" id="heroe-fb" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-facebook">Publicar mi link en Facebook</a>
+          <button class="bt-comp bt-cp2" id="heroe-copiar" data-track="heroe" data-detalle="copiar-link">🔗 <span id="heroe-copiar-txt" style="margin-left:8px">Copiar mi link</span></button>
+          <p class="ayuda" style="margin-top:12px">Guarda este link. Pronto te contactaremos por WhatsApp para coordinar.</p>
+          <div class="com-mini" data-comunidad style="display:none">
             <p>📲 Mientras tanto, únete a la comunidad:</p>
           </div>
         </div>
@@ -842,8 +874,8 @@ footer .pie{margin-top:18px;opacity:.6}
   var ICONO_TG = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M9.78 15.27l-.4 5.6c.57 0 .82-.25 1.12-.54l2.69-2.57 5.58 4.09c1.02.57 1.75.27 2.02-.94L24.45 3.5c.33-1.53-.55-2.13-1.55-1.76L1.4 9.98c-1.48.57-1.46 1.39-.25 1.77l5.5 1.71L19.4 5.43c.6-.4 1.15-.18.7.22"/></svg>';
   function pintarComunidad(wsp, tg) {
     var h = '', cont = document.querySelectorAll('[data-comunidad]'), i, base;
-    if (wsp) { h += '<a class="bt-com bt-wsp" href="' + esc(wsp) + '" target="_blank" rel="noopener" data-track="comunidad" data-detalle="whatsapp">' + ICONO_WSP + 'Únete a la comunidad de WhatsApp</a>'; }
-    if (tg) { h += '<a class="bt-com bt-tg" href="' + esc(tg) + '" target="_blank" rel="noopener" data-track="comunidad" data-detalle="telegram">' + ICONO_TG + 'Únete al canal de Telegram</a>'; }
+    if (wsp) { h += '<a class="bt-com bt-wsp" href="' + esc(wsp) + '" target="_blank" rel="noopener" data-track="comunidad" data-detalle="comunidad-whatsapp">' + ICONO_WSP + 'Únete por WhatsApp</a>'; }
+    if (tg) { h += '<a class="bt-com bt-tg" href="' + esc(tg) + '" target="_blank" rel="noopener" data-track="comunidad" data-detalle="comunidad-telegram">' + ICONO_TG + 'Únete por Telegram</a>'; }
     for (i = 0; i < cont.length; i++) {
       base = cont[i].getAttribute('data-base');
       if (base === null) { base = cont[i].innerHTML; cont[i].setAttribute('data-base', base); }
@@ -1129,6 +1161,8 @@ footer .pie{margin-top:18px;opacity:.6}
       nombre: trim($('m-nombre').value),
       cedula: $('m-cedula').value.replace(/\D/g, ''),
       telefono: $('m-tel').value.replace(/\D/g, ''),
+      sexo: $('m-sexo').value,
+      edad: parseInt($('m-edad').value.replace(/\D/g, ''), 10),
       correo: trim($('m-correo').value).toLowerCase() || null,
       parroquia: $('m-parroquia').value,
       barrio: trim($('m-barrio').value) || null,
@@ -1141,6 +1175,8 @@ footer .pie{margin-top:18px;opacity:.6}
     if (d.nombre.length < 2) { return mostrarError('m-err', 'Escribe tus nombres y apellidos.'); }
     if (!cedulaValida(d.cedula)) { return mostrarError('m-err', 'Revisa tu número de cédula, no es válido.'); }
     if (!/^0\d{9}$/.test(d.telefono)) { return mostrarError('m-err', 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
+    if (!d.sexo) { return mostrarError('m-err', 'Selecciona tu sexo.'); }
+    if (!(d.edad >= 18 && d.edad <= 110)) { return mostrarError('m-err', d.edad < 18 ? 'Para registrar un hogar debes ser mayor de 18 años.' : 'Escribe tu edad.'); }
     if (!d.correo) { return mostrarError('m-err', 'Escribe tu correo electrónico.'); }
     if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/.test(d.correo)) { return mostrarError('m-err', 'Revisa tu correo, parece que está mal escrito (ej: nombre@gmail.com).'); }
     if (!d.parroquia) { return mostrarError('m-err', 'Selecciona tu parroquia.'); }
@@ -1169,6 +1205,33 @@ footer .pie{margin-top:18px;opacity:.6}
     });
   };
 
+  /* ---------- Héroes del Barrio: link personal ---------- */
+  function codigoHeroe(nombre) {
+    var n = String(nombre).toLowerCase().split(' ')[0];
+    try { n = n.normalize('NFD'); } catch (e) {}
+    n = n.replace(/[̀-ͯ]/g, '').replace(/ñ/g, 'n').replace(/[^a-z]/g, '').slice(0, 10) || 'heroe';
+    return n + '-' + Math.random().toString(36).slice(2, 7).replace(/[^a-z0-9]/g, 'x');
+  }
+  function mostrarLinkHeroe(codigo, nombre) {
+    var link = location.origin + location.pathname + '?src=heroe-' + codigo;
+    var primer = String(nombre).split(' ')[0];
+    var msj = '¡Hola vecino! 👋 Soy ' + primer + '. Mira el mensaje de Miguel Ángel Moreta y registra tu hogar en Mejora tu Hogar 🏠 aquí: ' + link;
+    $('mi-link-txt').textContent = link;
+    $('heroe-wsp').href = 'https://wa.me/?text=' + encodeURIComponent(msj);
+    $('heroe-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
+    $('heroe-copiar').onclick = function () {
+      var ok = false;
+      try {
+        var t = document.createElement('textarea'); t.value = link; t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select(); ok = document.execCommand('copy'); document.body.removeChild(t);
+      } catch (e) {}
+      if (!ok && navigator.clipboard) { navigator.clipboard.writeText(link); ok = true; }
+      $('heroe-copiar-txt').textContent = ok ? '¡Link copiado!' : 'Mantén presionado el link para copiarlo';
+      setTimeout(function () { $('heroe-copiar-txt').textContent = 'Copiar mi link'; }, 2500);
+    };
+    guardar('moreta_heroe', codigo);
+  }
+
   /* ---------- Formulario Voluntarios ---------- */
   $('btn-vol').onclick = function () {
     $('btn-vol').className = 'btn-vol oculto';
@@ -1192,15 +1255,17 @@ footer .pie{margin-top:18px;opacity:.6}
     var boton = $('f-enviar');
     if (!conectado()) { return mostrarError('f-err', 'El formulario aún no está conectado. Intenta más tarde.'); }
     boton.disabled = true; boton.textContent = 'Enviando…';
+    var codigo = codigoHeroe(nombre);
     enviarAlPortero('vol', 'voluntario', {
       nombre: nombre, telefono: tel, parroquia: parroquia, barrio: barrio || null,
-      ayuda: ayuda.join(', ') || null, fuente: fuente, consentimiento: true
+      ayuda: ayuda.join(', ') || null, fuente: fuente, codigo: codigo, consentimiento: true
     }, [], null, function (ok, msg) {
       if (ok) {
         $('form-unete').style.display = 'none'; $('f-listo').style.display = 'block';
+        mostrarLinkHeroe(codigo, nombre);
         track('registro', 'unete');
       } else {
-        boton.disabled = false; boton.textContent = 'Sumarme como voluntario';
+        boton.disabled = false; boton.textContent = '¡Quiero ser héroe!';
         mostrarError('f-err', msg);
       }
     });
@@ -1255,7 +1320,7 @@ footer .pie{margin-top:18px;opacity:.6}
     conoce:       ['Te cuento un poco de mí 💙', 'conoce'],
     propuestas:   ['Estas son mis propuestas para la Tierrita 📋', 'propuestas'],
     agenda:       ['¡Sintonízame! Aquí está mi agenda 📻', 'agenda'],
-    unete:        ['¿Quieres ayudar? Súmate al equipo 🤝', 'unete'],
+    unete:        ['¡Sé el héroe de tu barrio! Invita a tus vecinos 🦸', 'unete'],
     descargables: ['Descarga el material y compártelo 📲', 'descargables'],
     comparte:     ['¡Publica esta página en tu Facebook! 🙌', 'comparte'],
     comunidad:    ['Únete a mi comunidad de WhatsApp o Telegram 📲', 'comunidad']

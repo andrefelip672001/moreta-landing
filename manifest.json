@@ -1,0 +1,12 @@
+{
+  "name": "Miguel Ángel Moreta · La Tierrita nos une",
+  "short_name": "Moreta",
+  "start_url": "./?src=pantalla-inicio",
+  "display": "standalone",
+  "background_color": "#0A1A5C",
+  "theme_color": "#0A1A5C",
+  "icons": [
+    { "src": "img/icono-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icono-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

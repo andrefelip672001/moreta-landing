@@ -331,7 +331,7 @@ footer .pie{margin-top:18px;opacity:.6}
   function api(ruta, metodo, cuerpo, cb) {
     if (!conectado()) { if (cb) { cb(false, null); } return; }
     var x = new XMLHttpRequest();
-    x.open(metodo, C.SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/' + ruta, true);
+    x.open(metodo, C.SUPABASE_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '') + '/rest/v1/' + ruta, true);
     x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
     // Las claves antiguas (eyJ...) también van en Authorization; las nuevas (sb_publishable_...) solo en apikey
     if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
@@ -457,7 +457,10 @@ footer .pie{margin-top:18px;opacity:.6}
       track('registro', 'unete');
       if (window.fbq) { window.fbq('track', 'Lead'); }
     }
-    if (!conectado()) { exito(); return; } // modo demostración
+    if (!conectado()) { // sin Supabase configurado: no fingir que se guardó
+      boton.disabled = false; boton.textContent = '¡Quiero sumarme!';
+      return errorForm('El formulario aún no está conectado. Intenta más tarde.');
+    }
     api('voluntarios', 'POST', {
       nombre: nombre, telefono: tel, parroquia: parroquia, barrio: barrio || null,
       ayuda: ayuda.join(', ') || null, fuente: fuente, consentimiento: true

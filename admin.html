@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel · Moreta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<style>
+:root{--azul:#1D5BF2;--azul2:#0E3BC4;--marino:#0A1A5C;--magenta:#E5177E;--rosa:#FF4FA8;--gris:#5B6488;--fondo:#F3F5FC;--linea:#DFE3F0;--verde:#13A35B;--rojo:#C4153F}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Montserrat,Arial,sans-serif;background:var(--fondo);color:var(--marino);-webkit-font-smoothing:antialiased;font-size:14.5px}
+button,input,select,textarea{font:inherit;color:inherit}
+.oculto{display:none!important}
+
+/* Login */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,var(--azul),var(--azul2) 45%,var(--marino))}
+.caja{background:#fff;border-radius:22px;padding:28px 24px;width:100%;max-width:380px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.caja h1{font-size:22px;font-weight:900;margin-top:16px}
+.caja p{color:var(--gris);font-size:13.5px;margin-top:4px}
+.logo-login{background:var(--marino);border-radius:14px;padding:14px;text-align:center}
+.logo-login img{width:200px;max-width:100%}
+
+/* Campos */
+label.l{display:block;font-weight:700;font-size:13px;margin:14px 0 6px}
+.in{width:100%;padding:11px 13px;border:1.5px solid var(--linea);border-radius:11px;background:#fff;font-size:15px}
+.in:focus{outline:none;border-color:var(--azul)}
+textarea.in{min-height:110px;resize:vertical;line-height:1.5}
+.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:800;cursor:pointer;background:var(--marino);color:#fff;font-size:14px;white-space:nowrap}
+.btn.mag{background:linear-gradient(90deg,var(--magenta),var(--rosa))}
+.btn.sec{background:#fff;color:var(--marino);border:1.5px solid var(--linea)}
+.btn.peq{padding:7px 11px;font-size:12.5px;border-radius:9px}
+.btn.rojo{background:#fff;color:var(--rojo);border:1.5px solid #F3C9D3}
+.btn[disabled]{opacity:.55;cursor:default}
+.full{width:100%;margin-top:18px;padding:14px}
+.msg-err{color:var(--rojo);font-weight:600;font-size:13px;margin-top:12px}
+
+/* Layout */
+header.top{background:var(--marino);color:#fff;position:sticky;top:0;z-index:10}
+.top-in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;align-items:center}
+.top-in img{height:34px}
+.top-in .yo{margin-left:auto;font-size:12.5px;opacity:.8;margin-right:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40vw}
+.top-in a{color:#fff;font-size:12.5px;font-weight:700;margin-right:12px}
+nav.tabs{max-width:1080px;margin:0 auto;padding:0 10px;display:flex;overflow-x:auto}
+nav.tabs button{background:none;border:0;color:rgba(255,255,255,.7);padding:12px 12px 13px;font-weight:700;font-size:13.5px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button.on{color:#fff;border-bottom-color:var(--rosa)}
+main{max-width:1080px;margin:0 auto;padding:22px 16px 60px}
+h2{font-size:22px;font-weight:900}
+.sub{color:var(--gris);font-size:13.5px;margin-top:3px}
+.fila{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.cab{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 3px 14px rgba(10,26,92,.06)}
+
+/* Estadísticas */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi .n{font-size:30px;font-weight:900;margin-top:4px}
+.kpi .t{font-size:12px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px}
+.kpi .d{font-size:12px;color:var(--gris);margin-top:2px}
+.kpi.dest{background:linear-gradient(135deg,var(--magenta),var(--rosa));color:#fff}
+.kpi.dest .t,.kpi.dest .d{color:rgba(255,255,255,.9)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px}
+.card h3{font-size:15px;font-weight:800;margin-bottom:12px}
+.barra-h{margin-top:9px}
+.barra-h .et{display:flex;justify-content:space-between;font-size:13px;font-weight:600}
+.barra-h .et b{font-weight:800}
+.barra-h .pista{height:9px;background:var(--fondo);border-radius:6px;margin-top:4px;overflow:hidden}
+.barra-h .val{height:100%;background:var(--azul);border-radius:6px}
+.columnas{display:flex;align-items:flex-end;height:170px;gap:3px;padding-top:10px;overflow-x:auto}
+.col{flex:1;min-width:14px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.col .v{width:100%;background:var(--azul);border-radius:4px 4px 0 0;min-height:2px}
+.col .r{width:100%;background:var(--magenta);min-height:0}
+.col span{font-size:9.5px;color:var(--gris);margin-top:4px;white-space:nowrap}
+.leyenda{display:flex;gap:14px;font-size:12px;color:var(--gris);margin-top:10px}
+.leyenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.vacio{color:var(--gris);font-size:13px;padding:8px 0}
+
+/* Tabla voluntarios */
+.tabla-wrap{overflow-x:auto;margin-top:14px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;font-size:13.5px}
+th{background:var(--marino);color:#fff;text-align:left;padding:10px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+td{padding:10px 12px;border-top:1px solid var(--linea);vertical-align:top}
+td a{color:var(--verde);font-weight:700;text-decoration:none}
+
+/* CRUD */
+.item{display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:12px 14px;margin-top:10px;box-shadow:0 2px 10px rgba(10,26,92,.05)}
+.item.off{opacity:.5}
+.item .info{flex:1;min-width:0}
+.item .info b{display:block;font-size:14.5px}
+.item .info small{display:block;color:var(--gris);font-size:12.5px;margin-top:2px;overflow:hidden;text-overflow:ellipsis}
+.item .acc{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.thumb{width:54px;height:72px;border-radius:9px;object-fit:cover;background:var(--fondo);flex:none}
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 8px;border-radius:20px;background:var(--fondo);color:var(--gris);margin-left:6px;vertical-align:1px}
+.formu{margin-top:14px}
+.formu .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 14px}
+.formu .grid .ancho{grid-column:1/-1}
+.check{display:flex;align-items:center;gap:8px;margin-top:38px;font-weight:700;font-size:13.5px}
+.check input{width:18px;height:18px}
+.ayuda{font-size:12px;color:var(--gris);margin-top:5px}
+
+/* Aviso */
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--marino);color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;font-size:13.5px;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:50;max-width:90vw;text-align:center}
+#toast.err{background:var(--rojo)}
+
+.formu{scroll-margin-top:120px}
+@media (max-width:640px){
+  .top-in .yo{display:none}
+  .top-in a{margin-left:auto}
+  .item{flex-wrap:wrap}
+  .item .acc{width:100%;justify-content:flex-start}
+  .cab .fila{width:100%}
+  .cab .fila .in{flex:1;min-width:0}
+}
+@media print{
+  header.top,.no-print,#toast{display:none!important}
+  body{background:#fff}
+  main{padding:0}
+  .card{box-shadow:none;border:1px solid var(--linea)}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<section id="login">
+  <form class="caja" id="f-login">
+    <div class="logo-login"><img src="img/logo-tierrita.png" alt="La Tierrita nos une"></div>
+    <h1>Panel de campaña</h1>
+    <p>Acceso solo para el administrador.</p>
+    <label class="l" for="l-email">Correo</label>
+    <input class="in" type="email" id="l-email" autocomplete="username" required>
+    <label class="l" for="l-pass">Contraseña</label>
+    <input class="in" type="password" id="l-pass" autocomplete="current-password" required>
+    <button class="btn mag full" id="l-btn">Entrar</button>
+    <p class="msg-err oculto" id="l-err"></p>
+  </form>
+</section>
+
+<!-- ================= PANEL ================= -->
+<div id="panel" class="oculto">
+  <header class="top">
+    <div class="top-in">
+      <img src="img/logo-tierrita.png" alt="">
+      <span class="yo" id="yo"></span>
+      <a href="index.html" target="_blank">Ver página ↗</a>
+      <button class="btn peq sec" id="salir">Salir</button>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button data-tab="stats" class="on">📊 Estadísticas</button>
+      <button data-tab="voluntarios">🤝 Voluntarios</button>
+      <button data-tab="videos">🎥 Videos</button>
+      <button data-tab="propuestas">📋 Propuestas</button>
+      <button data-tab="agenda">🗓️ Agenda</button>
+      <button data-tab="bio">💙 Biografía</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Estadísticas -->
+    <section data-sec="stats">
+      <div class="cab">
+        <div><h2>Estadísticas</h2><p class="sub" id="st-rango-txt">Últimos 30 días</p></div>
+        <div class="fila no-print">
+          <select class="in" id="st-rango" style="width:auto">
+            <option value="1">Hoy (24 h)</option>
+            <option value="7">Últimos 7 días</option>
+            <option value="30" selected>Últimos 30 días</option>
+            <option value="90">Últimos 90 días</option>
+            <option value="3650">Todo</option>
+          </select>
+          <button class="btn sec" id="st-recargar">↻ Actualizar</button>
+          <button class="btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+        </div>
+      </div>
+      <div class="kpis" id="st-kpis"></div>
+      <div class="card" style="margin-top:12px">
+        <h3>Visitas y registros por día</h3>
+        <div class="columnas" id="st-dias"></div>
+        <div class="leyenda"><span><i style="background:var(--azul)"></i>Visitas</span><span><i style="background:var(--magenta)"></i>Registros</span></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>¿De dónde llegan?</h3><div id="st-fuentes"></div></div>
+        <div class="card"><h3>Botones más usados</h3><div id="st-botones"></div></div>
+        <div class="card"><h3>Voluntarios por parroquia</h3><div id="st-parroquias"></div></div>
+      </div>
+    </section>
+
+    <!-- Voluntarios -->
+    <section data-sec="voluntarios" class="oculto">
+      <div class="cab">
+        <div><h2>Voluntarios</h2><p class="sub" id="vo-total">—</p></div>
+        <div class="fila">
+          <input class="in" id="vo-buscar" placeholder="Buscar nombre, celular, barrio…" style="width:240px">
+          <select class="in" id="vo-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
+          <button class="btn mag" id="vo-excel">⬇ Descargar Excel</button>
+        </div>
+      </div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Fecha</th><th>Nombre</th><th>Celular</th><th>Parroquia</th><th>Barrio</th><th>Quiere ayudar en</th><th>Llegó por</th><th></th></tr></thead>
+          <tbody id="vo-filas"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Secciones editables (se llenan solas) -->
+    <section data-sec="videos" class="oculto" data-crud="videos"></section>
+    <section data-sec="propuestas" class="oculto" data-crud="propuestas"></section>
+    <section data-sec="agenda" class="oculto" data-crud="agenda"></section>
+
+    <!-- Biografía -->
+    <section data-sec="bio" class="oculto">
+      <div class="cab"><div><h2>Biografía</h2><p class="sub">Texto de la sección "Conoce a Moreta". Los saltos de línea se respetan.</p></div></div>
+      <div class="card">
+        <textarea class="in" id="bio-texto" style="min-height:280px"></textarea>
+        <div class="fila" style="margin-top:12px"><button class="btn mag" id="bio-guardar">Guardar biografía</button></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toast" class="oculto"></div>
+
+<script>
+/* =========================================================
+   Panel de administración — solo lo usa el administrador
+   desde un navegador moderno.
+   ========================================================= */
+const C = window.CONFIG || {};
+const BASE = (C.SUPABASE_URL || '').replace(/\/+$/, '').replace(/\/rest\/v1$/, '');
+const KEY = C.SUPABASE_ANON_KEY;
+const $ = (s, el) => (el || document).querySelector(s);
+const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+/* ---------- Avisos ---------- */
+let toastT;
+function aviso(txt, error) {
+  const t = $('#toast'); t.textContent = txt; t.className = error ? 'err' : '';
+  clearTimeout(toastT); toastT = setTimeout(() => t.className = 'oculto', 3200);
+}
+
+/* ---------- Sesión ---------- */
+let ses = null;
+try { ses = JSON.parse(localStorage.getItem('moreta_ses')); } catch (e) { ses = null; }
+function guardarSes() { try { localStorage.setItem('moreta_ses', JSON.stringify(ses)); } catch (e) {} }
+
+async function pedirToken(tipo, cuerpo) {
+  const r = await fetch(`${BASE}/auth/v1/token?grant_type=${tipo}`, {
+    method: 'POST', headers: { apikey: KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(cuerpo)
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error_code === 'invalid_credentials' ? 'Correo o contraseña incorrectos.' : (d.error_description || d.msg || 'No se pudo entrar.'));
+  ses = { access_token: d.access_token, refresh_token: d.refresh_token, expira: Date.now() + (d.expires_in - 60) * 1000, email: d.user && d.user.email };
+  guardarSes();
+}
+async function token() {
+  if (!ses) throw new Error('Sin sesión');
+  if (Date.now() > ses.expira) await pedirToken('refresh_token', { refresh_token: ses.refresh_token });
+  return ses.access_token;
+}
+function salir() {
+  ses = null; try { localStorage.removeItem('moreta_ses'); } catch (e) {}
+  $('#panel').classList.add('oculto'); $('#login').classList.remove('oculto');
+}
+
+/* ---------- API ---------- */
+async function api(ruta, opc = {}) {
+  let t;
+  try { t = await token(); } catch (e) { salir(); throw new Error('Tu sesión expiró. Vuelve a entrar.'); }
+  const h = { apikey: KEY, Authorization: 'Bearer ' + t };
+  if (opc.body !== undefined) h['Content-Type'] = 'application/json';
+  if (opc.prefer) h.Prefer = opc.prefer;
+  const r = await fetch(`${BASE}/rest/v1/${ruta}`, { method: opc.method || 'GET', headers: h, body: opc.body !== undefined ? JSON.stringify(opc.body) : undefined });
+  if (r.status === 401) { salir(); throw new Error('Tu sesión expiró. Vuelve a entrar.'); }
+  const txt = await r.text(); let d = null;
+  try { d = txt ? JSON.parse(txt) : null; } catch (e) {}
+  if (!r.ok) throw new Error((d && (d.message || d.hint)) || ('Error ' + r.status));
+  return d;
+}
+
+/* ---------- Login ---------- */
+$('#f-login').addEventListener('submit', async e => {
+  e.preventDefault();
+  const err = $('#l-err'), btn = $('#l-btn');
+  err.classList.add('oculto'); btn.disabled = true; btn.textContent = 'Entrando…';
+  try {
+    if (!BASE || !KEY) throw new Error('Falta configurar Supabase en config.js');
+    await pedirToken('password', { email: $('#l-email').value.trim(), password: $('#l-pass').value });
+    await entrar();
+  } catch (x) { err.textContent = x.message; err.classList.remove('oculto'); }
+  btn.disabled = false; btn.textContent = 'Entrar';
+});
+
+async function entrar() {
+  const admin = await api('rpc/es_admin', { method: 'POST', body: {} });
+  if (admin !== true) {
+    salir();
+    const err = $('#l-err');
+    err.textContent = 'Este correo no es el administrador. Revisa que sea el mismo que pusiste en supabase.sql.';
+    err.classList.remove('oculto');
+    return;
+  }
+  $('#yo').textContent = ses.email || '';
+  $('#login').classList.add('oculto'); $('#panel').classList.remove('oculto');
+  abrir('stats');
+}
+$('#salir').onclick = salir;
+
+/* ---------- Pestañas ---------- */
+const cargadores = {};
+function abrir(tab) {
+  $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  $$('main > section').forEach(s => s.classList.toggle('oculto', s.dataset.sec !== tab));
+  if (cargadores[tab]) cargadores[tab]().catch(x => aviso(x.message, true));
+  window.scrollTo(0, 0);
+}
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) abrir(b.dataset.tab); });
+
+/* =========================================================
+   ESTADÍSTICAS
+   ========================================================= */
+const NOMBRES = {
+  propuestas: 'Conoce mis propuestas', unete: 'Únete a mi equipo', videos: 'Mira mis videos',
+  agenda: 'Agenda de medios', bio: 'Conoce a Moreta', facebook: 'Facebook', instagram: 'Instagram',
+  tiktok: 'TikTok', footer: 'Compartir (final de página)', 'tras-registro': 'Compartir (después de registrarse)',
+  directo: 'Link directo', compartido: 'Compartido por WhatsApp'
+};
+const nombre = n => NOMBRES[n] || n;
+
+function barras(el, lista) {
+  if (!lista.length) { el.innerHTML = '<p class="vacio">Aún no hay datos en este periodo.</p>'; return; }
+  const max = Math.max(...lista.map(x => x.total));
+  el.innerHTML = lista.map(x => `
+    <div class="barra-h"><div class="et"><span>${esc(nombre(x.nombre))}</span><b>${x.total}</b></div>
+    <div class="pista"><div class="val" style="width:${Math.max(2, x.total / max * 100)}%"></div></div></div>`).join('');
+}
+
+cargadores.stats = async () => {
+  const dias = +$('#st-rango').value;
+  $('#st-rango-txt').textContent = $('#st-rango').selectedOptions[0].text;
+  const s = await api('rpc/estadisticas', { method: 'POST', body: { dias } });
+  const conv = s.visitas ? (s.registros / s.visitas * 100).toFixed(1) : '0';
+  $('#st-kpis').innerHTML = `
+    <div class="card kpi"><div class="t">Visitas</div><div class="n">${s.visitas}</div><div class="d">veces que se abrió la página</div></div>
+    <div class="card kpi dest"><div class="t">Nuevos voluntarios</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
+    <div class="card kpi"><div class="t">Conversión</div><div class="n">${conv}%</div><div class="d">de visitas que se registran</div></div>
+    <div class="card kpi"><div class="t">Compartidos</div><div class="n">${s.compartidos}</div><div class="d">clics en compartir por WhatsApp</div></div>
+    <div class="card kpi"><div class="t">Videos vistos</div><div class="n">${s.videos}</div><div class="d">reproducciones iniciadas</div></div>`;
+
+  const dias_ = s.por_dia || [];
+  if (!dias_.length) { $('#st-dias').innerHTML = '<p class="vacio">Aún no hay datos en este periodo.</p>'; }
+  else {
+    const max = Math.max(...dias_.map(d => d.visitas + d.registros), 1);
+    $('#st-dias').innerHTML = dias_.map(d => {
+      const p = d.dia.split('-');
+      return `<div class="col" title="${d.visitas} visitas · ${d.registros} registros">
+        <div class="r" style="height:${d.registros / max * 140}px"></div>
+        <div class="v" style="height:${d.visitas / max * 140}px"></div>
+        <span>${+p[2]} ${MESES[+p[1] - 1]}</span></div>`;
+    }).join('');
+  }
+  barras($('#st-fuentes'), s.por_fuente || []);
+  barras($('#st-botones'), s.botones || []);
+  barras($('#st-parroquias'), s.parroquias || []);
+};
+$('#st-rango').onchange = () => cargadores.stats().catch(x => aviso(x.message, true));
+$('#st-recargar').onclick = () => cargadores.stats().then(() => aviso('Actualizado')).catch(x => aviso(x.message, true));
+
+/* =========================================================
+   VOLUNTARIOS
+   ========================================================= */
+let voluntarios = [];
+function fecha(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('es-EC', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' });
+}
+function filtrados() {
+  const q = $('#vo-buscar').value.toLowerCase().trim(), p = $('#vo-parroquia').value;
+  return voluntarios.filter(v => (!p || v.parroquia === p) &&
+    (!q || [v.nombre, v.telefono, v.barrio, v.ayuda].join(' ').toLowerCase().includes(q)));
+}
+function pintarVoluntarios() {
+  const lista = filtrados();
+  $('#vo-total').textContent = `${lista.length} de ${voluntarios.length} registrados`;
+  $('#vo-filas').innerHTML = lista.length ? lista.map(v => `<tr>
+    <td style="white-space:nowrap">${esc(fecha(v.creado))}</td>
+    <td><b>${esc(v.nombre)}</b></td>
+    <td><a href="https://wa.me/593${esc(v.telefono.slice(1))}" target="_blank">${esc(v.telefono)}</a></td>
+    <td>${esc(v.parroquia)}</td><td>${esc(v.barrio || '')}</td><td>${esc(v.ayuda || '')}</td>
+    <td>${esc(nombre(v.fuente || 'directo'))}</td>
+    <td><button class="btn peq rojo" data-borrar-vol="${v.id}">Eliminar</button></td></tr>`).join('')
+    : '<tr><td colspan="8" class="vacio" style="text-align:center;padding:24px">No hay registros.</td></tr>';
+}
+cargadores.voluntarios = async () => {
+  voluntarios = [];
+  for (let o = 0; ; o += 1000) {
+    const parte = await api(`voluntarios?select=*&order=creado.desc&limit=1000&offset=${o}`);
+    voluntarios = voluntarios.concat(parte);
+    if (parte.length < 1000) break;
+  }
+  const actual = $('#vo-parroquia').value;
+  const ps = [...new Set(voluntarios.map(v => v.parroquia))].sort();
+  $('#vo-parroquia').innerHTML = '<option value="">Todas las parroquias</option>' + ps.map(p => `<option ${p === actual ? 'selected' : ''}>${esc(p)}</option>`).join('');
+  pintarVoluntarios();
+};
+$('#vo-buscar').oninput = pintarVoluntarios;
+$('#vo-parroquia').onchange = pintarVoluntarios;
+$('#vo-filas').addEventListener('click', async e => {
+  const id = e.target.dataset.borrarVol; if (!id) return;
+  const v = voluntarios.find(x => String(x.id) === id);
+  if (!confirm(`¿Eliminar a ${v.nombre}? Esto no se puede deshacer.`)) return;
+  try { await api(`voluntarios?id=eq.${id}`, { method: 'DELETE' }); aviso('Registro eliminado'); cargadores.voluntarios(); }
+  catch (x) { aviso(x.message, true); }
+});
+$('#vo-excel').onclick = () => {
+  const lista = filtrados();
+  if (!lista.length) return aviso('No hay registros para descargar', true);
+  const c = s => '"' + String(s == null ? '' : s).replace(/"/g, '""') + '"';
+  const filas = [['Fecha', 'Nombre', 'Celular', 'Parroquia', 'Barrio', 'Quiere ayudar en', 'Llegó por'].map(c).join(';')]
+    .concat(lista.map(v => [fecha(v.creado), v.nombre, '="' + v.telefono + '"', v.parroquia, v.barrio, v.ayuda, nombre(v.fuente || 'directo')]
+      .map((x, i) => i === 2 ? x : c(x)).join(';')));
+  const blob = new Blob(['﻿' + filas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `voluntarios-moreta-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+};
+
+/* =========================================================
+   SECCIONES EDITABLES (videos, propuestas, agenda)
+   ========================================================= */
+const ytId = u => { const m = String(u || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/|live\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; };
+const TIPOS = { radio: 'Radio', tv: 'Televisión', digital: 'Digital', evento: 'Evento' };
+
+const TABLAS = {
+  videos: {
+    titulo: 'Videos', sub: 'Sube el video a YouTube como "No listado", copia el link y pégalo aquí.',
+    orden: 'orden.asc,id.asc', nuevo: '+ Agregar video',
+    campos: [
+      { k: 'titulo', l: 'Título', t: 'text', req: 1, ancho: 1 },
+      { k: 'youtube_url', l: 'Link de YouTube', t: 'text', req: 1, ancho: 1, ayuda: 'Ej: https://youtube.com/shorts/abc123XYZ00 o https://youtu.be/abc123XYZ00' },
+      { k: 'formato', l: 'Formato', t: 'select', ops: [['vertical', 'Vertical (Shorts / Reels)'], ['horizontal', 'Horizontal']] },
+      { k: 'orden', l: 'Orden (1 aparece primero)', t: 'number', def: 1 },
+      { k: 'activo', l: 'Visible en la página', t: 'check', def: true }
+    ],
+    validar: d => ytId(d.youtube_url) ? null : 'El link de YouTube no es válido.',
+    vista: r => { const id = ytId(r.youtube_url);
+      return `<img class="thumb" src="${id ? 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg' : ''}" alt="">
+        <div class="info"><b>${esc(r.titulo)}<span class="badge">#${r.orden}</span></b><small>${esc(r.formato)} · ${esc(r.youtube_url)}</small></div>`; }
+  },
+  propuestas: {
+    titulo: 'Propuestas', sub: 'Las 5 propuestas del candidato. Se muestran ordenadas por el campo "Orden".',
+    orden: 'orden.asc,numero.asc', nuevo: '+ Agregar propuesta',
+    campos: [
+      { k: 'numero', l: 'Número que se muestra', t: 'number', req: 1, def: 1 },
+      { k: 'orden', l: 'Orden', t: 'number', def: 1 },
+      { k: 'titulo', l: 'Título', t: 'text', req: 1, ancho: 1 },
+      { k: 'descripcion', l: 'Descripción', t: 'textarea', ancho: 1 },
+      { k: 'activo', l: 'Visible en la página', t: 'check', def: true }
+    ],
+    vista: r => `<div class="info"><b>${esc(r.numero)}. ${esc(r.titulo)}</b><small>${esc(r.descripcion)}</small></div>`
+  },
+  agenda: {
+    titulo: 'Agenda de medios', sub: 'Las fechas que ya pasaron se ocultan solas en la página.',
+    orden: 'fecha.desc', nuevo: '+ Agregar fecha',
+    campos: [
+      { k: 'fecha', l: 'Fecha', t: 'date', req: 1 },
+      { k: 'hora', l: 'Hora', t: 'text', ayuda: 'Ej: 7:00 am' },
+      { k: 'medio', l: 'Medio o lugar', t: 'text', req: 1, ayuda: 'Ej: Radio Ritmo' },
+      { k: 'detalle', l: 'Detalle', t: 'text', ayuda: 'Ej: 98.5 FM' },
+      { k: 'tipo', l: 'Tipo', t: 'select', ops: Object.entries(TIPOS) },
+      { k: 'activo', l: 'Visible en la página', t: 'check', def: true }
+    ],
+    vista: r => { const p = r.fecha.split('-'), pasada = r.fecha < new Date().toLocaleDateString('en-CA');
+      return `<div class="info"><b>${+p[2]} ${MESES[+p[1] - 1]} ${p[0]} · ${esc(r.medio)}${pasada ? '<span class="badge">Ya pasó</span>' : ''}</b>
+        <small>${esc(TIPOS[r.tipo] || r.tipo)} · ${esc(r.detalle)} ${r.hora ? '· ' + esc(r.hora) : ''}</small></div>`; }
+  }
+};
+
+function campoHTML(c) {
+  const id = 'c-' + c.k, cls = c.ancho ? ' class="ancho"' : '';
+  let ctrl;
+  if (c.t === 'check') return `<div${cls}><label class="check"><input type="checkbox" name="${c.k}"> ${c.l}</label></div>`;
+  if (c.t === 'select') ctrl = `<select class="in" name="${c.k}" id="${id}">${c.ops.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</select>`;
+  else if (c.t === 'textarea') ctrl = `<textarea class="in" name="${c.k}" id="${id}"></textarea>`;
+  else ctrl = `<input class="in" type="${c.t}" name="${c.k}" id="${id}">`;
+  return `<div${cls}><label class="l" for="${id}">${c.l}${c.req ? ' *' : ''}</label>${ctrl}${c.ayuda ? `<p class="ayuda">${c.ayuda}</p>` : ''}</div>`;
+}
+
+function montarCrud(sec) {
+  const tabla = sec.dataset.crud, cfg = TABLAS[tabla];
+  let filas = [], editando = null;
+  sec.innerHTML = `
+    <div class="cab"><div><h2>${cfg.titulo}</h2><p class="sub">${cfg.sub}</p></div>
+      <button class="btn mag" data-nuevo>${cfg.nuevo}</button></div>
+    <form class="card formu oculto" novalidate>
+      <h3 data-ftit></h3>
+      <div class="grid">${cfg.campos.map(campoHTML).join('')}</div>
+      <p class="msg-err oculto" data-ferr></p>
+      <div class="fila" style="margin-top:16px"><button class="btn mag">Guardar</button><button type="button" class="btn sec" data-cancelar>Cancelar</button></div>
+    </form>
+    <div data-lista></div>`;
+  const form = $('form', sec), lista = $('[data-lista]', sec), ferr = $('[data-ferr]', sec);
+
+  function abrirForm(r) {
+    editando = r ? r.id : null;
+    $('[data-ftit]', sec).textContent = r ? 'Editar' : cfg.nuevo.replace('+ ', '');
+    cfg.campos.forEach(c => {
+      const el = form.elements[c.k], v = r ? r[c.k] : (c.def !== undefined ? c.def : (c.t === 'select' ? c.ops[0][0] : ''));
+      if (c.t === 'check') el.checked = !!v; else el.value = v == null ? '' : v;
+    });
+    if (!r && tabla !== 'agenda') { const n = filas.length + 1; ['orden', 'numero'].forEach(k => form.elements[k] && (form.elements[k].value = n)); }
+    ferr.classList.add('oculto'); form.classList.remove('oculto'); form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  const cerrarForm = () => { form.classList.add('oculto'); editando = null; };
+
+  async function cargar() {
+    filas = await api(`${tabla}?select=*&order=${cfg.orden}`);
+    lista.innerHTML = filas.length ? filas.map(r => `
+      <div class="item${r.activo ? '' : ' off'}">${cfg.vista(r)}
+        <div class="acc">
+          <button class="btn peq sec" data-ed="${r.id}">Editar</button>
+          <button class="btn peq sec" data-vis="${r.id}">${r.activo ? 'Ocultar' : 'Mostrar'}</button>
+          <button class="btn peq rojo" data-del="${r.id}">Eliminar</button>
+        </div></div>`).join('')
+      : '<div class="card vacio" style="margin-top:10px">Todavía no hay nada aquí. Usa el botón de arriba para agregar.</div>';
+  }
+  cargadores[tabla] = cargar;
+
+  $('[data-nuevo]', sec).onclick = () => abrirForm(null);
+  $('[data-cancelar]', sec).onclick = cerrarForm;
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const d = {};
+    cfg.campos.forEach(c => {
+      const el = form.elements[c.k];
+      d[c.k] = c.t === 'check' ? el.checked : c.t === 'number' ? (el.value === '' ? 0 : parseInt(el.value, 10)) : el.value.trim();
+    });
+    const falta = cfg.campos.find(c => c.req && (d[c.k] === '' || d[c.k] == null));
+    const error = falta ? `Completa: ${falta.l}` : (cfg.validar && cfg.validar(d));
+    if (error) { ferr.textContent = error; ferr.classList.remove('oculto'); return; }
+    try {
+      if (editando) await api(`${tabla}?id=eq.${editando}`, { method: 'PATCH', body: d, prefer: 'return=minimal' });
+      else await api(tabla, { method: 'POST', body: d, prefer: 'return=minimal' });
+      aviso('Guardado ✓'); cerrarForm(); cargar();
+    } catch (x) { ferr.textContent = x.message; ferr.classList.remove('oculto'); }
+  });
+
+  lista.addEventListener('click', async e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const r = filas.find(x => String(x.id) === (b.dataset.ed || b.dataset.vis || b.dataset.del));
+    if (!r) return;
+    try {
+      if (b.dataset.ed) abrirForm(r);
+      if (b.dataset.vis) { await api(`${tabla}?id=eq.${r.id}`, { method: 'PATCH', body: { activo: !r.activo }, prefer: 'return=minimal' }); aviso(r.activo ? 'Oculto de la página' : 'Visible en la página'); cargar(); }
+      if (b.dataset.del && confirm('¿Eliminar definitivamente? Si solo quieres quitarlo un tiempo, usa "Ocultar".')) {
+        await api(`${tabla}?id=eq.${r.id}`, { method: 'DELETE' }); aviso('Eliminado'); cargar();
+      }
+    } catch (x) { aviso(x.message, true); }
+  });
+}
+$$('[data-crud]').forEach(montarCrud);
+
+/* =========================================================
+   BIOGRAFÍA
+   ========================================================= */
+cargadores.bio = async () => {
+  const d = await api('contenido?select=valor&clave=eq.bio');
+  $('#bio-texto').value = d && d[0] ? d[0].valor : '';
+};
+$('#bio-guardar').onclick = async () => {
+  try {
+    await api('contenido?on_conflict=clave', { method: 'POST', body: { clave: 'bio', valor: $('#bio-texto').value.trim() }, prefer: 'resolution=merge-duplicates,return=minimal' });
+    aviso('Biografía guardada ✓');
+  } catch (x) { aviso(x.message, true); }
+};
+
+/* ---------- Inicio: si ya hay sesión guardada, entrar directo ---------- */
+if (ses) entrar().catch(() => salir());
+</script>
+</body>
+</html>

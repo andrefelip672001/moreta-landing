@@ -63,8 +63,13 @@ a{color:inherit}
 .vm-play:after{content:"";border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:7px}
 .vm-capa.reproduciendo .vm-play{display:none}
 .vm-pie{background:var(--marino);padding:10px 14px 12px;text-align:left}
-.vm-pista{height:7px;background:rgba(255,255,255,.18);border-radius:5px;overflow:hidden}
-.vm-avance{height:100%;width:0;background:linear-gradient(90deg,var(--magenta),var(--rosa));border-radius:5px}
+.vm-carga{display:flex;align-items:center}
+.vm-pista{flex:1;height:10px;background:rgba(255,255,255,.16);border-radius:6px;overflow:hidden}
+.vm-avance{height:100%;width:0;border-radius:6px;transition:width .6s linear;
+  background:linear-gradient(90deg,var(--magenta),var(--rosa),var(--magenta));background-size:200% 100%;animation:brillo 2.2s linear infinite}
+@keyframes brillo{from{background-position:100% 0}to{background-position:-100% 0}}
+.vm-candado{width:30px;height:30px;margin-left:10px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;transition:transform .3s,background .3s}
+.vm-candado.abierto{background:#13A35B;transform:scale(1.15)}
 .vm-txt{font-size:12px;font-weight:700;margin-top:7px;color:rgba(255,255,255,.9)}
 .vm-txt.ok{color:#7CF0B4}
 
@@ -269,8 +274,11 @@ footer .pie{margin-top:18px;opacity:.6}
         <div class="vm-capa" id="vm-capa" aria-label="Reproducir video"><span class="vm-play"></span></div>
       </div>
       <div class="vm-pie">
-        <div class="vm-pista"><div class="vm-avance" id="vm-avance"></div></div>
-        <p class="vm-txt" id="vm-txt">▶ Mira el video completo para desbloquear tu registro</p>
+        <div class="vm-carga">
+          <div class="vm-pista"><div class="vm-avance" id="vm-avance"></div></div>
+          <span class="vm-candado" id="vm-candado">🔒</span>
+        </div>
+        <p class="vm-txt" id="vm-txt">Mira el video completo para desbloquear tu registro</p>
       </div>
     </div>
 
@@ -724,7 +732,11 @@ footer .pie{margin-top:18px;opacity:.6}
   var vmIniciado = false;
 
   function textoVideo(t, ok) { var e = $('vm-txt'); e.innerHTML = t; e.className = 'vm-txt' + (ok ? ' ok' : ''); }
-  function avance(p) { $('vm-avance').style.width = Math.min(100, Math.max(0, p)) + '%'; }
+  function avance(p) {
+    p = Math.min(100, Math.max(0, p));
+    $('vm-avance').style.width = p + '%';
+    if (p >= 100) { $('vm-candado').textContent = '🔓'; $('vm-candado').className = 'vm-candado abierto'; }
+  }
   function mmss(s) { s = Math.max(0, Math.round(s)); var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
 
   function desbloquear(desdeVideo) {
@@ -801,7 +813,6 @@ footer .pie{margin-top:18px;opacity:.6}
       if (desbloqueado) { return; }
       if (duracion) {
         avance(maxVisto / duracion * 100);
-        if (reproduciendo) { textoVideo('⏳ Faltan ' + mmss(duracion - maxVisto) + ' para desbloquear tu registro'); }
       }
     }, 400);
   }
@@ -820,7 +831,7 @@ footer .pie{margin-top:18px;opacity:.6}
         reloj = setInterval(function () {
           if (!corriendo) { return; }
           t += 0.25;
-          if (!desbloqueado) { avance(t / total * 100); textoVideo('⏳ Faltan ' + mmss(total - t) + ' para desbloquear tu registro'); }
+          if (!desbloqueado) { avance(t / total * 100); }
           if (t >= total) { clearInterval(reloj); corriendo = false; capa.className = 'vm-capa'; desbloquear(true); }
         }, 250);
       }

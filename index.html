@@ -27,8 +27,9 @@
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet">
 <script src="config.js"></script>
+<script src="agenda-imagen.js" defer></script>
 <style>
 :root{--azul:#1D5BF2;--azul2:#0E3BC4;--marino:#0A1A5C;--magenta:#E5177E;--rosa:#FF4FA8;--gris:#5B6488;--fondo:#F3F5FC;--linea:#DFE3F0;--verde:#13A35B}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -166,6 +167,8 @@ h2 em{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--magen
 .agi .tipo{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--magenta)}
 .agi h3{font-size:18px;font-weight:800;margin-top:2px}
 .agi p{font-size:14px;color:var(--gris);margin-top:3px;font-weight:600}
+.ag-comp{margin-top:10px;border:0;border-radius:20px;padding:8px 14px;background:var(--fondo);color:var(--marino);font:inherit;font-weight:800;font-size:12.5px;cursor:pointer}
+.ag-comp:active{transform:scale(.97)}
 .vacia{background:#fff;border-radius:18px;padding:20px;margin-top:12px;color:var(--gris);font-size:14px;text-align:center}
 
 /* Voluntariado (distinto a Mejora tu Hogar) */
@@ -862,9 +865,32 @@ footer .pie{margin-top:18px;opacity:.6}
       a = lista[i]; p = String(a.fecha).split('-');
       h += '<div class="ag"><div class="fecha"><b>' + parseInt(p[2], 10) + '</b><span>' + MESES[parseInt(p[1], 10) - 1] + '</span></div>' +
            '<div class="agi"><div class="tipo">' + esc(TIPOS[a.tipo] || a.tipo) + '</div><h3>' + esc(a.medio) + '</h3>' +
-           '<p>' + esc(a.detalle) + (a.hora ? ' · ' + esc(a.hora) : '') + '</p></div></div>';
+           '<p>' + esc(a.detalle) + (a.hora ? ' · ' + esc(a.hora) : '') + '</p>' +
+           '<button class="ag-comp" data-agenda-fecha="' + esc(a.fecha) + '">📲 Compartir en mi estado</button></div></div>';
     }
+    agendaActual = lista;
     $('lista-agenda').innerHTML = h || '<div class="vacia">Muy pronto anunciaremos nuevas fechas.</div>';
+  }
+
+  /* ---------- Compartir la agenda como imagen (para estados de WhatsApp / historias) ---------- */
+  var agendaActual = [];
+  function pieImagen() {
+    var u = (location.host + location.pathname).replace(/index\.html$/, '').replace(/\/$/, '');
+    return u ? 'Regístrate en Mejora tu Hogar: ' + u : 'La Tierrita nos une';
+  }
+  function compartirAgenda(fecha, boton) {
+    if (!window.AgendaImagen) { return; }
+    var items = [], i;
+    for (i = 0; i < agendaActual.length; i++) { if (agendaActual[i].fecha === fecha) { items.push(agendaActual[i]); } }
+    var txt = boton.innerHTML; boton.disabled = true; boton.innerHTML = '⏳ Preparando imagen…';
+    window.AgendaImagen.generar({ items: items, formato: 'historia', pie: pieImagen() }, function (canvas) {
+      window.AgendaImagen.compartir(canvas, 'agenda-moreta-' + fecha + '.png',
+        '¡Sintoniza a Miguel Ángel Moreta! 📻 ' + location.origin + location.pathname + '?src=agenda-imagen', function (r) {
+          boton.disabled = false; boton.innerHTML = r === 'descarga' ? '✔ Imagen descargada' : txt;
+          if (r === 'descarga') { setTimeout(function () { boton.innerHTML = txt; }, 3000); }
+        });
+      track('clic-agenda', 'compartir-imagen');
+    });
   }
 
   /* ---------- Descargables ---------- */
@@ -1314,6 +1340,7 @@ footer .pie{margin-top:18px;opacity:.6}
           return;
         }
         if (t.getAttribute('data-compartir')) { e.preventDefault(); compartir(t.getAttribute('data-compartir')); }
+        if (t.getAttribute('data-agenda-fecha')) { compartirAgenda(t.getAttribute('data-agenda-fecha'), t); return; }
         if (t.getAttribute('href') === '#' && t.className === 'desc') { e.preventDefault(); }
         if (t.getAttribute('data-track')) { track('clic-' + t.getAttribute('data-track'), t.getAttribute('data-detalle')); return; }
       }

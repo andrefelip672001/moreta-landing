@@ -10,8 +10,9 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;0,900;1,800&display=swap" rel="stylesheet">
 <script src="config.js"></script>
+<script src="agenda-imagen.js"></script>
 <style>
 :root{--azul:#1D5BF2;--azul2:#0E3BC4;--marino:#0A1A5C;--magenta:#E5177E;--rosa:#FF4FA8;--gris:#5B6488;--fondo:#F3F5FC;--linea:#DFE3F0;--verde:#13A35B;--rojo:#C4153F}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -305,6 +306,18 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
 </div>
 
 <div id="toast" class="oculto"></div>
+
+<!-- Vista previa de imagen de agenda -->
+<div id="vista" class="oculto" style="position:fixed;inset:0;background:rgba(10,26,92,.75);z-index:60;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div class="card" style="max-width:440px;width:100%;max-height:94vh;overflow:auto;text-align:center">
+    <img id="vista-img" alt="" style="max-width:100%;max-height:62vh;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.2)">
+    <div class="fila" style="justify-content:center;margin-top:14px">
+      <button class="btn mag" id="vista-bajar">⬇ Descargar imagen</button>
+      <button class="btn sec" id="vista-cerrar">Cerrar</button>
+    </div>
+    <p class="ayuda" style="margin-top:8px">Súbela a tus estados de WhatsApp, historias de Instagram/Facebook o al feed.</p>
+  </div>
+</div>
 
 <script>
 /* =========================================================
@@ -818,7 +831,15 @@ const TABLAS = {
     vista: r => `<div class="info"><b>${esc(r.numero)}. ${esc(r.titulo)}</b><small>${esc(r.descripcion)}</small></div>`
   },
   agenda: {
-    titulo: 'Agenda de medios', sub: 'Las fechas que ya pasaron se ocultan solas en la página.',
+    titulo: 'Agenda de medios', sub: 'Las fechas que ya pasaron se ocultan solas en la página. Genera la imagen para publicar en estados, historias y Facebook.',
+    extraAcc: r => `<button class="btn peq" data-img="${r.id}" data-fmt="historia" title="1080×1920 para estados e historias">🖼️ Historia</button>
+      <button class="btn peq" data-img="${r.id}" data-fmt="post" title="1080×1350 para el feed">🖼️ Post</button>`,
+    herramientas: `<div class="card fila" style="margin-bottom:6px">
+      <b style="font-size:14px">🖼️ Imagen de todo un día:</b>
+      <input class="in" type="date" id="ag-dia" style="width:auto">
+      <button class="btn" id="ag-dia-hist">Historia</button>
+      <button class="btn sec" id="ag-dia-post">Post</button>
+      <span class="ayuda" style="margin:0">Junta todas las citas de esa fecha en una sola imagen (máx. 3).</span></div>`,
     orden: 'fecha.desc', nuevo: '+ Agregar fecha',
     campos: [
       { k: 'fecha', l: 'Fecha', t: 'date', req: 1 },
@@ -854,6 +875,7 @@ function montarCrud(sec) {
   sec.innerHTML = `
     <div class="cab"><div><h2>${cfg.titulo}</h2><p class="sub">${cfg.sub}</p></div>
       <button class="btn mag" data-nuevo>${cfg.nuevo}</button></div>
+    ${cfg.herramientas || ''}
     <form class="card formu oculto" novalidate>
       <h3 data-ftit></h3>
       <div class="grid">${cfg.campos.map(campoHTML).join('')}</div>
@@ -881,6 +903,7 @@ function montarCrud(sec) {
     lista.innerHTML = filas.length ? filas.map(r => `
       <div class="item${r.activo ? '' : ' off'}">${cfg.vista(r)}
         <div class="acc">
+          ${cfg.extraAcc ? cfg.extraAcc(r) : ''}
           <button class="btn peq sec" data-ed="${r.id}">Editar</button>
           <button class="btn peq sec" data-vis="${r.id}">${r.activo ? 'Ocultar' : 'Mostrar'}</button>
           <button class="btn peq rojo" data-del="${r.id}">Eliminar</button>
@@ -927,6 +950,7 @@ function montarCrud(sec) {
 
   lista.addEventListener('click', async e => {
     const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.img) { const r = filas.find(x => String(x.id) === b.dataset.img); if (r) imagenAgenda([r], b.dataset.fmt); return; }
     const r = filas.find(x => String(x.id) === (b.dataset.ed || b.dataset.vis || b.dataset.del));
     if (!r) return;
     try {
@@ -939,6 +963,42 @@ function montarCrud(sec) {
   });
 }
 $$('[data-crud]').forEach(montarCrud);
+
+/* =========================================================
+   IMÁGENES DE AGENDA
+   ========================================================= */
+let lienzoActual = null, archivoActual = '';
+function pieImagen() {
+  const u = new URL('./', location.href);
+  return u.protocol.startsWith('http') ? 'Regístrate en Mejora tu Hogar: ' + (u.host + u.pathname).replace(/\/$/, '') : 'La Tierrita nos une';
+}
+function imagenAgenda(items, formato) {
+  if (!items.length) return aviso('No hay citas en esa fecha', true);
+  if (!window.AgendaImagen) return aviso('No se cargó el generador de imágenes', true);
+  aviso('⏳ Generando imagen…');
+  AgendaImagen.generar({ items, formato, pie: pieImagen() }, canvas => {
+    lienzoActual = canvas;
+    archivoActual = `agenda-moreta-${items[0].fecha}-${formato}.png`;
+    $('#vista-img').src = canvas.toDataURL('image/png');
+    $('#vista').classList.remove('oculto');
+  });
+}
+$('#vista-bajar').onclick = () => { if (lienzoActual) { AgendaImagen.descargar(lienzoActual, archivoActual); aviso('Imagen descargada ✓'); } };
+$('#vista-cerrar').onclick = () => $('#vista').classList.add('oculto');
+$('#vista').onclick = e => { if (e.target.id === 'vista') $('#vista').classList.add('oculto'); };
+async function imagenDelDia(formato) {
+  const dia = $('#ag-dia').value;
+  if (!dia) return aviso('Elige una fecha', true);
+  try {
+    const items = await api(`agenda?select=*&fecha=eq.${dia}&activo=eq.true`);
+    imagenAgenda(items, formato);
+  } catch (x) { aviso(x.message, true); }
+}
+document.addEventListener('click', e => {
+  if (e.target.id === 'ag-dia-hist') imagenDelDia('historia');
+  if (e.target.id === 'ag-dia-post') imagenDelDia('post');
+});
+setTimeout(() => { const d = $('#ag-dia'); if (d && !d.value) d.value = new Date().toLocaleDateString('en-CA'); }, 0);
 
 /* =========================================================
    VIDEO PRINCIPAL Y BIOGRAFÍA

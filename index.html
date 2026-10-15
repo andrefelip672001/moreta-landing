@@ -606,7 +606,7 @@ footer .pie{margin-top:18px;opacity:.6}
 <div class="guia" id="guia">
   <div class="guia-burbuja" id="guia-burbuja">
     <button class="x" id="guia-x" aria-label="Cerrar">×</button>
-    <span id="guia-txt">¡Hola! 👋 Mira mi video completo y desbloquea tu registro a Mejora tu Hogar.</span>
+    <span id="guia-txt">Sigue mis redes sociales</span>
     <span class="ir" id="guia-ir">Ver ↓</span>
   </div>
   <div class="guia-foto" id="guia-foto">
@@ -752,7 +752,6 @@ footer .pie{margin-top:18px;opacity:.6}
     if (desdeVideo && !desbloqueado) {
       desbloqueado = true; guardar('moreta_video_ok', '1');
       track('video-principal', 'completo');
-      decir('¡Gracias por ver el video! 🙌 Ahora registra tu hogar aquí abajo.', 'mejora', true);
       setTimeout(function () { irA('mejora'); }, 900);
     }
   }
@@ -1241,7 +1240,6 @@ footer .pie{margin-top:18px;opacity:.6}
       $('form-mth').style.display = 'none'; $('m-listo').style.display = 'block';
       track('registro', 'mejora-tu-hogar');
       if (window.fbq) { window.fbq('track', 'Lead'); }
-      decir('¡Listo! 🏠 Tu hogar quedó registrado. ¡Comparte con tu familia!', 'comparte', true);
     });
   };
 
@@ -1354,71 +1352,15 @@ footer .pie{margin-top:18px;opacity:.6}
   /* =========================================================
      MORETA GUÍA (abajo a la derecha)
      ========================================================= */
-  var MENSAJES = {
-    inicio:       ['¡Hola! 👋 Mira mi video completo y desbloquea tu registro a Mejora tu Hogar.', 'inicio'],
-    mejora:       ['Llena tus datos para registrar tu hogar 🏠', 'mejora'],
-    testimonios:  ['Escucha lo que dice nuestra gente 💬', 'testimonios'],
-    conoce:       ['Te cuento un poco de mí 💙', 'conoce'],
-    propuestas:   ['Estas son mis propuestas para la Tierrita 📋', 'propuestas'],
-    agenda:       ['¡Sintonízame! Aquí está mi agenda 📻', 'agenda'],
-    unete:        ['¡Sé el héroe de tu barrio! Invita a tus vecinos 🦸', 'unete'],
-    descargables: ['Descarga el material y compártelo 📲', 'descargables'],
-    comparte:     ['¡Publica esta página en tu Facebook! 🙌', 'comparte'],
-    comunidad:    ['Únete a mi comunidad de WhatsApp o Telegram 📲', 'comunidad']
-  };
-  var ORDEN = ['inicio','mejora','testimonios','conoce','propuestas','agenda','comunidad','unete','descargables','comparte'];
-  var actual = '', cerrada = false, ocultarT = null, destino = 'mejora';
-
-  function decir(texto, ir, forzar) {
-    var b = $('guia-burbuja');
-    $('guia-txt').textContent = texto;
-    destino = ir;
-    $('guia-ir').style.display = ir ? 'block' : 'none';
-    if (cerrada && !forzar) { return; }
-    b.className = 'guia-burbuja';
-    clearTimeout(ocultarT);
-    ocultarT = setTimeout(function () { b.className = 'guia-burbuja escondida'; }, 7000);
-  }
-  function siguiente(id) {
-    var i = ORDEN.indexOf(id) + 1;
-    while (i < ORDEN.length && !$(ORDEN[i]).offsetHeight) { i++; }
-    return ORDEN[i] || null;
-  }
-
-  function seccionVisible() {
-    var mitad = (window.innerHeight || 600) * 0.45, vis = 'inicio', i, el;
-    for (i = 0; i < ORDEN.length; i++) {
-      el = $(ORDEN[i]);
-      if (el && el.offsetHeight && el.getBoundingClientRect().top < mitad) { vis = ORDEN[i]; }
-    }
-    return vis;
-  }
-  var revisando = false;
-  function alHacerScroll() {
-    if (revisando) { return; }
-    revisando = true;
-    setTimeout(function () {
-      revisando = false;
-      var s = seccionVisible();
-      if (s === actual) { return; }
-      actual = s;
-      var m = MENSAJES[s];
-      var texto = m[0];
-      if (s === 'inicio' && desbloqueado) { texto = '¡Ya viste mi video! 🙌 Registra tu hogar aquí abajo.'; }
-      if (s === 'mejora' && !desbloqueado) { texto = '🔒 Primero mira mi video arriba para desbloquear el registro.'; }
-      var ir = s === 'inicio' ? (desbloqueado ? 'mejora' : null) : (s === 'mejora' && !desbloqueado ? 'inicio' : siguiente(s));
-      decir(texto, ir);
-    }, 150);
-  }
-  window.addEventListener('scroll', alHacerScroll);
-
+  var TEXTO_GUIA = 'Sigue mis redes sociales';
+  var cerrada = false;
+  $('guia-txt').textContent = TEXTO_GUIA;
+  $('guia-ir').style.display = 'none';
   $('guia-x').onclick = function (e) { e.stopPropagation(); cerrada = true; $('guia-burbuja').className = 'guia-burbuja escondida'; };
-  $('guia-burbuja').onclick = function () { if (destino) { irA(destino); track('clic-guia', destino); } };
   $('guia-foto').onclick = function () {
-    cerrada = false;
-    var b = $('guia-burbuja');
-    if (b.className.indexOf('escondida') > -1) { decir($('guia-txt').textContent, destino, true); }
-    else { b.className = 'guia-burbuja escondida'; }
+    cerrada = !cerrada;
+    $('guia-burbuja').className = cerrada ? 'guia-burbuja escondida' : 'guia-burbuja';
+    track('clic-guia', 'redes');
   };
 
   /* ---------- Inicio ---------- */
@@ -1429,7 +1371,6 @@ footer .pie{margin-top:18px;opacity:.6}
   cargarPixeles();
   cargar();
   track('visita', null);
-  setTimeout(function () { actual = ''; alHacerScroll(); }, 1200);
 })();
 </script>
 </body>

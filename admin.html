@@ -5,27 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Panel · Moreta</title>
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;0,900;1,800&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="agenda-imagen.js"></script>
 <style>
-:root{--azul:#1D5BF2;--azul2:#0E3BC4;--marino:#0A1A5C;--magenta:#E5177E;--rosa:#FF4FA8;--gris:#5B6488;--fondo:#F3F5FC;--linea:#DFE3F0;--verde:#13A35B;--rojo:#C4153F}
+:root{--azul:#0000EF;--azul2:#0000C2;--marino:#000066;--magenta:#FF0064;--rosa:#FF3D8B;--gris:#55587A;--fondo:#F3F3FF;--linea:#DEDEF4;--verde:#13A35B;--rojo:#C4153F}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Montserrat,Arial,sans-serif;background:var(--fondo);color:var(--marino);-webkit-font-smoothing:antialiased;font-size:14.5px}
 button,input,select,textarea{font:inherit;color:inherit}
 .oculto{display:none!important}
 
 /* Login */
-#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,var(--azul),var(--azul2) 45%,var(--marino))}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--azul)}
 .caja{background:#fff;border-radius:22px;padding:28px 24px;width:100%;max-width:380px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
 .caja h1{font-size:22px;font-weight:900;margin-top:16px}
 .caja p{color:var(--gris);font-size:13.5px;margin-top:4px}
-.logo-login{background:var(--marino);border-radius:14px;padding:14px;text-align:center}
+.logo-login{background:var(--azul);border-radius:14px;padding:14px;text-align:center}
 .logo-login img{width:200px;max-width:100%}
 
 /* Campos */
@@ -34,7 +34,7 @@ label.l{display:block;font-weight:700;font-size:13px;margin:14px 0 6px}
 .in:focus{outline:none;border-color:var(--azul)}
 textarea.in{min-height:110px;resize:vertical;line-height:1.5}
 .btn{border:0;border-radius:11px;padding:11px 16px;font-weight:800;cursor:pointer;background:var(--marino);color:#fff;font-size:14px;white-space:nowrap}
-.btn.mag{background:linear-gradient(90deg,var(--magenta),var(--rosa))}
+.btn.mag{background:var(--magenta)}
 .btn.sec{background:#fff;color:var(--marino);border:1.5px solid var(--linea)}
 .btn.peq{padding:7px 11px;font-size:12.5px;border-radius:9px}
 .btn.rojo{background:#fff;color:var(--rojo);border:1.5px solid #F3C9D3}
@@ -43,9 +43,9 @@ textarea.in{min-height:110px;resize:vertical;line-height:1.5}
 .msg-err{color:var(--rojo);font-weight:600;font-size:13px;margin-top:12px}
 
 /* Layout */
-header.top{background:var(--marino);color:#fff;position:sticky;top:0;z-index:10}
+header.top{background:var(--azul);color:#fff;position:sticky;top:0;z-index:10}
 .top-in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;align-items:center}
-.top-in img{height:34px}
+.top-in img{height:40px}
 .top-in .yo{margin-left:auto;font-size:12.5px;opacity:.8;margin-right:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40vw}
 .top-in a{color:#fff;font-size:12.5px;font-weight:700;margin-right:12px}
 nav.tabs{max-width:1080px;margin:0 auto;padding:0 10px;display:flex;overflow-x:auto}
@@ -56,14 +56,14 @@ h2{font-size:22px;font-weight:900}
 .sub{color:var(--gris);font-size:13.5px;margin-top:3px}
 .fila{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
 .cab{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
-.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 3px 14px rgba(10,26,92,.06)}
+.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 3px 14px rgba(0,0,102,.06)}
 
 /* Estadísticas */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
 .kpi .n{font-size:30px;font-weight:900;margin-top:4px}
 .kpi .t{font-size:12px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px}
 .kpi .d{font-size:12px;color:var(--gris);margin-top:2px}
-.kpi.dest{background:linear-gradient(135deg,var(--magenta),var(--rosa));color:#fff}
+.kpi.dest{background:var(--magenta);color:#fff}
 .kpi.dest .t,.kpi.dest .d{color:rgba(255,255,255,.9)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px}
 .card h3{font-size:15px;font-weight:800;margin-bottom:12px}
@@ -89,7 +89,7 @@ td{padding:10px 12px;border-top:1px solid var(--linea);vertical-align:top}
 td a{color:var(--verde);font-weight:700;text-decoration:none}
 
 /* CRUD */
-.item{display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:12px 14px;margin-top:10px;box-shadow:0 2px 10px rgba(10,26,92,.05)}
+.item{display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:12px 14px;margin-top:10px;box-shadow:0 2px 10px rgba(0,0,102,.05)}
 .item.off{opacity:.5}
 .item .info{flex:1;min-width:0}
 .item .info b{display:block;font-size:14.5px}
@@ -112,7 +112,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
 .col .h{width:100%;background:var(--verde);min-height:0}
 
 /* Hogares */
-.hog{background:#fff;border-radius:16px;padding:16px;margin-top:12px;box-shadow:0 3px 14px rgba(10,26,92,.06);display:flex;gap:16px}
+.hog{background:#fff;border-radius:16px;padding:16px;margin-top:12px;box-shadow:0 3px 14px rgba(0,0,102,.06);display:flex;gap:16px}
 .hog .datos{flex:1;min-width:0}
 .hog h3{font-size:16px;font-weight:800}
 .hog .meta{font-size:12px;color:var(--gris);margin-top:2px}
@@ -151,7 +151,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
 <!-- ================= LOGIN ================= -->
 <section id="login">
   <form class="caja" id="f-login">
-    <div class="logo-login"><img src="img/logo-tierrita.png" alt="La Tierrita nos une"></div>
+    <div class="logo-login"><img src="img/logo-blanco.svg" alt="Miguel Ángel Moreta — Alcalde"></div>
     <h1>Panel de campaña</h1>
     <p>Acceso solo para el administrador.</p>
     <label class="l" for="l-email">Correo</label>
@@ -167,7 +167,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
 <div id="panel" class="oculto">
   <header class="top">
     <div class="top-in">
-      <img src="img/logo-tierrita.png" alt="">
+      <img src="img/logo-blanco.svg" alt="">
       <span class="yo" id="yo"></span>
       <a href="index.html" target="_blank">Ver página ↗</a>
       <button class="btn peq sec" id="salir">Salir</button>
@@ -308,7 +308,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
 <div id="toast" class="oculto"></div>
 
 <!-- Vista previa de imagen de agenda -->
-<div id="vista" class="oculto" style="position:fixed;inset:0;background:rgba(10,26,92,.75);z-index:60;display:flex;align-items:center;justify-content:center;padding:20px">
+<div id="vista" class="oculto" style="position:fixed;inset:0;background:rgba(0,0,102,.75);z-index:60;display:flex;align-items:center;justify-content:center;padding:20px">
   <div class="card" style="max-width:440px;width:100%;max-height:94vh;overflow:auto;text-align:center">
     <img id="vista-img" alt="" style="max-width:100%;max-height:62vh;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.2)">
     <div class="fila" style="justify-content:center;margin-top:14px">
@@ -426,7 +426,7 @@ const NOMBRES = {
   directo: 'Link directo', compartido: 'Compartido por WhatsApp',
   'compartido-facebook': 'Compartido en Facebook', 'compartido-whatsapp': 'Compartido por WhatsApp',
   'compartido-copiado': 'Enlace copiado', whatsapp: 'Compartir por WhatsApp', 'copiar-enlace': 'Copiar enlace',
-  'ir-al-video': 'Ir al video (candado)', 'abrir-heroe': 'Quiero ser Héroe del Barrio', 'compartir-whatsapp': 'Héroe compartió su link (WhatsApp)', 'compartir-facebook': 'Héroe compartió su link (Facebook)', 'copiar-link': 'Héroe copió su link', 'comunidad-whatsapp': 'Comunidad de WhatsApp', 'comunidad-telegram': 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers', 'qr-valla': 'QR de vallas y lonas', 'qr-evento': 'QR de eventos', 'agenda-imagen': 'Imagen de agenda compartida', 'pantalla-inicio': 'Ícono en pantalla de inicio'
+  'ir-al-video': 'Ir al video (candado)', 'abrir-heroe': 'Quiero ser Héroe del Barrio', 'compartir-whatsapp': 'Héroe compartió su link (WhatsApp)', 'compartir-facebook': 'Héroe compartió su link (Facebook)', 'copiar-link': 'Héroe copió su link', 'comunidad-whatsapp': 'Comunidad de WhatsApp', 'comunidad-telegram': 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers', 'wsp-campana': 'WhatsApp de la campaña', 'meta-ads': 'Anuncios pagados (Meta)', youtube: 'YouTube', 'qr-valla': 'QR de vallas y lonas', 'qr-evento': 'QR de eventos', 'agenda-imagen': 'Imagen de agenda compartida', 'pantalla-inicio': 'Ícono en pantalla de inicio'
 };
 const nombre = n => {
   if (NOMBRES[n]) return NOMBRES[n];

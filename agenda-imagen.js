@@ -11,8 +11,9 @@
    ========================================================= */
 (function () {
   var C = {
-    azul: '#1D5BF2', azul2: '#0E3BC4', marino: '#0A1A5C', brillo: '#3D7BFF',
-    magenta: '#E5177E', rosa: '#FF4FA8', gris: '#5B6488', blanco: '#FFFFFF'
+    // Colores del Manual de Marca
+    azul: '#0000EF', azul2: '#0000C2', marino: '#000066',
+    magenta: '#FF0064', rosa: '#FF0064', gris: '#55587A', blanco: '#FFFFFF'
   };
   var DIAS = ['DOMINGO', 'LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
   var MESES = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
@@ -65,23 +66,19 @@
   }
   function sinSombra(ctx) { ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; }
 
+  // Casa del logo (símbolo de la marca), medidas originales 48.21 x 54.14
+  var CASA = 'M24.11 1L1 27.07L1 53.14L47.22 53.14L47.22 27.07L24.11 1ZM18.17 31.98H30.05V53.14H18.17Z';
+  function casa(ctx, x, y, ancho, color, alfa) {
+    if (typeof Path2D === 'undefined') { return; }
+    var k = ancho / 48.21;
+    ctx.save(); ctx.globalAlpha = alfa == null ? 1 : alfa; ctx.translate(x, y); ctx.scale(k, k);
+    ctx.fillStyle = color; ctx.fill(new Path2D(CASA), 'evenodd'); ctx.restore();
+  }
+
   function fondo(ctx, W, H) {
-    var g = ctx.createLinearGradient(0, 0, W * 0.6, H);
-    g.addColorStop(0, C.azul); g.addColorStop(0.45, C.azul2); g.addColorStop(1, C.marino);
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    var r = ctx.createRadialGradient(W * 0.85, H * 0.06, 0, W * 0.85, H * 0.06, W * 0.7);
-    r.addColorStop(0, 'rgba(61,123,255,0.9)'); r.addColorStop(1, 'rgba(61,123,255,0)');
-    ctx.fillStyle = r; ctx.fillRect(0, 0, W, H);
-    // franja magenta diagonal (derecha)
-    ctx.save(); ctx.translate(W * 0.97, H * 0.42); ctx.rotate(20 * Math.PI / 180);
-    var m = ctx.createLinearGradient(0, -H * 0.35, 0, H * 0.35);
-    m.addColorStop(0, C.magenta); m.addColorStop(1, C.rosa);
-    ctx.globalAlpha = 0.88; ctx.fillStyle = m; redondeado(ctx, -W * 0.09, -H * 0.33, W * 0.18, H * 0.66, 50); ctx.fill();
-    ctx.restore();
-    // franja blanca suave (izquierda abajo)
-    ctx.save(); ctx.translate(W * 0.02, H * 0.86); ctx.rotate(-24 * Math.PI / 180);
-    ctx.globalAlpha = 0.07; ctx.fillStyle = '#fff'; redondeado(ctx, -W * 0.14, -H * 0.2, W * 0.28, H * 0.4, 60); ctx.fill();
-    ctx.restore(); ctx.globalAlpha = 1;
+    ctx.fillStyle = C.azul; ctx.fillRect(0, 0, W, H);
+    casa(ctx, W * 0.66, H * 0.30, W * 0.52, C.magenta, 0.95);   // casa rosada grande a la derecha
+    casa(ctx, -W * 0.12, H * 0.74, W * 0.34, '#FFFFFF', 0.07);  // casa blanca suave abajo a la izquierda
   }
 
   function fotoCircular(ctx, foto, cx, cy, d) {
@@ -95,14 +92,15 @@
     ctx.restore();
   }
 
-  function nombre(ctx, x, y, k) {
-    ctx.fillStyle = '#fff'; ctx.textAlign = 'left';
-    ctx.font = 'italic 800 ' + Math.round(54 * k) + 'px ' + F; ctx.fillText('Miguel Ángel', x, y);
-    ctx.font = '900 ' + Math.round(118 * k) + 'px ' + F; ctx.fillText('MORETA', x - 4, y + 112 * k);
-    var colores = [C.magenta, '#fff', C.brillo, C.rosa], i, bw = 92 * k;
-    for (i = 0; i < 4; i++) { ctx.fillStyle = colores[i]; redondeado(ctx, x + i * (bw + 10 * k), y + 140 * k, bw, 12 * k, 6 * k); ctx.fill(); }
-    ctx.fillStyle = 'rgba(255,255,255,.92)'; ctx.font = '700 ' + Math.round(30 * k) + 'px ' + F;
-    ctx.fillText('Candidato a la Alcaldía de Santo Domingo', x, y + 200 * k);
+  function nombre(ctx, x, y, k, hashtag) {
+    if (hashtag) {
+      var hw = 520 * k, hh = hw * hashtag.height / hashtag.width;
+      ctx.drawImage(hashtag, x, y, hw, hh); y += hh;
+    }
+    ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.textAlign = 'left';
+    ctx.font = '700 ' + Math.round(30 * k) + 'px ' + F;
+    ctx.fillText('Candidato a la Alcaldía', x, y + 56 * k);
+    ctx.fillText('de Santo Domingo', x, y + 94 * k);
   }
 
   function tarjeta(ctx, it, x, y, w, h, grande) {
@@ -111,16 +109,14 @@
     sinSombra(ctx);
     var pad = grande ? 44 : 32, ic = grande ? 150 : 112, cy = y + h / 2;
     // ícono
-    var gi = ctx.createLinearGradient(x + pad, cy - ic / 2, x + pad + ic, cy + ic / 2);
-    gi.addColorStop(0, C.magenta); gi.addColorStop(1, C.rosa);
-    ctx.fillStyle = gi; redondeado(ctx, x + pad, cy - ic / 2, ic, ic, ic * 0.28); ctx.fill();
+    ctx.fillStyle = C.magenta; redondeado(ctx, x + pad, cy - ic / 2, ic, ic, ic * 0.28); ctx.fill();
     ctx.font = Math.round(ic * 0.52) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(ICONOS[it.tipo] || '📍', x + pad + ic / 2, cy + 4);
     ctx.textBaseline = 'alphabetic';
     // línea divisoria
     var tx = x + pad + ic + (grande ? 44 : 30), ancho = x + w - pad - tx;
-    ctx.fillStyle = '#E3E7F3'; ctx.fillRect(tx - (grande ? 22 : 15), y + 30, 4, h - 60);
+    ctx.fillStyle = '#E2E2F6'; ctx.fillRect(tx - (grande ? 22 : 15), y + 30, 4, h - 60);
     // textos
     ctx.textAlign = 'left';
     var lineaTipo = (TIPOS[it.tipo] || 'EVENTO'), sTipo = grande ? 30 : 24;
@@ -129,7 +125,7 @@
     var ytop = y + (h - bloque) / 2 + sTipo;
     ctx.fillStyle = C.magenta; ctx.font = '800 ' + sTipo + 'px ' + F;
     ctx.fillText(lineaTipo, tx, ytop);
-    ctx.fillStyle = C.marino; ctx.font = '900 ' + sMedio + 'px ' + F;
+    ctx.fillStyle = C.azul; ctx.font = '900 ' + sMedio + 'px ' + F;
     ctx.fillText(it.medio || '', tx, ytop + sMedio + (grande ? 8 : 4));
     var yb = ytop + sMedio + (grande ? 34 : 22);
     var xx = tx;
@@ -151,13 +147,13 @@
     }
   }
 
-  function dibujar(ctx, W, H, items, formato, logo, foto, pie) {
+  function dibujar(ctx, W, H, items, formato, logo, foto, pie, hashtag) {
     var historia = formato === 'historia', k = historia ? 1 : 0.8;
     fondo(ctx, W, H);
     // logo
     if (logo) {
-      var lw = historia ? 680 : 520, lh = lw * logo.height / logo.width;
-      sombra(ctx, 16, 6, 0.25); ctx.drawImage(logo, (W - lw) / 2, historia ? 90 : 46, lw, lh); sinSombra(ctx);
+      var lw = historia ? 560 : 420, lh = lw * logo.height / logo.width;
+      ctx.drawImage(logo, (W - lw) / 2, historia ? 80 : 40, lw, lh);
     }
     // título
     ctx.fillStyle = '#fff'; ctx.textAlign = 'left';
@@ -179,8 +175,7 @@
     ctx.font = '800 ' + fs + 'px ' + F;
     var fw = ctx.measureText(txtF).width + (historia ? 190 : 160);
     sombra(ctx, 24, 10, 0.25);
-    var gf = ctx.createLinearGradient(0, fy, fw, fy + fh); gf.addColorStop(0, C.magenta); gf.addColorStop(1, C.rosa);
-    ctx.fillStyle = gf; redondeado(ctx, historia ? 80 : 70, fy, fw, fh, fh / 2); ctx.fill(); sinSombra(ctx);
+    ctx.fillStyle = C.magenta; redondeado(ctx, historia ? 80 : 70, fy, fw, fh, fh / 2); ctx.fill(); sinSombra(ctx);
     calendario(ctx, (historia ? 80 : 70) + 30, fy + (fh - fs * 1.35) / 2, fs * 1.35, fechas.length === 1 ? +String(fechas[0]).split('-')[2] : null);
     ctx.fillStyle = '#fff'; ctx.font = '800 ' + fs + 'px ' + F;
     ctx.fillText(txtF, (historia ? 80 : 70) + (historia ? 124 : 108), fy + fh / 2 + fs * 0.36);
@@ -202,10 +197,10 @@
     // foto y nombre
     if (historia) {
       fotoCircular(ctx, foto, W - 250, varias ? H - 360 : H - 410, varias ? 330 : 360);
-      nombre(ctx, 80, varias ? H - 360 : H - 400, 1);
+      nombre(ctx, 80, varias ? H - 470 : H - 520, 1, hashtag);
     } else {
       fotoCircular(ctx, foto, W - 180, H - 235, 230);
-      nombre(ctx, 70, H - 270, 0.78);
+      nombre(ctx, 70, H - 330, 0.74, hashtag);
     }
     // pie: link
     if (pie) {
@@ -257,10 +252,12 @@
       var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
       var ctx = canvas.getContext('2d');
       esperarFuentes(function () {
-        cargarImagen(base + 'img/logo-tierrita.png', function (logo) {
-          cargarImagen(base + 'img/moreta-cara.jpg', function (foto) {
-            dibujar(ctx, W, H, ordenar(op.items || []), formato, logo, foto, op.pie || '');
-            cb(canvas);
+        cargarImagen(base + 'img/logo-blanco.png', function (logo) {
+          cargarImagen(base + 'img/hashtag-blanco.png', function (hashtag) {
+            cargarImagen(base + 'img/moreta-cara.jpg', function (foto) {
+              dibujar(ctx, W, H, ordenar(op.items || []), formato, logo, foto, op.pie || '', hashtag);
+              cb(canvas);
+            });
           });
         });
       });

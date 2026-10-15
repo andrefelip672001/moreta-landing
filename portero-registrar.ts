@@ -128,6 +128,8 @@ Deno.serve(async (req) => {
   }
 
   const personas = parseInt(String(d.personas ?? ""), 10);
+  const brigada = texto("brigada", 40)?.toLowerCase() ?? null;
+  const talonario = texto("talonario", 8);
   const edad = parseInt(String(d.edad ?? ""), 10);
   const { error } = await sb.from("hogares").insert({
     nombre: texto("nombre", 120),
@@ -144,12 +146,15 @@ Deno.serve(async (req) => {
     mejoras: texto("mejoras", 200),
     fotos: rutas,
     fuente,
+    brigada,
+    talonario,
     consentimiento: d.consentimiento === true,
   });
 
   if (error) {
     await borrarFotos(); // si el registro falla, no dejamos fotos huérfanas
-    if (error.code === "23505") return responder({ error: "cedula" }, 409);
+    if (error.code === "23505") return responder({ error: error.message.includes("talonario") ? "talonario" : "cedula" }, 409);
+    if (error.message.includes("brigada no valida")) return responder({ error: "brigada" }, 400);
     return responder({ error: "datos", detalle: error.message }, 400);
   }
   return responder({ ok: true });

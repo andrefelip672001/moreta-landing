@@ -124,6 +124,23 @@ h2 em{font-family:var(--f-script);text-transform:none;color:var(--magenta);font-
 .listo h3{font-size:21px;font-weight:900;margin-top:8px}
 .listo p{color:var(--gris);font-size:14.5px;margin-top:8px;line-height:1.5}
 .opc{font-weight:500;color:var(--gris)}
+/* ---------- MODO BRIGADA (link ?brigada=codigo): solo el formulario ---------- */
+body.brigada .hero,body.brigada section:not(#mejora),body.brigada .redes-flot,body.brigada .guia,body.brigada [data-comunidad],body.brigada .solo-publico{display:none!important}
+body.brigada #mejora{padding-top:18px}
+.solo-brigada{display:none}
+body.brigada .solo-brigada{display:block}
+.brig-barra{background:var(--azul);color:#fff;border-radius:18px;padding:14px 16px;margin-bottom:14px;align-items:center}
+body.brigada .brig-barra{display:flex}
+.brig-barra img{width:96px;height:auto;flex:none;margin-right:14px}
+.brig-barra .q{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;opacity:.8}
+.brig-barra .n{font-size:17px;font-weight:900;line-height:1.2}
+.brig-nums{display:flex;margin-top:8px}
+.brig-nums div{background:rgba(255,255,255,.14);border-radius:10px;padding:5px 10px;margin-right:8px;font-size:12px;font-weight:700}
+.brig-nums b{font-size:17px;font-weight:900;margin-right:3px}
+.talonario{background:#FFF0F6;border:2px solid var(--magenta);border-radius:14px;padding:12px 14px 14px;margin-bottom:6px}
+.talonario .l{margin-top:0;color:var(--magenta)}
+.talonario input{font-size:22px;font-weight:900;letter-spacing:3px;text-align:center}
+.brig-aviso{background:#FFF1F3;border:1.5px solid #F3C9D3;color:#C4153F;border-radius:14px;padding:12px 14px;font-size:13.5px;font-weight:700;margin-bottom:14px;text-align:center}
 .captcha{margin-top:14px}
 .captcha:empty{margin-top:0}
 .fotos{display:flex;margin:0 -5px}
@@ -299,11 +316,20 @@ footer .pie{margin-top:18px;opacity:.6}
 <!-- ================= 2. MEJORA TU HOGAR (bloqueado) ================= -->
 <section id="mejora">
   <div class="wrap">
+    <div class="brig-aviso" id="brig-aviso" style="display:none"></div>
+    <div class="brig-barra" id="brig-barra" style="display:none">
+      <img src="img/logo-blanco.svg" alt="Miguel Ángel Moreta — Alcalde" width="96" height="43">
+      <div>
+        <div class="q">Jefe de brigada</div>
+        <div class="n" id="brig-nombre">—</div>
+        <div class="brig-nums"><div><b id="brig-hoy">0</b>hoy</div><div><b id="brig-total">0</b>en total</div></div>
+      </div>
+    </div>
     <div class="mth bloqueado" id="mth">
       <div class="mth-cab">
         <span class="et">🏠 Propuesta Mejora tu Hogar</span>
-        <h2>Registra tu hogar</h2>
-        <p>Déjanos tus datos para ser parte del programa Mejora tu Hogar.</p>
+        <h2 id="mth-titulo">Registra tu hogar</h2>
+        <p id="mth-sub">Déjanos tus datos para ser parte del programa Mejora tu Hogar.</p>
       </div>
       <div class="mth-cuerpo">
         <div class="candado">
@@ -315,6 +341,12 @@ footer .pie{margin-top:18px;opacity:.6}
 
         <div class="form-in">
           <form class="form" id="form-mth" novalidate>
+            <div class="talonario solo-brigada">
+              <label class="l" for="m-talonario">N° de talonario</label>
+              <input type="tel" id="m-talonario" maxlength="8" inputmode="numeric" placeholder="0001" autocomplete="off">
+              <p class="ayuda">Escribe el número impreso en el talonario de papel.</p>
+            </div>
+
             <label class="l" for="m-nombre">Nombres y apellidos</label>
             <input type="text" id="m-nombre" maxlength="120" autocomplete="name" placeholder="Ej: María Pérez">
 
@@ -402,7 +434,7 @@ footer .pie{margin-top:18px;opacity:.6}
 
             <label class="consent">
               <input type="checkbox" id="m-consent">
-              <span>Acepto que la campaña use mis datos para contactarme sobre la propuesta Mejora tu Hogar, según el aviso de privacidad al final de esta página.</span>
+              <span id="m-consent-txt">Acepto que la campaña use mis datos para contactarme sobre la propuesta Mejora tu Hogar, según el aviso de privacidad al final de esta página.</span>
             </label>
 
             <div class="captcha" id="cap-mth"></div>
@@ -412,9 +444,10 @@ footer .pie{margin-top:18px;opacity:.6}
 
           <div class="listo" id="m-listo">
             <div class="big">🏠</div>
-            <h3>¡Tu hogar quedó registrado!</h3>
-            <p>Te contactaremos por WhatsApp. Comparte esta página para que más familias se registren.</p>
-            <a class="btn-sec" href="#comparte" style="background:var(--marino)">Compartir con mi familia</a>
+            <h3 id="m-listo-tit">¡Tu hogar quedó registrado!</h3>
+            <p id="m-listo-txt">Te contactaremos por WhatsApp. Comparte esta página para que más familias se registren.</p>
+            <a class="btn-sec solo-publico" href="#comparte" style="background:var(--marino)">Compartir con mi familia</a>
+            <button type="button" class="enviar solo-brigada" id="m-otra">➕ Registrar otra persona</button>
             <div class="com-mini" data-comunidad style="display:none">
               <p>📲 Entérate primero de las novedades de Mejora tu Hogar:</p>
             </div>
@@ -683,6 +716,18 @@ footer .pie{margin-top:18px;opacity:.6}
       else if (sessionStorage.getItem('src')) { fuente = sessionStorage.getItem('src'); }
     } catch (e) { if (m) { fuente = decodeURIComponent(m[1]).slice(0, 60); } }
   })();
+  /* ---------- Jefes de brigada: link ?brigada=codigo → solo el formulario, sin video ---------- */
+  var brigada = null, modoBrigada = false, videoPendiente = null;
+  (function () {
+    var m = /[?&]brigada=([^&#]+)/.exec(location.search), c = null;
+    try {
+      if (m) { c = decodeURIComponent(m[1]); sessionStorage.setItem('brigada', c); }
+      else { c = sessionStorage.getItem('brigada'); }
+    } catch (e) { if (m) { c = decodeURIComponent(m[1]); } }
+    c = String(c || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40);
+    if (c.length >= 3) { brigada = c; modoBrigada = true; document.body.className += ' brigada'; }
+  })();
+
   // Para probar de nuevo el bloqueo: abre la página con ?reset=1
   if (/[?&]reset=1/.test(location.search)) { try { localStorage.removeItem('moreta_video_ok'); } catch (e) {} }
 
@@ -708,6 +753,7 @@ footer .pie{margin-top:18px;opacity:.6}
 
   /* ---------- Medición ---------- */
   function track(evento, detalle) {
+    if (modoBrigada) { return; } // lo que hacen las brigadas no cuenta como visitas de la página
     api('eventos', 'POST', { evento: evento, detalle: detalle || null, fuente: fuente, pagina: 'conoce-moreta' });
     if (window.fbq) { window.fbq('trackCustom', evento, { detalle: detalle, fuente: fuente }); }
     if (window.gtag) { window.gtag('event', evento, { detalle: detalle, fuente: fuente }); }
@@ -758,6 +804,7 @@ footer .pie{margin-top:18px;opacity:.6}
   if (desbloqueado) { desbloquear(false); }
 
   function iniciarVideo(url, formato) {
+    if (modoBrigada) { videoPendiente = [url, formato]; return; } // la brigada no necesita el video
     if (formato === 'horizontal') { $('vm').className = 'vm h'; }
     var id = ytId(url);
     if (!id) { videoDemo(); return; }
@@ -1110,6 +1157,8 @@ footer .pie{margin-top:18px;opacity:.6}
     captcha: 'No pudimos comprobar que eres una persona. Espera unos segundos e inténtalo otra vez.',
     limite: 'Se han hecho muchos registros desde esta conexión. Inténtalo de nuevo en una hora.',
     cedula: 'Esta cédula ya está registrada en Mejora tu Hogar.',
+    talonario: 'Ese número de talonario ya fue registrado. Revisa el número del papel.',
+    brigada: 'Tu link de jefe de brigada ya no está activo. Comunícate con el coordinador de la campaña.',
     foto: 'Una de las fotos no se pudo subir. Quítala y prueba con otra.',
     datos: 'Revisa los datos del formulario e inténtalo otra vez.'
   };
@@ -1121,7 +1170,7 @@ footer .pie{margin-top:18px;opacity:.6}
     if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
     if (tipoContenido) { x.setRequestHeader('Content-Type', tipoContenido); }
     if (tipoContenido === 'application/json') { x.setRequestHeader('Prefer', 'return=minimal'); }
-    x.onreadystatechange = function () { if (x.readyState === 4) { cb(x.status); } };
+    x.onreadystatechange = function () { if (x.readyState === 4) { cb(x.status, x.responseText || ''); } };
     x.send(cuerpo);
   }
 
@@ -1129,10 +1178,11 @@ footer .pie{margin-top:18px;opacity:.6}
   function enviarDirecto(tipo, datos, fotosLista, alProgreso, cb) {
     function guardar() {
       if (alProgreso) { alProgreso(100); }
-      xhrSupabase('POST', '/rest/v1/' + (tipo === 'hogar' ? 'hogares' : 'voluntarios'), 'application/json', JSON.stringify(datos), function (st) {
+      xhrSupabase('POST', '/rest/v1/' + (tipo === 'hogar' ? 'hogares' : 'voluntarios'), 'application/json', JSON.stringify(datos), function (st, txt) {
         if (st >= 200 && st < 300) { return cb(true); }
         if (st === 0) { return cb(false, 'No hay conexión a internet. Revisa tus datos o wifi e inténtalo otra vez.'); }
-        if (st === 409) { return cb(false, MENSAJES_ERROR.cedula); }
+        if (st === 409) { return cb(false, txt.indexOf('talonario') > -1 ? MENSAJES_ERROR.talonario : MENSAJES_ERROR.cedula); }
+        if (txt.indexOf('brigada no valida') > -1) { return cb(false, MENSAJES_ERROR.brigada); }
         cb(false, MENSAJES_ERROR.datos);
       });
     }
@@ -1211,6 +1261,13 @@ footer .pie{margin-top:18px;opacity:.6}
       mejoras: marcados('m-mejoras').join(', '),
       fuente: fuente, consentimiento: true, fotos: []
     };
+    if (modoBrigada) {
+      var tal = $('m-talonario').value.replace(/\D/g, '');
+      if (!tal || +tal === 0) { return mostrarError('m-err', 'Escribe el número de talonario.'); }
+      while (tal.length < 4) { tal = '0' + tal; }
+      $('m-talonario').value = tal;
+      d.talonario = tal; d.brigada = brigada; d.fuente = 'brigada';
+    }
     if (d.nombre.length < 2) { return mostrarError('m-err', 'Escribe tus nombres y apellidos.'); }
     if (!cedulaValida(d.cedula)) { return mostrarError('m-err', 'Revisa tu número de cédula, no es válido.'); }
     if (!/^0\d{9}$/.test(d.telefono)) { return mostrarError('m-err', 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
@@ -1236,12 +1293,75 @@ footer .pie{margin-top:18px;opacity:.6}
     enviarAlPortero('mth', 'hogar', d, pendientes, function (p) {
       boton.textContent = p < 100 ? 'Subiendo… ' + p + '%' : 'Guardando…';
     }, function (ok, msg) {
-      if (!ok) { boton.disabled = false; boton.textContent = 'Registrar mi hogar'; return mostrarError('m-err', msg); }
+      if (!ok) { boton.disabled = false; boton.textContent = modoBrigada ? 'Guardar registro' : 'Registrar mi hogar'; return mostrarError('m-err', msg); }
       $('form-mth').style.display = 'none'; $('m-listo').style.display = 'block';
+      if (modoBrigada) {
+        $('m-listo-tit').textContent = '¡Registro guardado!';
+        $('m-listo-txt').textContent = 'Talonario N° ' + d.talonario + ' · ' + d.nombre + '.';
+        infoBrigada();
+        irA('mejora');
+        return;
+      }
       track('registro', 'mejora-tu-hogar');
       if (window.fbq) { window.fbq('track', 'Lead'); }
     });
   };
+
+  /* ---------- Modo brigada ---------- */
+  function infoBrigada(alTerminar) {
+    if (!conectado()) { return; }
+    var x = new XMLHttpRequest();
+    x.open('POST', baseUrl() + '/rest/v1/rpc/brigada_info', true);
+    x.setRequestHeader('apikey', C.SUPABASE_ANON_KEY);
+    if (C.SUPABASE_ANON_KEY.indexOf('eyJ') === 0) { x.setRequestHeader('Authorization', 'Bearer ' + C.SUPABASE_ANON_KEY); }
+    x.setRequestHeader('Content-Type', 'application/json');
+    x.onreadystatechange = function () {
+      if (x.readyState !== 4) { return; }
+      var r = null;
+      try { r = JSON.parse(x.responseText); } catch (e) {}
+      if (x.status >= 200 && x.status < 300 && r && r.nombre) {
+        $('brig-nombre').textContent = r.nombre;
+        $('brig-hoy').textContent = r.hoy;
+        $('brig-total').textContent = r.total;
+        if (alTerminar) { alTerminar(true); }
+      } else if (alTerminar) { alTerminar(x.status >= 200 && x.status < 300 ? false : null); }
+    };
+    x.send(JSON.stringify({ p_codigo: brigada }));
+  }
+  if (modoBrigada) {
+    desbloqueado = true; // solo en esta visita; no se guarda
+    $('mth').className = 'mth';
+    $('brig-barra').style.display = '';
+    $('mth-titulo').textContent = 'Registro por brigada';
+    $('mth-sub').textContent = 'Ingresa los datos de la familia tal como están en el talonario.';
+    $('m-consent-txt').textContent = 'La persona registrada acepta que la campaña use sus datos para contactarla sobre la propuesta Mejora tu Hogar, según el aviso de privacidad.';
+    $('m-enviar').textContent = 'Guardar registro';
+    infoBrigada(function (ok) {
+      if (ok !== false) { return; } // ok o sin conexión: seguimos en modo brigada
+      // El código no existe o fue desactivado: vuelve la página normal
+      modoBrigada = false;
+      try { sessionStorage.removeItem('brigada'); } catch (e) {}
+      document.body.className = document.body.className.replace(/\s*brigada/g, '');
+      $('brig-barra').style.display = 'none';
+      $('brig-aviso').style.display = 'block';
+      $('brig-aviso').textContent = 'Este link de jefe de brigada no es válido o fue desactivado. Comunícate con el coordinador de la campaña.';
+      $('mth-titulo').textContent = 'Registra tu hogar';
+      $('m-enviar').textContent = 'Registrar mi hogar';
+      desbloqueado = leer('moreta_video_ok') === '1';
+      if (!desbloqueado) { $('mth').className = 'mth bloqueado'; }
+      if (videoPendiente) { iniciarVideo(videoPendiente[0], videoPendiente[1]); }
+      setTimeout(function () { irA('mejora'); }, 300);
+    });
+    $('m-otra').onclick = function () {
+      $('form-mth').reset();
+      ponerFoto(0, null); ponerFoto(1, null);
+      var b = $('m-enviar'); b.disabled = false; b.textContent = 'Guardar registro';
+      mostrarError('m-err', '');
+      $('m-listo').style.display = 'none'; $('form-mth').style.display = '';
+      irA('mejora');
+      try { $('m-talonario').focus(); } catch (e) {}
+    };
+  }
 
   /* ---------- Héroes del Barrio: link personal ---------- */
   function codigoHeroe(nombre) {

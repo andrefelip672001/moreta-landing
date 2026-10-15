@@ -176,6 +176,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
       <button data-tab="stats" class="on">📊 Estadísticas</button>
       <button data-tab="hogares">🏠 Mejora tu Hogar</button>
       <button data-tab="voluntarios">🦸 Héroes del Barrio</button>
+      <button data-tab="brigadas">🚩 Brigadas</button>
       <button data-tab="bio">⭐ Video principal y bio</button>
       <button data-tab="videos">🎥 Videos</button>
       <button data-tab="propuestas">📋 Propuestas</button>
@@ -225,7 +226,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
       <div class="cab">
         <div><h2>Mejora tu Hogar</h2><p class="sub" id="ho-total">—</p></div>
         <div class="fila">
-          <input class="in" id="ho-buscar" placeholder="Buscar nombre, cédula, barrio…" style="width:240px">
+          <input class="in" id="ho-buscar" placeholder="Buscar nombre, cédula, talonario…" style="width:240px">
           <select class="in" id="ho-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
           <button class="btn mag" id="ho-excel">⬇ Descargar Excel</button>
         </div>
@@ -247,6 +248,36 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
         <table>
           <thead><tr><th>Fecha</th><th>Nombre</th><th>Celular</th><th>Parroquia</th><th>Barrio</th><th>Quiere ayudar en</th><th>Familias</th><th>Código</th><th></th></tr></thead>
           <tbody id="vo-filas"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Jefes de brigada -->
+    <section data-sec="brigadas" class="oculto">
+      <div class="cab">
+        <div><h2>Jefes de brigada</h2><p class="sub">Cada jefe tiene su link personal: abre directo el formulario (sin video) y pide el N° de talonario.</p></div>
+        <div class="fila">
+          <label class="ayuda" for="br-dia" style="margin:0">Ver el día</label>
+          <input class="in" type="date" id="br-dia" style="width:auto">
+          <button class="btn sec" id="br-recargar">↻ Actualizar</button>
+          <button class="btn mag" id="br-excel">⬇ Descargar Excel</button>
+        </div>
+      </div>
+      <div class="kpis" id="br-kpis"></div>
+      <div class="card" style="margin-top:12px">
+        <h3>➕ Nuevo jefe de brigada</h3>
+        <div class="formu" style="margin-top:0">
+          <div class="grid">
+            <div><label class="l" for="br-nombre">Nombre y apellido</label><input class="in" id="br-nombre" maxlength="120" placeholder="Ej: Juan Pérez"></div>
+            <div><label class="l" for="br-tel">Celular (para enviarle su link)</label><input class="in" id="br-tel" maxlength="10" inputmode="numeric" placeholder="09XXXXXXXX"></div>
+          </div>
+          <div class="fila" style="margin-top:14px"><button class="btn mag" id="br-crear">Crear y generar link</button></div>
+        </div>
+      </div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Jefe de brigada</th><th>Link personal</th><th id="br-th-dia">Día</th><th>Hoy</th><th>Total</th><th>Talonarios</th><th>Estado</th><th></th></tr></thead>
+          <tbody id="br-filas"></tbody>
         </table>
       </div>
     </section>
@@ -426,7 +457,7 @@ const NOMBRES = {
   directo: 'Link directo', compartido: 'Compartido por WhatsApp',
   'compartido-facebook': 'Compartido en Facebook', 'compartido-whatsapp': 'Compartido por WhatsApp',
   'compartido-copiado': 'Enlace copiado', whatsapp: 'Compartir por WhatsApp', 'copiar-enlace': 'Copiar enlace',
-  'ir-al-video': 'Ir al video (candado)', 'abrir-heroe': 'Quiero ser Héroe del Barrio', 'compartir-whatsapp': 'Héroe compartió su link (WhatsApp)', 'compartir-facebook': 'Héroe compartió su link (Facebook)', 'copiar-link': 'Héroe copió su link', 'comunidad-whatsapp': 'Comunidad de WhatsApp', 'comunidad-telegram': 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers', 'wsp-campana': 'WhatsApp de la campaña', 'meta-ads': 'Anuncios pagados (Meta)', youtube: 'YouTube', 'qr-valla': 'QR de vallas y lonas', 'qr-evento': 'QR de eventos', 'agenda-imagen': 'Imagen de agenda compartida', 'pantalla-inicio': 'Ícono en pantalla de inicio'
+  'ir-al-video': 'Ir al video (candado)', 'abrir-heroe': 'Quiero ser Héroe del Barrio', 'compartir-whatsapp': 'Héroe compartió su link (WhatsApp)', 'compartir-facebook': 'Héroe compartió su link (Facebook)', 'copiar-link': 'Héroe copió su link', 'comunidad-whatsapp': 'Comunidad de WhatsApp', 'comunidad-telegram': 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers', 'wsp-campana': 'WhatsApp de la campaña', 'meta-ads': 'Anuncios pagados (Meta)', youtube: 'YouTube', 'qr-valla': 'QR de vallas y lonas', 'qr-evento': 'QR de eventos', 'agenda-imagen': 'Imagen de agenda compartida', 'pantalla-inicio': 'Ícono en pantalla de inicio', brigada: '🚩 Jefes de brigada'
 };
 const nombre = n => {
   if (NOMBRES[n]) return NOMBRES[n];
@@ -531,6 +562,8 @@ $('#st-excel').onclick = async () => {
   try {
     if (!ultimoResumen || !ultimoResumen.extra) await cargadores.stats();
     const s = ultimoResumen.s, x = ultimoResumen.extra, periodo = $('#st-rango').selectedOptions[0].text;
+    try { await cargarBrigadas(); } catch (e) {}
+    const porDiaBrig = await api('rpc/brigadas_por_dia', { method: 'POST', body: {} }).catch(() => []);
     let todosHogares = [];
     for (let o = 0; ; o += 1000) {
       const parte = await api(`hogares?select=*&order=creado.desc&limit=1000&offset=${o}`);
@@ -551,6 +584,7 @@ $('#st-excel').onclick = async () => {
         ['Héroes del Barrio (periodo)', s.registros],
         ['Héroes del Barrio (total)', s.total_voluntarios],
         ['Familias registradas por héroes', x.ranking.reduce((a, r) => a + r.total, 0)],
+        ['Hogares ingresados por jefes de brigada (total)', brigadas.reduce((a, b) => a + b.total, 0)],
         ['Clics en compartir', s.compartidos],
         ['Intentos bloqueados (seguridad)', s.bloqueados ?? 0]
       ] },
@@ -561,6 +595,8 @@ $('#st-excel').onclick = async () => {
       Object.assign({ nombre: 'Héroes por parroquia' }, lista(s.parroquias_vol, ['Parroquia', 'Héroes'])),
       { nombre: 'Sexo y edad', cab: ['Grupo', 'Hogares'], filas: [['SEXO', '']].concat(x.sexo.map(r => [r.nombre, r.total]), [['', ''], ['EDAD', '']], x.edad.map(r => [r.nombre, r.total])) },
       { nombre: 'Ranking de héroes', cab: ['Puesto', 'Héroe', 'Parroquia', 'Familias registradas', 'Código'], filas: x.ranking.map((r, i) => [i + 1, r.nombre, r.parroquia, r.total, r.codigo]) },
+      { nombre: 'Brigadas', cab: CAB_BRIGADAS, filas: brigadas.map(filaBrigada) },
+      { nombre: 'Brigadas por día', cab: ['Fecha', 'Jefe de brigada', 'Registros'], filas: (porDiaBrig || []).map(r => [r.dia, r.nombre, r.total]) },
       { nombre: 'Mejora tu Hogar', cab: CAB_HOGARES, filas: todosHogares.map(filaHogar) },
       { nombre: 'Héroes del Barrio', cab: CAB_HEROES, filas: voluntarios.map(filaHeroe) }
     ]);
@@ -600,7 +636,7 @@ let hogares = [], urlsFotos = {};
 function hogFiltrados() {
   const q = $('#ho-buscar').value.toLowerCase().trim(), p = $('#ho-parroquia').value;
   return hogares.filter(h => (!p || h.parroquia === p) &&
-    (!q || [h.nombre, h.cedula, h.telefono, h.correo, h.sexo, h.barrio, h.direccion, h.mejoras].join(' ').toLowerCase().includes(q)));
+    (!q || [h.nombre, h.cedula, h.telefono, h.correo, h.sexo, h.barrio, h.direccion, h.mejoras, h.talonario, h.brigada && nombreBrigada(h.brigada)].join(' ').toLowerCase().includes(q)));
 }
 function pintarHogares() {
   const lista = hogFiltrados();
@@ -609,7 +645,7 @@ function pintarHogares() {
     <div class="hog">
       <div class="datos">
         <h3>${esc(h.nombre)}</h3>
-        <div class="meta">${esc(fecha(h.creado))} · llegó por ${esc(nombre(h.fuente || 'directo'))}</div>
+        <div class="meta">${esc(fecha(h.creado))} · ${h.brigada ? `🚩 ingresado por <b>${esc(nombreBrigada(h.brigada))}</b> · talonario <b>${esc(h.talonario || '—')}</b>` : 'llegó por ' + esc(nombre(h.fuente || 'directo'))}</div>
         <dl>
           <dt>Cédula</dt><dd>${esc(h.cedula)}</dd>
           <dt>Persona</dt><dd>${h.sexo ? esc(h.sexo) : '—'}${h.edad ? ' · ' + h.edad + ' años' : ''}</dd>
@@ -630,6 +666,7 @@ function pintarHogares() {
     : '<div class="card vacio" style="margin-top:12px">No hay registros todavía.</div>';
 }
 cargadores.hogares = async () => {
+  try { await cargarBrigadas(); } catch (e) {}
   hogares = [];
   for (let o = 0; ; o += 1000) {
     const parte = await api(`hogares?select=*&order=creado.desc&limit=1000&offset=${o}`);
@@ -657,15 +694,16 @@ $('#ho-lista').addEventListener('click', async e => {
     aviso('Registro eliminado'); cargadores.hogares();
   } catch (x) { aviso(x.message, true); }
 });
-const CAB_HOGARES = ['Fecha', 'Nombre', 'Cédula', 'Sexo', 'Edad', 'Celular', 'Correo', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Fotos', 'Llegó por', 'Héroe que lo invitó'];
+const CAB_HOGARES = ['Fecha', 'Nombre', 'Cédula', 'Sexo', 'Edad', 'Celular', 'Correo', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Fotos', 'Llegó por', 'Héroe que lo invitó', 'N° de talonario', 'Jefe de brigada'];
 function filaHogar(h) {
   const cod = (h.fuente || '').indexOf('heroe-') === 0 ? h.fuente.slice(6) : '';
   const v = cod && voluntarios.find(x => x.codigo === cod);
   const heroe = cod ? (v ? v.nombre : cod) : '';
-  return [fecha(h.creado), h.nombre, h.cedula, h.sexo || '', h.edad ?? '', h.telefono, h.correo || '', h.parroquia, h.barrio || '', h.direccion, h.vivienda, h.personas, h.mejoras, (h.fotos || []).length, nombre(h.fuente || 'directo'), heroe];
+  return [fecha(h.creado), h.nombre, h.cedula, h.sexo || '', h.edad ?? '', h.telefono, h.correo || '', h.parroquia, h.barrio || '', h.direccion, h.vivienda, h.personas, h.mejoras, (h.fotos || []).length, nombre(h.fuente || 'directo'), heroe, h.talonario || '', h.brigada ? nombreBrigada(h.brigada) : ''];
 }
 $('#ho-excel').onclick = async () => {
   const lista = hogFiltrados();
+  if (!brigadas.length) { try { await cargarBrigadas(); } catch (e) {} }
   if (!voluntarios.length) { try { await cargarVoluntarios(); } catch (e) {} }
   if (!lista.length) return aviso('No hay registros para descargar', true);
   await descargarExcel(`mejora-tu-hogar-${hoyArchivo()}.xlsx`, [{ nombre: 'Mejora tu Hogar', cab: CAB_HOGARES, filas: lista.map(filaHogar) }]);
@@ -743,6 +781,114 @@ $('#vo-excel').onclick = async () => {
   const lista = filtrados();
   if (!lista.length) return aviso('No hay registros para descargar', true);
   await descargarExcel(`heroes-del-barrio-${hoyArchivo()}.xlsx`, [{ nombre: 'Héroes del Barrio', cab: CAB_HEROES, filas: lista.map(filaHeroe) }]);
+};
+
+/* =========================================================
+   JEFES DE BRIGADA
+   ========================================================= */
+let brigadas = [];
+const hoyEC = () => new Date().toLocaleDateString('en-CA', { timeZone: 'America/Guayaquil' });
+const nombreBrigada = c => { const b = brigadas.find(x => x.codigo === c); return b ? b.nombre : c; };
+function linkBrigada(codigo) { return new URL(`./?brigada=${codigo}`, location.href).href; }
+async function cargarBrigadas() {
+  if (!$('#br-dia').value) $('#br-dia').value = hoyEC();
+  brigadas = await api('rpc/brigadas_resumen', { method: 'POST', body: { p_dia: $('#br-dia').value } }) || [];
+}
+function codigoNuevo(nom) {
+  let n = String(nom).toLowerCase();
+  try { n = n.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); } catch (e) {}
+  n = n.replace(/[^a-z0-9 ]/g, '').trim().split(/\s+/).slice(0, 2).join('-').slice(0, 30) || 'brigada';
+  const az = 'abcdefghjkmnpqrstuvwxyz23456789'; let r = '';
+  const rnd = crypto.getRandomValues(new Uint32Array(4));
+  for (let i = 0; i < 4; i++) r += az[rnd[i] % az.length];
+  return `${n}-${r}`;
+}
+function textoDia() {
+  const d = $('#br-dia').value;
+  if (d === hoyEC()) return 'Hoy';
+  const p = d.split('-'); return `${+p[2]} ${MESES[+p[1] - 1]}`;
+}
+function pintarBrigadas() {
+  const activos = brigadas.filter(b => b.activo).length;
+  const sum = k => brigadas.reduce((a, b) => a + (b[k] || 0), 0);
+  const dia = textoDia();
+  $('#br-th-dia').textContent = dia === 'Hoy' ? 'Día (hoy)' : dia;
+  $('#br-kpis').innerHTML = `
+    <div class="card kpi"><div class="t">Jefes de brigada</div><div class="n">${activos}</div><div class="d">activos de ${brigadas.length}</div></div>
+    <div class="card kpi dest"><div class="t">Registros ${dia === 'Hoy' ? 'de hoy' : 'del ' + dia}</div><div class="n">${sum('dia')}</div><div class="d">ingresados por las brigadas</div></div>
+    <div class="card kpi"><div class="t">Total ingresado</div><div class="n">${sum('total')}</div><div class="d">hogares registrados por brigadas</div></div>`;
+  $('#br-filas').innerHTML = brigadas.length ? brigadas.map(b => {
+    const link = linkBrigada(b.codigo);
+    const msj = `Hola ${b.nombre.split(' ')[0]}, este es tu link personal de jefe de brigada para registrar familias en Mejora tu Hogar: ${link}`;
+    const wa = b.telefono ? `https://wa.me/593${b.telefono.slice(1)}?text=${encodeURIComponent(msj)}` : `https://wa.me/?text=${encodeURIComponent(msj)}`;
+    return `<tr style="${b.activo ? '' : 'opacity:.55'}">
+      <td><b>${esc(b.nombre)}</b><br><small style="color:var(--gris)">${esc(b.telefono || 'sin celular')}</small></td>
+      <td style="white-space:nowrap"><code style="font-size:11.5px">${esc(b.codigo)}</code><br>
+        <button class="btn peq sec" data-copiar="${esc(link)}">📋 Copiar link</button>
+        <a class="btn peq sec" href="${esc(wa)}" target="_blank" rel="noopener" style="text-decoration:none">📲 WhatsApp</a></td>
+      <td style="text-align:center"><b style="font-size:18px;color:${b.dia ? 'var(--magenta)' : 'var(--gris)'}">${b.dia}</b></td>
+      <td style="text-align:center">${b.hoy}</td>
+      <td style="text-align:center"><b>${b.total}</b></td>
+      <td style="white-space:nowrap">${b.talonario_desde ? esc(b.talonario_desde) + ' – ' + esc(b.talonario_hasta) : '—'}</td>
+      <td><button class="btn peq ${b.activo ? 'sec' : 'mag'}" data-activo="${b.id}">${b.activo ? '✅ Activo' : '⛔ Desactivado'}</button></td>
+      <td>${b.total ? '' : `<button class="btn peq rojo" data-borrar-br="${b.id}">Eliminar</button>`}</td></tr>`;
+  }).join('') : '<tr><td colspan="8" class="vacio" style="text-align:center;padding:24px">Todavía no hay jefes de brigada. Crea el primero arriba.</td></tr>';
+}
+cargadores.brigadas = async () => { await cargarBrigadas(); pintarBrigadas(); };
+$('#br-dia').onchange = () => cargadores.brigadas().catch(x => aviso(x.message, true));
+$('#br-recargar').onclick = () => cargadores.brigadas().then(() => aviso('Actualizado')).catch(x => aviso(x.message, true));
+$('#br-crear').onclick = async () => {
+  const nom = $('#br-nombre').value.trim(), tel = $('#br-tel').value.replace(/\D/g, '');
+  if (nom.length < 2) return aviso('Escribe el nombre del jefe de brigada', true);
+  if (tel && !/^0\d{9}$/.test(tel)) return aviso('El celular debe tener 10 dígitos (ej: 0991234567)', true);
+  const btn = $('#br-crear'); btn.disabled = true;
+  try {
+    await api('brigadas', { method: 'POST', body: { nombre: nom, telefono: tel || null, codigo: codigoNuevo(nom) }, prefer: 'return=minimal' });
+    $('#br-nombre').value = ''; $('#br-tel').value = '';
+    aviso('Jefe de brigada creado. Envíale su link por WhatsApp.');
+    await cargadores.brigadas();
+  } catch (x) { aviso(x.message, true); }
+  btn.disabled = false;
+};
+$('#br-filas').addEventListener('click', async e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.copiar) {
+    try { await navigator.clipboard.writeText(t.dataset.copiar); aviso('Link copiado'); }
+    catch (x) { prompt('Copia el link:', t.dataset.copiar); }
+    return;
+  }
+  if (t.dataset.activo) {
+    const b = brigadas.find(x => String(x.id) === t.dataset.activo);
+    if (b.activo && !confirm(`¿Desactivar a ${b.nombre}? Su link dejará de funcionar (sus registros se mantienen).`)) return;
+    try { await api(`brigadas?id=eq.${b.id}`, { method: 'PATCH', body: { activo: !b.activo }, prefer: 'return=minimal' }); await cargadores.brigadas(); }
+    catch (x) { aviso(x.message, true); }
+    return;
+  }
+  if (t.dataset.borrarBr) {
+    const b = brigadas.find(x => String(x.id) === t.dataset.borrarBr);
+    if (!confirm(`¿Eliminar a ${b.nombre}?`)) return;
+    try { await api(`brigadas?id=eq.${b.id}`, { method: 'DELETE' }); aviso('Eliminado'); await cargadores.brigadas(); }
+    catch (x) { aviso(x.message, true); }
+  }
+});
+const CAB_BRIGADAS = ['Jefe de brigada', 'Celular', 'Código', 'Link personal', 'Estado', 'Registros del día elegido', 'Registros hoy', 'Total registros', 'Talonario desde', 'Talonario hasta'];
+const filaBrigada = b => [b.nombre, b.telefono || '', b.codigo, linkBrigada(b.codigo), b.activo ? 'Activo' : 'Desactivado', b.dia, b.hoy, b.total, b.talonario_desde || '', b.talonario_hasta || ''];
+$('#br-excel').onclick = async () => {
+  try {
+    await cargarBrigadas();
+    if (!brigadas.length) return aviso('No hay jefes de brigada todavía', true);
+    const porDia = await api('rpc/brigadas_por_dia', { method: 'POST', body: {} }) || [];
+    let hog = [];
+    for (let o = 0; ; o += 1000) {
+      const parte = await api(`hogares?select=*&brigada=not.is.null&order=creado.desc&limit=1000&offset=${o}`);
+      hog = hog.concat(parte); if (parte.length < 1000) break;
+    }
+    await descargarExcel(`brigadas-${hoyArchivo()}.xlsx`, [
+      { nombre: 'Resumen', titulo: `Jefes de brigada · día elegido: ${$('#br-dia').value} · generado el ${new Date().toLocaleString('es-EC')}`, cab: CAB_BRIGADAS, filas: brigadas.map(filaBrigada) },
+      { nombre: 'Por día', cab: ['Fecha', 'Jefe de brigada', 'Registros'], filas: porDia.map(r => [r.dia, r.nombre, r.total]) },
+      { nombre: 'Registros de brigadas', cab: CAB_HOGARES, filas: hog.map(filaHogar) }
+    ]);
+  } catch (x) { aviso(x.message, true); }
 };
 
 /* =========================================================

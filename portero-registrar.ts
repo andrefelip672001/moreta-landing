@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
   }
 
   const tipo = String(form.get("tipo") ?? "");
-  if (tipo !== "hogar" && tipo !== "voluntario") return responder({ error: "tipo" }, 400);
+  if (!["hogar", "voluntario", "artesano", "ferretero"].includes(tipo)) return responder({ error: "tipo" }, 400);
 
   const ip = req.headers.get("cf-connecting-ip") ??
     req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "sin-ip";
@@ -89,6 +89,32 @@ Deno.serve(async (req) => {
     return s === "" ? null : s;
   };
   const fuente = texto("fuente", 60);
+
+  // Datos básicos (artesanos y ferreteros)
+  const edadB = parseInt(String(d.edad ?? ""), 10);
+  const basicos = () => ({
+    nombre: texto("nombre", 120),
+    cedula: texto("cedula", 10),
+    telefono: texto("telefono", 10),
+    sexo: texto("sexo", 20),
+    edad: Number.isFinite(edadB) ? edadB : null,
+    correo: texto("correo", 120)?.toLowerCase() ?? null,
+    parroquia: texto("parroquia", 80),
+    barrio: texto("barrio", 120),
+    fuente,
+    consentimiento: d.consentimiento === true,
+  });
+  if (tipo === "artesano" || tipo === "ferretero") {
+    const fila = tipo === "artesano"
+      ? { ...basicos(), oficios: texto("oficios", 400), experiencia: texto("experiencia", 40) }
+      : { ...basicos(), razon_social: texto("razon_social", 160), ruc: texto("ruc", 13), direccion: texto("direccion", 250) };
+    const { error } = await sb.from(tipo === "artesano" ? "artesanos" : "ferreteros").insert(fila);
+    if (error) {
+      if (error.code === "23505") return responder({ error: "cedula" }, 409);
+      return responder({ error: "datos", detalle: error.message }, 400);
+    }
+    return responder({ ok: true });
+  }
 
   if (tipo === "voluntario") {
     const { error } = await sb.from("voluntarios").insert({

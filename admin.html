@@ -151,7 +151,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
 <!-- ================= LOGIN ================= -->
 <section id="login">
   <form class="caja" id="f-login">
-    <div class="logo-login"><img src="img/logo-blanco.svg" alt="Miguel Ángel Moreta — Alcalde"></div>
+    <div class="logo-login"><img src="img/logo-blanco.svg" alt="Miguel Ángel Moreta"></div>
     <h1>Panel de campaña</h1>
     <p>Acceso solo para el administrador.</p>
     <label class="l" for="l-email">Correo</label>
@@ -175,7 +175,9 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
     <nav class="tabs" id="tabs">
       <button data-tab="stats" class="on">📊 Estadísticas</button>
       <button data-tab="hogares">🏠 Mejora tu Hogar</button>
-      <button data-tab="voluntarios">🦸 Héroes del Barrio</button>
+      <button data-tab="voluntarios">🦸 Héroes de la Vivienda</button>
+      <button data-tab="artesanos">🛠️ Artesanos</button>
+      <button data-tab="ferreteros">🔩 Ferreteros</button>
       <button data-tab="brigadas">🚩 Brigadas</button>
       <button data-tab="bio">⭐ Video principal y bio</button>
       <button data-tab="videos">🎥 Videos</button>
@@ -237,7 +239,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
     <!-- Voluntarios -->
     <section data-sec="voluntarios" class="oculto">
       <div class="cab">
-        <div><h2>Héroes del Barrio</h2><p class="sub" id="vo-total">—</p></div>
+        <div><h2>Héroes de la Vivienda</h2><p class="sub" id="vo-total">—</p></div>
         <div class="fila">
           <input class="in" id="vo-buscar" placeholder="Buscar nombre, celular, barrio…" style="width:240px">
           <select class="in" id="vo-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
@@ -248,6 +250,42 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
         <table>
           <thead><tr><th>Fecha</th><th>Nombre</th><th>Celular</th><th>Parroquia</th><th>Barrio</th><th>Quiere ayudar en</th><th>Familias</th><th>Código</th><th></th></tr></thead>
           <tbody id="vo-filas"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Artesanos de la construcción -->
+    <section data-sec="artesanos" class="oculto">
+      <div class="cab">
+        <div><h2>Artesanos de la construcción</h2><p class="sub" id="artesanos-total">—</p></div>
+        <div class="fila">
+          <input class="in" id="artesanos-buscar" placeholder="Buscar nombre, cédula, oficio…" style="width:240px">
+          <select class="in" id="artesanos-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
+          <button class="btn mag" id="artesanos-excel">⬇ Descargar Excel</button>
+        </div>
+      </div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Fecha</th><th>Nombre</th><th>Cédula</th><th>Celular</th><th>A qué se dedica</th><th>Experiencia</th><th>Parroquia</th><th></th></tr></thead>
+          <tbody id="artesanos-filas"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Aliados ferreteros -->
+    <section data-sec="ferreteros" class="oculto">
+      <div class="cab">
+        <div><h2>Aliados ferreteros</h2><p class="sub" id="ferreteros-total">—</p></div>
+        <div class="fila">
+          <input class="in" id="ferreteros-buscar" placeholder="Buscar razón social, RUC, nombre…" style="width:240px">
+          <select class="in" id="ferreteros-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
+          <button class="btn mag" id="ferreteros-excel">⬇ Descargar Excel</button>
+        </div>
+      </div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Fecha</th><th>Ferretería</th><th>RUC</th><th>Encargado</th><th>Celular</th><th>Dirección</th><th>Parroquia</th><th></th></tr></thead>
+          <tbody id="ferreteros-filas"></tbody>
         </table>
       </div>
     </section>
@@ -457,7 +495,7 @@ const NOMBRES = {
   directo: 'Link directo', compartido: 'Compartido por WhatsApp',
   'compartido-facebook': 'Compartido en Facebook', 'compartido-whatsapp': 'Compartido por WhatsApp',
   'compartido-copiado': 'Enlace copiado', whatsapp: 'Compartir por WhatsApp', 'copiar-enlace': 'Copiar enlace',
-  'ir-al-video': 'Ir al video (candado)', 'abrir-heroe': 'Quiero ser Héroe del Barrio', 'compartir-whatsapp': 'Héroe compartió su link (WhatsApp)', 'compartir-facebook': 'Héroe compartió su link (Facebook)', 'copiar-link': 'Héroe copió su link', 'comunidad-whatsapp': 'Comunidad de WhatsApp', 'comunidad-telegram': 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers', 'wsp-campana': 'WhatsApp de la campaña', 'meta-ads': 'Anuncios pagados (Meta)', youtube: 'YouTube', 'qr-valla': 'QR de vallas y lonas', 'qr-evento': 'QR de eventos', 'agenda-imagen': 'Imagen de agenda compartida', 'pantalla-inicio': 'Ícono en pantalla de inicio', brigada: '🚩 Jefes de brigada'
+  'ir-al-video': 'Ir al video (candado)', 'abrir-artesano': 'Registrarme como artesano', 'abrir-ferretero': 'Registrar mi ferretería', 'abrir-heroe': 'Quiero ser Héroe de la Vivienda', 'compartir-whatsapp': 'Héroe compartió su link (WhatsApp)', 'compartir-facebook': 'Héroe compartió su link (Facebook)', 'copiar-link': 'Héroe copió su link', 'comunidad-whatsapp': 'Comunidad de WhatsApp', 'comunidad-telegram': 'Comunidad de Telegram', 'abrir-voluntariado': 'Quiero ser voluntario', 'qr-flyer': 'QR de flyers', 'wsp-campana': 'WhatsApp de la campaña', 'meta-ads': 'Anuncios pagados (Meta)', youtube: 'YouTube', 'qr-valla': 'QR de vallas y lonas', 'qr-evento': 'QR de eventos', 'agenda-imagen': 'Imagen de agenda compartida', 'pantalla-inicio': 'Ícono en pantalla de inicio', brigada: '🚩 Jefes de brigada'
 };
 const nombre = n => {
   if (NOMBRES[n]) return NOMBRES[n];
@@ -480,14 +518,17 @@ cargadores.stats = async () => {
   const dias = +$('#st-rango').value;
   $('#st-rango-txt').textContent = $('#st-rango').selectedOptions[0].text;
   const s = await api('rpc/estadisticas', { method: 'POST', body: { dias } });
-  ultimoResumen = { s };
+  const cx = await api('rpc/conteos_registros', { method: 'POST', body: { dias } }).catch(() => ({}));
+  ultimoResumen = { s, cx };
   try { await cargarVoluntarios(); } catch (e) {} // para mostrar nombres de héroes en las fuentes
   const pct = (a, b) => b ? (a / b * 100).toFixed(1) + '%' : '0%';
   $('#st-kpis').innerHTML = `
     <div class="card kpi"><div class="t">Visitas</div><div class="n">${s.visitas}</div><div class="d">veces que se abrió la página</div></div>
     <div class="card kpi"><div class="t">Video completo</div><div class="n">${s.video_completo ?? 0}</div><div class="d">de ${s.video_inicio ?? 0} que le dieron play (${pct(s.video_completo, s.video_inicio)})</div></div>
     <div class="card kpi dest"><div class="t">Hogares registrados</div><div class="n">${s.hogares ?? 0}</div><div class="d">${s.total_hogares ?? 0} en total · ${pct(s.hogares, s.visitas)} de las visitas</div></div>
-    <div class="card kpi"><div class="t">Héroes del Barrio</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
+    <div class="card kpi"><div class="t">Héroes de la Vivienda</div><div class="n">${s.registros}</div><div class="d">${s.total_voluntarios} en total</div></div>
+    <div class="card kpi"><div class="t">🛠️ Artesanos</div><div class="n">${cx.artesanos ?? 0}</div><div class="d">${cx.total_artesanos ?? 0} en total</div></div>
+    <div class="card kpi"><div class="t">🔩 Ferreteros aliados</div><div class="n">${cx.ferreteros ?? 0}</div><div class="d">${cx.total_ferreteros ?? 0} en total</div></div>
     <div class="card kpi"><div class="t">Compartidos</div><div class="n">${s.compartidos}</div><div class="d">clics en los botones de compartir</div></div>
     <div class="card kpi"><div class="t">🛡️ Intentos bloqueados</div><div class="n">${s.bloqueados ?? 0}</div><div class="d">${s.bloqueados_captcha ?? 0} robots · ${s.bloqueados_limite ?? 0} por exceso de envíos</div></div>`;
 
@@ -581,10 +622,14 @@ $('#st-excel').onclick = async () => {
         ['Hogares registrados (periodo)', s.hogares ?? 0],
         ['Hogares registrados (total)', s.total_hogares ?? 0],
         ['% de visitas que registran su hogar', pct(s.hogares, s.visitas)],
-        ['Héroes del Barrio (periodo)', s.registros],
-        ['Héroes del Barrio (total)', s.total_voluntarios],
+        ['Héroes de la Vivienda (periodo)', s.registros],
+        ['Héroes de la Vivienda (total)', s.total_voluntarios],
         ['Familias registradas por héroes', x.ranking.reduce((a, r) => a + r.total, 0)],
         ['Hogares ingresados por jefes de brigada (total)', brigadas.reduce((a, b) => a + b.total, 0)],
+        ['Artesanos de la construcción (periodo)', (ultimoResumen.cx || {}).artesanos ?? 0],
+        ['Artesanos de la construcción (total)', (ultimoResumen.cx || {}).total_artesanos ?? 0],
+        ['Aliados ferreteros (periodo)', (ultimoResumen.cx || {}).ferreteros ?? 0],
+        ['Aliados ferreteros (total)', (ultimoResumen.cx || {}).total_ferreteros ?? 0],
         ['Clics en compartir', s.compartidos],
         ['Intentos bloqueados (seguridad)', s.bloqueados ?? 0]
       ] },
@@ -598,7 +643,9 @@ $('#st-excel').onclick = async () => {
       { nombre: 'Brigadas', cab: CAB_BRIGADAS, filas: brigadas.map(filaBrigada) },
       { nombre: 'Brigadas por día', cab: ['Fecha', 'Jefe de brigada', 'Registros'], filas: (porDiaBrig || []).map(r => [r.dia, r.nombre, r.total]) },
       { nombre: 'Mejora tu Hogar', cab: CAB_HOGARES, filas: todosHogares.map(filaHogar) },
-      { nombre: 'Héroes del Barrio', cab: CAB_HEROES, filas: voluntarios.map(filaHeroe) }
+      { nombre: 'Héroes de la Vivienda', cab: CAB_HEROES, filas: voluntarios.map(filaHeroe) },
+      { nombre: 'Artesanos', cab: REG.artesanos.cab, filas: (await traerTodo('artesanos')).map(REG.artesanos.fila) },
+      { nombre: 'Ferreteros', cab: REG.ferreteros.cab, filas: (await traerTodo('ferreteros')).map(REG.ferreteros.fila) }
     ]);
   } catch (e) { aviso(e.message, true); }
   btn.disabled = false; btn.textContent = '📊 Exportar todo a Excel';
@@ -780,8 +827,70 @@ function linkHeroe(codigo) { return new URL(`./?src=heroe-${codigo}`, location.h
 $('#vo-excel').onclick = async () => {
   const lista = filtrados();
   if (!lista.length) return aviso('No hay registros para descargar', true);
-  await descargarExcel(`heroes-del-barrio-${hoyArchivo()}.xlsx`, [{ nombre: 'Héroes del Barrio', cab: CAB_HEROES, filas: lista.map(filaHeroe) }]);
+  await descargarExcel(`heroes-de-la-vivienda-${hoyArchivo()}.xlsx`, [{ nombre: 'Héroes de la Vivienda', cab: CAB_HEROES, filas: lista.map(filaHeroe) }]);
 };
+
+/* =========================================================
+   ARTESANOS Y FERRETEROS (misma lógica para las dos tablas)
+   ========================================================= */
+async function traerTodo(tabla) {
+  let t = [];
+  for (let o = 0; ; o += 1000) {
+    const parte = await api(`${tabla}?select=*&order=creado.desc&limit=1000&offset=${o}`);
+    t = t.concat(parte); if (parte.length < 1000) break;
+  }
+  return t;
+}
+const wa = tel => `<a href="https://wa.me/593${esc(String(tel).slice(1))}" target="_blank">${esc(tel)}</a>`;
+const REG = {
+  artesanos: {
+    nombre: 'artesanos', buscar: r => [r.nombre, r.cedula, r.telefono, r.correo, r.oficios, r.barrio, r.experiencia],
+    celdas: r => `<td style="white-space:nowrap">${esc(fecha(r.creado))}</td><td><b>${esc(r.nombre)}</b><br><small style="color:var(--gris)">${esc(r.sexo || '')}${r.edad ? ' · ' + r.edad + ' años' : ''} · ${esc(r.correo || '')}</small></td>
+      <td>${esc(r.cedula)}</td><td>${wa(r.telefono)}</td><td>${esc(r.oficios)}</td><td>${esc(r.experiencia || '')}</td><td>${esc(r.parroquia)}${r.barrio ? '<br><small style="color:var(--gris)">' + esc(r.barrio) + '</small>' : ''}</td>`,
+    cab: ['Fecha', 'Nombre', 'Cédula', 'Celular', 'Sexo', 'Edad', 'Correo', 'Parroquia', 'Barrio', 'A qué se dedica', 'Experiencia', 'Llegó por'],
+    fila: r => [fecha(r.creado), r.nombre, r.cedula, r.telefono, r.sexo || '', r.edad ?? '', r.correo || '', r.parroquia, r.barrio || '', r.oficios, r.experiencia || '', nombre(r.fuente || 'directo')]
+  },
+  ferreteros: {
+    nombre: 'ferreteros', buscar: r => [r.razon_social, r.ruc, r.nombre, r.cedula, r.telefono, r.correo, r.direccion, r.barrio],
+    celdas: r => `<td style="white-space:nowrap">${esc(fecha(r.creado))}</td><td><b>${esc(r.razon_social)}</b></td><td>${esc(r.ruc || '—')}</td>
+      <td>${esc(r.nombre)}<br><small style="color:var(--gris)">CI ${esc(r.cedula)} · ${esc(r.correo || '')}</small></td><td>${wa(r.telefono)}</td><td>${esc(r.direccion)}</td><td>${esc(r.parroquia)}${r.barrio ? '<br><small style="color:var(--gris)">' + esc(r.barrio) + '</small>' : ''}</td>`,
+    cab: ['Fecha', 'Razón social', 'RUC', 'Propietario / encargado', 'Cédula', 'Celular', 'Sexo', 'Edad', 'Correo', 'Parroquia', 'Barrio', 'Dirección', 'Llegó por'],
+    fila: r => [fecha(r.creado), r.razon_social, r.ruc || '', r.nombre, r.cedula, r.telefono, r.sexo || '', r.edad ?? '', r.correo || '', r.parroquia, r.barrio || '', r.direccion, nombre(r.fuente || 'directo')]
+  }
+};
+Object.keys(REG).forEach(k => {
+  const cfg = REG[k]; let filas = [];
+  const filtrar = () => {
+    const q = $(`#${k}-buscar`).value.toLowerCase().trim(), p = $(`#${k}-parroquia`).value;
+    return filas.filter(r => (!p || r.parroquia === p) && (!q || cfg.buscar(r).join(' ').toLowerCase().includes(q)));
+  };
+  const pintar = () => {
+    const l = filtrar();
+    $(`#${k}-total`).textContent = `${l.length} de ${filas.length} registrados`;
+    $(`#${k}-filas`).innerHTML = l.length ? l.map(r => `<tr>${cfg.celdas(r)}<td><button class="btn peq rojo" data-borrar="${r.id}">Eliminar</button></td></tr>`).join('')
+      : '<tr><td colspan="8" class="vacio" style="text-align:center;padding:24px">No hay registros todavía.</td></tr>';
+  };
+  cargadores[k] = async () => {
+    filas = await traerTodo(k);
+    const actual = $(`#${k}-parroquia`).value, ps = [...new Set(filas.map(r => r.parroquia))].sort();
+    $(`#${k}-parroquia`).innerHTML = '<option value="">Todas las parroquias</option>' + ps.map(p => `<option ${p === actual ? 'selected' : ''}>${esc(p)}</option>`).join('');
+    pintar();
+  };
+  $(`#${k}-buscar`).oninput = pintar;
+  $(`#${k}-parroquia`).onchange = pintar;
+  $(`#${k}-excel`).onclick = async () => {
+    const l = filtrar();
+    if (!l.length) return aviso('No hay registros para descargar', true);
+    await descargarExcel(`${k}-${hoyArchivo()}.xlsx`, [{ nombre: k === 'artesanos' ? 'Artesanos' : 'Ferreteros', cab: cfg.cab, filas: l.map(cfg.fila) }]);
+  };
+  $(`#${k}-filas`).addEventListener('click', async e => {
+    const id = e.target.dataset.borrar; if (!id) return;
+    const r = filas.find(x => String(x.id) === id);
+    if (!confirm(`¿Eliminar el registro de ${r.razon_social || r.nombre}? Esto no se puede deshacer.`)) return;
+    try { await api(`${k}?id=eq.${id}`, { method: 'DELETE' }); aviso('Registro eliminado'); cargadores[k](); }
+    catch (x) { aviso(x.message, true); }
+  });
+});
 
 /* =========================================================
    JEFES DE BRIGADA
@@ -980,7 +1089,10 @@ const TABLAS = {
     titulo: 'Agenda de medios', sub: 'Las fechas que ya pasaron se ocultan solas en la página. Genera la imagen para publicar en estados, historias y Facebook.',
     extraAcc: r => `<button class="btn peq" data-img="${r.id}" data-fmt="historia" title="1080×1920 para estados e historias">🖼️ Historia</button>
       <button class="btn peq" data-img="${r.id}" data-fmt="post" title="1080×1350 para el feed">🖼️ Post</button>`,
-    herramientas: `<div class="card fila" style="margin-bottom:6px">
+    herramientas: `<div class="card fila" style="margin-bottom:10px;background:#FFF8E6;border:1.5px solid #F5DFA3">
+      <label class="check" style="font-weight:800;font-size:14px"><input type="checkbox" id="ag-mostrar"> Mostrar la Agenda de medios en la página</label>
+      <span class="ayuda" style="margin:0" id="ag-mostrar-txt">Cargando…</span></div>
+      <div class="card fila" style="margin-bottom:6px">
       <b style="font-size:14px">🖼️ Imagen de todo un día:</b>
       <input class="in" type="date" id="ag-dia" style="width:auto">
       <button class="btn" id="ag-dia-hist">Historia</button>
@@ -1056,7 +1168,7 @@ function montarCrud(sec) {
         </div></div>`).join('')
       : '<div class="card vacio" style="margin-top:10px">Todavía no hay nada aquí. Usa el botón de arriba para agregar.</div>';
   }
-  cargadores[tabla] = cargar;
+  cargadores[tabla] = tabla === 'agenda' ? async () => { await cargar(); await leerMostrarAgenda(); } : cargar;
 
   // Subir archivo a Supabase (bucket público "descargables")
   $$('[data-subir]', sec).forEach(inp => inp.addEventListener('change', async () => {
@@ -1145,6 +1257,19 @@ document.addEventListener('click', e => {
   if (e.target.id === 'ag-dia-post') imagenDelDia('post');
 });
 setTimeout(() => { const d = $('#ag-dia'); if (d && !d.value) d.value = new Date().toLocaleDateString('en-CA'); }, 0);
+// Mostrar u ocultar la sección Agenda de medios en la página
+function textoAgenda(si) { $('#ag-mostrar-txt').textContent = si ? '✅ La gente SÍ ve la agenda en la página.' : '🙈 La agenda está OCULTA en la página (puedes seguir agregando fechas).'; }
+async function leerMostrarAgenda() {
+  const d = await api('contenido?select=valor&clave=eq.mostrar_agenda');
+  const si = !!(d && d[0] && d[0].valor === 'si');
+  $('#ag-mostrar').checked = si; textoAgenda(si);
+}
+document.addEventListener('change', async e => {
+  if (e.target.id !== 'ag-mostrar') return;
+  const si = e.target.checked;
+  try { await guardarContenido([['mostrar_agenda', si ? 'si' : 'no']]); textoAgenda(si); aviso(si ? 'La agenda ahora se ve en la página' : 'La agenda quedó oculta'); }
+  catch (x) { e.target.checked = !si; aviso(x.message, true); }
+});
 
 /* =========================================================
    VIDEO PRINCIPAL Y BIOGRAFÍA

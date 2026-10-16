@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://moretaymoreta.com/">
 <meta property="og:title" content="Miguel Ángel Moreta · Mejora tu Hogar 🏠">
 <meta property="og:description" content="Mira el video y registra tu hogar en Mejora tu Hogar. Conoce las propuestas para Santo Domingo. ¡La Tierrita nos une! 💙">
-<meta property="og:image" content="https://moretaymoreta.com/img/og.jpg?v=4">
+<meta property="og:image" content="https://moretaymoreta.com/img/og.jpg?v=5">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Miguel Ángel Moreta, candidato a la Alcaldía de Santo Domingo · Mejora tu Hogar">
+<meta property="og:image:alt" content="Miguel Ángel Moreta · Mejora tu Hogar · La Tierrita nos une">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://moretaymoreta.com/">
 <meta name="theme-color" content="#0000EF">
@@ -40,7 +40,7 @@
   /* Tipografias (gratuitas, de Google Fonts) */
   --f-titulo:'Montserrat',Arial,sans-serif;   /* titulos: Montserrat Black */
   --f-texto:'Montserrat',Arial,sans-serif;    /* textos */
-  --f-script:'Yellowtail',cursive;            /* letra a mano, como el "Alcalde" del logo */
+  --f-script:'Yellowtail',cursive;            /* letra a mano */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -124,6 +124,24 @@ h2 em{font-family:var(--f-script);text-transform:none;color:var(--magenta);font-
 .listo h3{font-size:21px;font-weight:900;margin-top:8px}
 .listo p{color:var(--gris);font-size:14.5px;margin-top:8px;line-height:1.5}
 .opc{font-weight:500;color:var(--gris)}
+/* Mensaje después de registrarse + botones de redes */
+.listo .sigue{color:var(--marino);font-weight:800;font-size:15px;margin-top:18px}
+.redes-listo{margin-top:6px}
+.redes-listo a{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border-radius:14px;margin-top:10px;color:#fff;text-decoration:none;font-weight:800;font-size:16px}
+.redes-listo svg{width:22px;height:22px;margin-right:10px;flex:none}
+.rl-fb{background:#1877F2}
+.rl-ig{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.rl-tt{background:#000}
+/* Artesanos y Ferreteros (mismo estilo de tarjeta que Héroes) */
+.vol.art{background:var(--azul)}
+.vol.fer{background:var(--magenta)}
+.vol.fer h2 em{color:#fff;opacity:.9}
+.vol.fer .btn-vol{border-color:#fff}
+.vol.fer .enviar{background:var(--azul)}
+.vol.fer .et{background:rgba(255,255,255,.2)}
+.premio{display:inline-block;margin-left:6px;background:var(--rosa);color:#fff;font-size:11px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.vol .listo h3{color:var(--marino)}
+.subtit-form{margin-top:18px;padding-top:14px;border-top:1px solid var(--linea);font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--gris)}
 /* ---------- MODO BRIGADA (link ?brigada=codigo): solo el formulario ---------- */
 body.brigada .hero,body.brigada section:not(#mejora),body.brigada .redes-flot,body.brigada .guia,body.brigada [data-comunidad],body.brigada .solo-publico{display:none!important}
 body.brigada #mejora{padding-top:18px}
@@ -226,7 +244,7 @@ body.brigada .brig-barra{display:flex}
 .com-mini p{font-size:13.5px;font-weight:700;color:var(--marino)}
 .com-mini .bt-com{padding:12px;font-size:15px;margin-top:10px}
 
-/* Héroes del Barrio */
+/* Héroes de la Vivienda */
 .pasos-heroe{display:flex;margin:16px -4px 0}
 .pasos-heroe div{flex:1;margin:0 4px;background:rgba(255,255,255,.1);border-radius:12px;padding:10px 8px;text-align:center;font-size:12px;font-weight:700;line-height:1.3}
 .pasos-heroe b{display:block;width:26px;height:26px;border-radius:50%;background:var(--rosa);margin:0 auto 6px;line-height:26px;font-size:14px}
@@ -292,7 +310,7 @@ footer .pie{margin-top:18px;opacity:.6}
 <!-- ================= 1. HERO + VIDEO OBLIGATORIO ================= -->
 <header class="hero" id="inicio">
   <div class="wrap">
-    <h1 style="margin:0"><img class="logo" src="img/logo-blanco.svg" alt="Miguel Ángel Moreta — Alcalde" width="270" height="121"></h1>
+    <h1 style="margin:0"><img class="logo" src="img/logo-blanco.svg" alt="Miguel Ángel Moreta" width="270" height="80"></h1>
 
     <div class="vm" id="vm">
       <div class="vm-ratio">
@@ -309,7 +327,6 @@ footer .pie{margin-top:18px;opacity:.6}
     </div>
 
     <img class="hashtag" src="img/hashtag-blanco.svg" alt="#LaTierritaNosUne" width="250" height="57">
-    <p class="cargo">Candidato a la Alcaldía de Santo Domingo</p>
   </div>
 </header>
 
@@ -318,7 +335,7 @@ footer .pie{margin-top:18px;opacity:.6}
   <div class="wrap">
     <div class="brig-aviso" id="brig-aviso" style="display:none"></div>
     <div class="brig-barra" id="brig-barra" style="display:none">
-      <img src="img/logo-blanco.svg" alt="Miguel Ángel Moreta — Alcalde" width="96" height="43">
+      <img src="img/logo-blanco.svg" alt="Miguel Ángel Moreta" width="96" height="29">
       <div>
         <div class="q">Jefe de brigada</div>
         <div class="n" id="brig-nombre">—</div>
@@ -328,7 +345,7 @@ footer .pie{margin-top:18px;opacity:.6}
     <div class="mth bloqueado" id="mth">
       <div class="mth-cab">
         <span class="et">🏠 Propuesta Mejora tu Hogar</span>
-        <h2 id="mth-titulo">Registra tu hogar</h2>
+        <h2 id="mth-titulo">Regístrate aquí</h2>
         <p id="mth-sub">Déjanos tus datos para ser parte del programa Mejora tu Hogar.</p>
       </div>
       <div class="mth-cuerpo">
@@ -443,10 +460,17 @@ footer .pie{margin-top:18px;opacity:.6}
           </form>
 
           <div class="listo" id="m-listo">
-            <div class="big">🏠</div>
-            <h3 id="m-listo-tit">¡Tu hogar quedó registrado!</h3>
-            <p id="m-listo-txt">Te contactaremos por WhatsApp. Comparte esta página para que más familias se registren.</p>
-            <a class="btn-sec solo-publico" href="#comparte" style="background:var(--marino)">Compartir con mi familia</a>
+            <div class="big">🏡</div>
+            <h3 id="m-listo-tit">¡Felicitaciones, ya eres parte del sueño!</h3>
+            <p id="m-listo-txt">Tú y tu familia vivirán felices y con la dignidad que se merecen. Gracias por confiar en el proyecto más grande de <b>Vivienda Social en Ecuador</b>.</p>
+            <div class="solo-publico">
+            <p class="sigue">Para mantenerte informado de todo, sigue mis redes sociales:</p>
+            <div class="redes-listo">
+              <a class="rl-fb" data-red="facebook" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>Facebook</a>
+              <a class="rl-ig" data-red="instagram" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>Instagram</a>
+              <a class="rl-tt" data-red="tiktok" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="tiktok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>TikTok</a>
+            </div>
+            </div>
             <button type="button" class="enviar solo-brigada" id="m-otra">➕ Registrar otra persona</button>
             <div class="com-mini" data-comunidad style="display:none">
               <p>📲 Entérate primero de las novedades de Mejora tu Hogar:</p>
@@ -473,8 +497,7 @@ footer .pie{margin-top:18px;opacity:.6}
     <div class="bio-cab">
       <div class="bio-foto"><img src="img/moreta.jpg" alt="Miguel Ángel Moreta" loading="lazy"></div>
       <div>
-        <h2>Conoce a <em>Moreta</em></h2>
-        <p class="bio-cargo">Candidato a la Alcaldía de Santo Domingo</p>
+        <h2>Conoce a Moreta <em>quien arregla tu caleta</em></h2>
       </div>
     </div>
     <div class="texto" id="texto-bio"></div>
@@ -495,7 +518,7 @@ footer .pie{margin-top:18px;opacity:.6}
 </section>
 
 <!-- ================= 6. AGENDA ================= -->
-<section id="agenda" style="padding-top:10px">
+<section id="agenda" style="padding-top:10px;display:none">
   <div class="wrap">
     <h2>Agenda de <em>medios</em></h2>
     <p class="sub">Sintoniza y acompáñanos.</p>
@@ -515,21 +538,21 @@ footer .pie{margin-top:18px;opacity:.6}
   </div>
 </section>
 
-<!-- ================= 7. HÉROES DEL BARRIO (voluntariado) ================= -->
+<!-- ================= 7. HÉROES DE LA VIVIENDA (voluntariado) ================= -->
 <section id="unete" style="padding-top:10px">
   <div class="wrap">
     <div class="vol">
-      <span class="et">🦸 Héroes del Barrio</span>
-      <h2>Sé el héroe <em>de tu barrio</em></h2>
-      <p class="sub">Muchas familias de tu barrio todavía no saben de Mejora tu Hogar. Tú puedes llegar a ellas: regístrate como Héroe del Barrio y recibe <b>tu propio link</b> para invitar a tus vecinos.</p>
+      <span class="et">🦸 Héroes de la Vivienda</span><span class="premio">🏆 Gana premios registrando</span>
+      <h2>Sé un héroe <em>de la vivienda</em></h2>
+      <p class="sub">Muchas familias no saben que <b>con Moreta se arregla su caleta</b>. Regístrate como Héroe de la Vivienda y <b>gana premios</b>: recibe tu propio link para invitar a tus vecinos.</p>
       <div class="pasos-heroe">
         <div><b>1</b><span>Regístrate como héroe</span></div>
         <div><b>2</b><span>Comparte tu link con tus vecinos</span></div>
-        <div><b>3</b><span>Mira cuántas familias registraste</span></div>
+        <div><b>3</b><span>Gana premios por cada familia</span></div>
       </div>
       <div class="aviso-vol"><span>ℹ️</span><div>Este registro es para quienes quieren <b>ayudar a otras familias</b>. Si quieres registrar <b>tu propio hogar</b> en Mejora tu Hogar, <a href="#mejora">hazlo aquí</a>.</div></div>
 
-      <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe del Barrio</button>
+      <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
 
       <div class="caja-form oculto" id="caja-vol">
         <form class="form" id="form-unete" novalidate>
@@ -566,8 +589,8 @@ footer .pie{margin-top:18px;opacity:.6}
 
         <div class="listo" id="f-listo">
           <div class="big">🦸</div>
-          <h3>¡Ya eres un Héroe del Barrio!</h3>
-          <p><b>Tu reto: ayuda a registrar 10 familias</b> de tu barrio. Este es tu link personal; cada familia que se registre con él suma a tu cuenta:</p>
+          <h3>¡Ya eres un Héroe de la Vivienda!</h3>
+          <p><b>Mientras más familias registres, más premios puedes ganar.</b> Este es tu link personal; cada familia que se registre con él suma a tu cuenta:</p>
           <div class="mi-link"><span id="mi-link-txt"></span></div>
           <a class="bt-comp bt-wa" href="#" id="heroe-wsp" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-whatsapp">Enviar mi link por WhatsApp</a>
           <a class="bt-comp bt-fb" href="#" id="heroe-fb" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-facebook">Publicar mi link en Facebook</a>
@@ -576,6 +599,136 @@ footer .pie{margin-top:18px;opacity:.6}
           <div class="com-mini" data-comunidad style="display:none">
             <p>📲 Mientras tanto, únete a la comunidad:</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7b. ARTESANOS DE LA CONSTRUCCIÓN ================= -->
+<section id="artesanos" style="padding-top:10px">
+  <div class="wrap">
+    <div class="vol art">
+      <span class="et">🛠️ Artesanos de la construcción</span>
+      <h2>Trabaja con <em>Mejora tu Hogar</em></h2>
+      <p class="sub">¿Eres albañil, plomero, electricista, cerrajero o te dedicas a la construcción? Regístrate para ser parte de los artesanos que arreglarán las casas de nuestra Tierrita.</p>
+      <button class="btn-vol" id="btn-art" data-track="boton" data-detalle="abrir-artesano">🛠️ Registrarme como artesano</button>
+      <div class="caja-form oculto" id="caja-art">
+        <form class="form" id="form-art" novalidate>
+          
+          <label class="l" for="a-nombre">Nombres y apellidos</label>
+          <input type="text" id="a-nombre" maxlength="120" autocomplete="name" placeholder="Ej: Carlos Andrade">
+          <div class="dos">
+            <div><label class="l" for="a-cedula">Cédula</label><input type="tel" id="a-cedula" maxlength="10" inputmode="numeric" placeholder="10 dígitos"></div>
+            <div><label class="l" for="a-tel">Celular</label><input type="tel" id="a-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX"></div>
+          </div>
+          <div class="dos">
+            <div><label class="l" for="a-sexo">Sexo</label><select id="a-sexo"><option value="">Selecciona</option><option>Hombre</option><option>Mujer</option><option>Prefiero no decirlo</option></select></div>
+            <div><label class="l" for="a-edad">Edad</label><input type="tel" id="a-edad" maxlength="3" inputmode="numeric" placeholder="Ej: 40"></div>
+          </div>
+          <label class="l" for="a-correo">Correo electrónico</label>
+          <input type="email" id="a-correo" maxlength="120" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="nombre@correo.com">
+          <label class="l" for="a-parroquia">Parroquia</label>
+          <select id="a-parroquia" class="sel-parroquia"></select>
+          <label class="l" for="a-barrio">Barrio o sector</label>
+          <input type="text" id="a-barrio" maxlength="120" placeholder="Ej: Cooperativa 30 de Julio">
+          <label class="l">¿A qué te dedicas? <span class="opc">(puedes marcar varios)</span></label>
+          <div class="chips" id="a-oficios">
+            <label class="chip"><input type="checkbox" value="Albañil"><span>Albañil</span></label>
+            <label class="chip"><input type="checkbox" value="Maestro de obra"><span>Maestro de obra</span></label>
+            <label class="chip"><input type="checkbox" value="Plomero / Gasfitero"><span>Plomero / Gasfitero</span></label>
+            <label class="chip"><input type="checkbox" value="Electricista"><span>Electricista</span></label>
+            <label class="chip"><input type="checkbox" value="Cerrajero"><span>Cerrajero</span></label>
+            <label class="chip"><input type="checkbox" value="Carpintero"><span>Carpintero</span></label>
+            <label class="chip"><input type="checkbox" value="Pintor"><span>Pintor</span></label>
+            <label class="chip"><input type="checkbox" value="Soldador"><span>Soldador</span></label>
+            <label class="chip"><input type="checkbox" value="Ceramista / Porcelanato"><span>Ceramista / Porcelanato</span></label>
+            <label class="chip"><input type="checkbox" value="Techador"><span>Techador</span></label>
+            <label class="chip"><input type="checkbox" value="Gypsum / Cielo raso"><span>Gypsum / Cielo raso</span></label>
+            <label class="chip"><input type="checkbox" value="Aluminio y vidrio"><span>Aluminio y vidrio</span></label>
+            <label class="chip"><input type="checkbox" value="Fierrero"><span>Fierrero</span></label>
+            <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
+          </div>
+          <label class="l" for="a-otro">Si marcaste "Otro", ¿cuál? <span class="opc">(opcional)</span></label>
+          <input type="text" id="a-otro" maxlength="80" placeholder="Ej: Instalador de puertas">
+          <label class="l" for="a-exp">Años de experiencia</label>
+          <select id="a-exp"><option value="">Selecciona</option><option>Menos de 2 años</option><option>2 a 5 años</option><option>6 a 10 años</option><option>Más de 10 años</option></select>
+          <label class="consent">
+            <input type="checkbox" id="a-consent">
+            <span>Acepto que la campaña use mis datos para contactarme sobre trabajos de Mejora tu Hogar, según el aviso de privacidad al final de esta página.</span>
+          </label>
+          <div class="captcha" id="cap-art"></div>
+          <button type="submit" class="enviar" id="a-enviar">Registrarme como artesano</button>
+          <p class="err" id="a-err"></p>
+        </form>
+        <div class="listo" id="a-listo">
+          <div class="big">🛠️</div>
+          <h3>¡Ya estás registrado como artesano!</h3>
+          <p>Gracias por sumarte al proyecto más grande de Vivienda Social en Ecuador. Te contactaremos por WhatsApp.</p>
+          <p class="sigue">Para mantenerte informado de todo, sigue mis redes sociales:</p>
+          <div class="redes-listo">
+              <a class="rl-fb" data-red="facebook" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>Facebook</a>
+              <a class="rl-ig" data-red="instagram" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>Instagram</a>
+              <a class="rl-tt" data-red="tiktok" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="tiktok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>TikTok</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7c. ALIADOS FERRETEROS ================= -->
+<section id="ferreteros" style="padding-top:10px">
+  <div class="wrap">
+    <div class="vol fer">
+      <span class="et">🔩 Aliados ferreteros</span>
+      <h2>Tu ferretería, <em>aliada de Moreta</em></h2>
+      <p class="sub">¿Tienes una ferretería o depósito de materiales? Regístrate como aliado ferretero de Mejora tu Hogar.</p>
+      <button class="btn-vol" id="btn-fer" data-track="boton" data-detalle="abrir-ferretero">🔩 Registrar mi ferretería</button>
+      <div class="caja-form oculto" id="caja-fer">
+        <form class="form" id="form-fer" novalidate>
+          <label class="l" for="r-razon">Razón social</label>
+          <input type="text" id="r-razon" maxlength="160" placeholder="Ej: Ferretería El Constructor S.A.">
+          <label class="l" for="r-ruc">RUC <span class="opc">(opcional)</span></label>
+          <input type="tel" id="r-ruc" maxlength="13" inputmode="numeric" placeholder="13 dígitos">
+          <p class="subtit-form">Datos del propietario o encargado</p>
+          
+          <label class="l" for="r-nombre">Nombres y apellidos</label>
+          <input type="text" id="r-nombre" maxlength="120" autocomplete="name" placeholder="Ej: Carlos Andrade">
+          <div class="dos">
+            <div><label class="l" for="r-cedula">Cédula</label><input type="tel" id="r-cedula" maxlength="10" inputmode="numeric" placeholder="10 dígitos"></div>
+            <div><label class="l" for="r-tel">Celular</label><input type="tel" id="r-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX"></div>
+          </div>
+          <div class="dos">
+            <div><label class="l" for="r-sexo">Sexo</label><select id="r-sexo"><option value="">Selecciona</option><option>Hombre</option><option>Mujer</option><option>Prefiero no decirlo</option></select></div>
+            <div><label class="l" for="r-edad">Edad</label><input type="tel" id="r-edad" maxlength="3" inputmode="numeric" placeholder="Ej: 40"></div>
+          </div>
+          <label class="l" for="r-correo">Correo electrónico</label>
+          <input type="email" id="r-correo" maxlength="120" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="nombre@correo.com">
+          <label class="l" for="r-parroquia">Parroquia</label>
+          <select id="r-parroquia" class="sel-parroquia"></select>
+          <label class="l" for="r-barrio">Barrio o sector</label>
+          <input type="text" id="r-barrio" maxlength="120" placeholder="Ej: Cooperativa 30 de Julio">
+          <label class="l" for="r-direccion">Dirección de la ferretería</label>
+          <input type="text" id="r-direccion" maxlength="250" placeholder="Calle principal, número y una referencia">
+          <label class="consent">
+            <input type="checkbox" id="r-consent">
+            <span>Acepto que la campaña use estos datos para contactarme sobre la alianza con Mejora tu Hogar, según el aviso de privacidad al final de esta página.</span>
+          </label>
+          <div class="captcha" id="cap-fer"></div>
+          <button type="submit" class="enviar" id="r-enviar">Registrar mi ferretería</button>
+          <p class="err" id="r-err"></p>
+        </form>
+        <div class="listo" id="r-listo">
+          <div class="big">🔩</div>
+          <h3>¡Tu ferretería ya es aliada!</h3>
+          <p>Gracias por sumarte al proyecto más grande de Vivienda Social en Ecuador. Te contactaremos por WhatsApp.</p>
+          <p class="sigue">Para mantenerte informado de todo, sigue mis redes sociales:</p>
+          <div class="redes-listo">
+              <a class="rl-fb" data-red="facebook" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>Facebook</a>
+              <a class="rl-ig" data-red="instagram" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>Instagram</a>
+              <a class="rl-tt" data-red="tiktok" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="tiktok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>TikTok</a>
+            </div>
         </div>
       </div>
     </div>
@@ -613,7 +766,7 @@ footer .pie{margin-top:18px;opacity:.6}
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
-    <img class="logo" src="img/logo-blanco.svg" alt="Miguel Ángel Moreta — Alcalde" style="width:220px">
+    <img class="logo" src="img/logo-blanco.svg" alt="Miguel Ángel Moreta" style="width:220px">
     <img class="hashtag" src="img/hashtag-blanco.svg" alt="#LaTierritaNosUne" style="width:200px;margin-top:20px">
     <details>
       <summary>Aviso de privacidad</summary>
@@ -994,7 +1147,7 @@ footer .pie{margin-top:18px;opacity:.6}
       pintarDescargables(DEMO.descargables);
       pintarPropTxt(DEMO.propTxt);
       pintarVideos('lista-propuestas', DEMO.propuestas);
-      pintarAgenda(DEMO.agenda); $('texto-bio').textContent = DEMO.bio;
+      pintarAgenda(DEMO.agenda); esconder('agenda', false); $('texto-bio').textContent = DEMO.bio;
       pintarComunidad('#', '#');
       iniciarVideo(C.VIDEO_PRINCIPAL || '', C.VIDEO_PRINCIPAL_FORMATO || 'vertical');
       return;
@@ -1020,6 +1173,7 @@ footer .pie{margin-top:18px;opacity:.6}
       var c = {}, i;
       if (ok && d) { for (i = 0; i < d.length; i++) { c[d[i].clave] = d[i].valor; } }
       $('texto-bio').textContent = c.bio || DEMO.bio;
+      esconder('agenda', c.mostrar_agenda !== 'si'); // se activa en el panel → Agenda
       pintarComunidad(c.whatsapp_comunidad || '', c.telegram_comunidad || '');
       iniciarVideo(c.video_principal || C.VIDEO_PRINCIPAL || '', c.video_principal_formato || C.VIDEO_PRINCIPAL_FORMATO || 'vertical');
     });
@@ -1126,7 +1280,7 @@ footer .pie{margin-top:18px;opacity:.6}
   /* =========================================================
      VERIFICACIÓN "NO SOY UN ROBOT" (Cloudflare Turnstile)
      ========================================================= */
-  var captcha = { mth: { id: null, token: '', cont: 'cap-mth' }, vol: { id: null, token: '', cont: 'cap-vol' } };
+  var captcha = { mth: { id: null, token: '', cont: 'cap-mth' }, vol: { id: null, token: '', cont: 'cap-vol' }, art: { id: null, token: '', cont: 'cap-art' }, fer: { id: null, token: '', cont: 'cap-fer' } };
   function dibujarCaptcha(k) {
     var c = captcha[k];
     if (!window.turnstile || c.id !== null || !$(c.cont).offsetParent) { return; }
@@ -1144,7 +1298,7 @@ footer .pie{margin-top:18px;opacity:.6}
     if (window.turnstile && c.id !== null) { try { window.turnstile.reset(c.id); } catch (e) {} }
   }
   if (C.TURNSTILE_SITE_KEY) {
-    window.alCargarTurnstile = function () { dibujarCaptcha('mth'); dibujarCaptcha('vol'); };
+    window.alCargarTurnstile = function () { dibujarCaptcha('mth'); dibujarCaptcha('vol'); dibujarCaptcha('art'); dibujarCaptcha('fer'); };
     var ts = document.createElement('script');
     ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=alCargarTurnstile';
     ts.async = true; document.head.appendChild(ts);
@@ -1157,6 +1311,8 @@ footer .pie{margin-top:18px;opacity:.6}
     captcha: 'No pudimos comprobar que eres una persona. Espera unos segundos e inténtalo otra vez.',
     limite: 'Se han hecho muchos registros desde esta conexión. Inténtalo de nuevo en una hora.',
     cedula: 'Esta cédula ya está registrada en Mejora tu Hogar.',
+    dup_artesano: 'Esta cédula ya está registrada como artesano.',
+    dup_ferretero: 'Este RUC ya está registrado como aliado ferretero.',
     talonario: 'Ese número de talonario ya fue registrado. Revisa el número del papel.',
     brigada: 'Tu link de jefe de brigada ya no está activo. Comunícate con el coordinador de la campaña.',
     foto: 'Una de las fotos no se pudo subir. Quítala y prueba con otra.',
@@ -1174,14 +1330,15 @@ footer .pie{margin-top:18px;opacity:.6}
     x.send(cuerpo);
   }
 
+  var TABLAS = { hogar: 'hogares', voluntario: 'voluntarios', artesano: 'artesanos', ferretero: 'ferreteros' };
   // MODO DIRECTO (sin Cloudflare): guarda directo en Supabase, como al inicio
   function enviarDirecto(tipo, datos, fotosLista, alProgreso, cb) {
     function guardar() {
       if (alProgreso) { alProgreso(100); }
-      xhrSupabase('POST', '/rest/v1/' + (tipo === 'hogar' ? 'hogares' : 'voluntarios'), 'application/json', JSON.stringify(datos), function (st, txt) {
+      xhrSupabase('POST', '/rest/v1/' + TABLAS[tipo], 'application/json', JSON.stringify(datos), function (st, txt) {
         if (st >= 200 && st < 300) { return cb(true); }
         if (st === 0) { return cb(false, 'No hay conexión a internet. Revisa tus datos o wifi e inténtalo otra vez.'); }
-        if (st === 409) { return cb(false, txt.indexOf('talonario') > -1 ? MENSAJES_ERROR.talonario : MENSAJES_ERROR.cedula); }
+        if (st === 409) { return cb(false, txt.indexOf('talonario') > -1 ? MENSAJES_ERROR.talonario : (MENSAJES_ERROR['dup_' + tipo] || MENSAJES_ERROR.cedula)); }
         if (txt.indexOf('brigada no valida') > -1) { return cb(false, MENSAJES_ERROR.brigada); }
         cb(false, MENSAJES_ERROR.datos);
       });
@@ -1225,7 +1382,7 @@ footer .pie{margin-top:18px;opacity:.6}
       try { r = JSON.parse(x.responseText); } catch (e) {}
       if (x.status >= 200 && x.status < 300 && r.ok) { return cb(true); }
       if (x.status === 0) { return cb(false, 'No hay conexión a internet. Revisa tus datos o wifi e inténtalo otra vez.'); }
-      cb(false, MENSAJES_ERROR[r.error] || 'No pudimos guardar tus datos. Inténtalo otra vez en unos minutos.');
+      cb(false, (r.error === 'cedula' && MENSAJES_ERROR['dup_' + tipo]) || MENSAJES_ERROR[r.error] || 'No pudimos guardar tus datos. Inténtalo otra vez en unos minutos.');
     };
     x.send(fd);
   }
@@ -1345,7 +1502,7 @@ footer .pie{margin-top:18px;opacity:.6}
       $('brig-barra').style.display = 'none';
       $('brig-aviso').style.display = 'block';
       $('brig-aviso').textContent = 'Este link de jefe de brigada no es válido o fue desactivado. Comunícate con el coordinador de la campaña.';
-      $('mth-titulo').textContent = 'Registra tu hogar';
+      $('mth-titulo').textContent = 'Regístrate aquí';
       $('m-enviar').textContent = 'Registrar mi hogar';
       desbloqueado = leer('moreta_video_ok') === '1';
       if (!desbloqueado) { $('mth').className = 'mth bloqueado'; }
@@ -1363,7 +1520,7 @@ footer .pie{margin-top:18px;opacity:.6}
     };
   }
 
-  /* ---------- Héroes del Barrio: link personal ---------- */
+  /* ---------- Héroes de la Vivienda: link personal ---------- */
   function codigoHeroe(nombre) {
     var n = String(nombre).toLowerCase().split(' ')[0];
     try { n = n.normalize('NFD'); } catch (e) {}
@@ -1373,9 +1530,11 @@ footer .pie{margin-top:18px;opacity:.6}
   function mostrarLinkHeroe(codigo, nombre) {
     var link = location.origin + location.pathname + '?src=heroe-' + codigo;
     var primer = String(nombre).split(' ')[0];
-    var msj = '¡Hola vecino! 👋 Soy ' + primer + '. Mira el mensaje de Miguel Ángel Moreta y registra tu hogar en Mejora tu Hogar 🏠 aquí: ' + link;
+    var msj = '¡Hola! Soy ' + primer + '.\n\n' +
+      '*Con Moreta se arregla tu caleta.* Regístrate gratis en *Mejora tu Hogar*, el proyecto más grande de Vivienda Social en Ecuador.\n\n' +
+      'Regístrate aquí:\n' + link;
     $('mi-link-txt').textContent = link;
-    $('heroe-wsp').href = 'https://wa.me/?text=' + encodeURIComponent(msj);
+    $('heroe-wsp').href = 'https://wa.me/?text=' + encodeURIComponent(sinEmojis(msj));
     $('heroe-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
     $('heroe-copiar').onclick = function () {
       var ok = false;
@@ -1429,6 +1588,84 @@ footer .pie{margin-top:18px;opacity:.6}
     });
   };
 
+  /* ---------- Artesanos y Ferreteros: mismos datos básicos ---------- */
+  function datosBasicos(pf, err) {
+    var d = {
+      nombre: trim($(pf + 'nombre').value),
+      cedula: $(pf + 'cedula').value.replace(/\D/g, ''),
+      telefono: $(pf + 'tel').value.replace(/\D/g, ''),
+      sexo: $(pf + 'sexo').value,
+      edad: parseInt($(pf + 'edad').value.replace(/\D/g, ''), 10),
+      correo: trim($(pf + 'correo').value).toLowerCase(),
+      parroquia: $(pf + 'parroquia').value,
+      barrio: trim($(pf + 'barrio').value) || null
+    };
+    if (d.nombre.length < 2) { return mostrarError(err, 'Escribe tus nombres y apellidos.'); }
+    if (!cedulaValida(d.cedula)) { return mostrarError(err, 'Revisa el número de cédula, no es válido.'); }
+    if (!/^0\d{9}$/.test(d.telefono)) { return mostrarError(err, 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
+    if (!d.sexo) { return mostrarError(err, 'Selecciona tu sexo.'); }
+    if (!(d.edad >= 18 && d.edad <= 110)) { return mostrarError(err, d.edad < 18 ? 'Debes ser mayor de 18 años.' : 'Escribe tu edad.'); }
+    if (!d.correo) { return mostrarError(err, 'Escribe tu correo electrónico.'); }
+    if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/.test(d.correo)) { return mostrarError(err, 'Revisa tu correo, parece que está mal escrito (ej: nombre@gmail.com).'); }
+    if (!d.parroquia) { return mostrarError(err, 'Selecciona tu parroquia.'); }
+    return d;
+  }
+  function formularioSimple(o) {
+    $(o.abrir).onclick = function () {
+      $(o.abrir).className = 'btn-vol oculto';
+      $(o.caja).className = 'caja-form';
+      dibujarCaptcha(o.k);
+    };
+    $(o.form).onsubmit = function (ev) {
+      ev.preventDefault();
+      var d = datosBasicos(o.pf, o.err);
+      if (!d) { return; }
+      var falla = o.extra(d);
+      if (falla) { return mostrarError(o.err, falla); }
+      if (!$(o.pf + 'consent').checked) { return mostrarError(o.err, 'Para continuar, acepta el uso de tus datos.'); }
+      if (!conectado()) { return mostrarError(o.err, 'El formulario aún no está conectado. Intenta más tarde.'); }
+      mostrarError(o.err, '');
+      d.fuente = fuente; d.consentimiento = true;
+      var boton = $(o.btn), txt = boton.textContent;
+      boton.disabled = true; boton.textContent = 'Enviando…';
+      enviarAlPortero(o.k, o.tipo, d, [], null, function (ok, msg) {
+        if (!ok) { boton.disabled = false; boton.textContent = txt; return mostrarError(o.err, msg); }
+        $(o.form).style.display = 'none'; $(o.listo).style.display = 'block';
+        irA(o.seccion);
+        track('registro', o.tipo);
+      });
+    };
+  }
+  formularioSimple({ k: 'art', tipo: 'artesano', pf: 'a-', seccion: 'artesanos', abrir: 'btn-art', caja: 'caja-art', form: 'form-art', btn: 'a-enviar', err: 'a-err', listo: 'a-listo',
+    extra: function (d) {
+      var of = marcados('a-oficios'), otro = trim($('a-otro').value);
+      if (!of.length) { return 'Marca a qué te dedicas (puedes marcar varios).'; }
+      if (otro) { for (var j = of.length - 1; j >= 0; j--) { if (of[j] === 'Otro') { of.splice(j, 1); } } of.push('Otro: ' + otro); }
+      d.oficios = of.join(', ');
+      d.experiencia = $('a-exp').value || null;
+      if (!d.experiencia) { return 'Indica tus años de experiencia.'; }
+      return null;
+    } });
+  formularioSimple({ k: 'fer', tipo: 'ferretero', pf: 'r-', seccion: 'ferreteros', abrir: 'btn-fer', caja: 'caja-fer', form: 'form-fer', btn: 'r-enviar', err: 'r-err', listo: 'r-listo',
+    extra: function (d) {
+      d.razon_social = trim($('r-razon').value);
+      d.ruc = $('r-ruc').value.replace(/\D/g, '') || null;
+      d.direccion = trim($('r-direccion').value);
+      if (d.razon_social.length < 2) { return 'Escribe la razón social de la ferretería.'; }
+      if (d.ruc && d.ruc.length !== 13) { return 'El RUC debe tener 13 dígitos (o déjalo vacío).'; }
+      if (d.direccion.length < 5) { return 'Escribe la dirección de la ferretería con una referencia.'; }
+      return null;
+    } });
+
+  /* ---------- Botones de redes (después de registrarse) ---------- */
+  (function () {
+    var l = document.querySelectorAll('[data-red]'), i, u, m = { facebook: C.FACEBOOK, instagram: C.INSTAGRAM, tiktok: C.TIKTOK };
+    for (i = 0; i < l.length; i++) {
+      u = m[l[i].getAttribute('data-red')];
+      if (u) { l[i].href = u; } else { l[i].style.display = 'none'; }
+    }
+  })();
+
   /* ---------- Compartir ---------- */
   function urlCompartir(red) { return location.origin + location.pathname + '?src=compartido-' + red; }
   function copiar(texto) {
@@ -1441,10 +1678,16 @@ footer .pie{margin-top:18px;opacity:.6}
     $('txt-copiar').textContent = ok ? '¡Enlace copiado!' : urlCompartir('copiado');
     setTimeout(function () { $('txt-copiar').textContent = 'Copiar enlace'; }, 2500);
   }
+  // Algunos WhatsApp (sobre todo en computadora) muestran los emojis como "�" cuando
+  // vienen en un link. Por eso los mensajes que se envían por link van sin emojis.
+  function sinEmojis(t) {
+    return String(t).replace(/[\uD800-\uDFFF]/g, '').replace(/[\u2600-\u27BF\uFE0F\u200D]/g, '').replace(/[ \t]{2,}/g, ' ').replace(/ +([.,!?:])/g, '$1');
+  }
+  var TEXTO_WSP = '*La Tierrita nos une.*\n\nMira el mensaje de Miguel Ángel Moreta y regístrate gratis en *Mejora tu Hogar*, el proyecto más grande de Vivienda Social en Ecuador.\n\nRegístrate aquí:';
   function compartir(red) {
-    var msj = C.TEXTO_COMPARTIR || '';
+    var msj = TEXTO_WSP;
     if (red === 'facebook') { window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(urlCompartir('facebook')), '_blank', 'width=600,height=500'); }
-    if (red === 'whatsapp') { window.open('https://wa.me/?text=' + encodeURIComponent(msj + ' ' + urlCompartir('whatsapp')), '_blank'); }
+    if (red === 'whatsapp') { window.open('https://wa.me/?text=' + encodeURIComponent(sinEmojis(msj) + '\n' + urlCompartir('whatsapp')), '_blank'); }
     if (red === 'copiar') { copiar(urlCompartir('copiado')); }
   }
 

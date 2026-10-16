@@ -99,8 +99,8 @@
     }
     ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.textAlign = 'left';
     ctx.font = '700 ' + Math.round(30 * k) + 'px ' + F;
-    ctx.fillText('Candidato a la Alcaldía', x, y + 56 * k);
-    ctx.fillText('de Santo Domingo', x, y + 94 * k);
+    ctx.fillText('Con Moreta se arregla', x, y + 56 * k);
+    ctx.fillText('tu caleta', x, y + 94 * k);
   }
 
   function tarjeta(ctx, it, x, y, w, h, grande) {

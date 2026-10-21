@@ -8,6 +8,9 @@ var CONFIG = {
   SUPABASE_URL: "https://gunukaedqxzshnhzxprc.supabase.co",
   SUPABASE_ANON_KEY: "sb_publishable_4JM0Ch5_pN4eUNh6IkkEwQ_uutT7XF2",
 
+  // Cloudflare Turnstile ("no soy un robot"): la Site Key (la pública)
+  TURNSTILE_SITE_KEY: "0x4AAAAAAFflU0h6D5LjlCLK",
+
   // Medición (déjalo vacío si aún no lo tienes)
   META_PIXEL_ID: "",
   GA4_ID: "",            // formato G-XXXXXXXXXX

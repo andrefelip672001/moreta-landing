@@ -1430,8 +1430,9 @@ footer .pie{margin-top:18px;opacity:.6}
     if (!/^0\d{9}$/.test(d.telefono)) { return mostrarError('m-err', 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
     if (!d.sexo) { return mostrarError('m-err', 'Selecciona tu sexo.'); }
     if (!(d.edad >= 18 && d.edad <= 110)) { return mostrarError('m-err', d.edad < 18 ? 'Para registrar un hogar debes ser mayor de 18 años.' : 'Escribe tu edad.'); }
-    if (!d.correo) { return mostrarError('m-err', 'Escribe tu correo electrónico.'); }
-    if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/.test(d.correo)) { return mostrarError('m-err', 'Revisa tu correo, parece que está mal escrito (ej: nombre@gmail.com).'); }
+    // El correo es obligatorio, salvo cuando lo registra un jefe de brigada (muchas familias no tienen)
+    if (!modoBrigada && !d.correo) { return mostrarError('m-err', 'Escribe tu correo electrónico.'); }
+    if (d.correo && !/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/.test(d.correo)) { return mostrarError('m-err', 'Revisa tu correo, parece que está mal escrito (ej: nombre@gmail.com).'); }
     if (!d.parroquia) { return mostrarError('m-err', 'Selecciona tu parroquia.'); }
     if (d.direccion.length < 5) { return mostrarError('m-err', 'Escribe la dirección de tu hogar con una referencia.'); }
     if (!d.vivienda) { return mostrarError('m-err', 'Indica si la vivienda es propia, familiar o arrendada.'); }

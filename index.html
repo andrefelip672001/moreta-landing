@@ -1419,11 +1419,12 @@ footer .pie{margin-top:18px;opacity:.6}
       fuente: fuente, consentimiento: true, fotos: []
     };
     if (modoBrigada) {
+      // El talonario es opcional: si se escribe, se completa a 4 dígitos
       var tal = $('m-talonario').value.replace(/\D/g, '');
-      if (!tal || +tal === 0) { return mostrarError('m-err', 'Escribe el número de talonario.'); }
-      while (tal.length < 4) { tal = '0' + tal; }
+      if (tal && +tal === 0) { tal = ''; }
+      if (tal) { while (tal.length < 4) { tal = '0' + tal; } }
       $('m-talonario').value = tal;
-      d.talonario = tal; d.brigada = brigada; d.fuente = 'brigada';
+      d.talonario = tal || null; d.brigada = brigada; d.fuente = 'brigada';
     }
     if (d.nombre.length < 2) { return mostrarError('m-err', 'Escribe tus nombres y apellidos.'); }
     if (!cedulaValida(d.cedula)) { return mostrarError('m-err', 'Revisa tu número de cédula, no es válido.'); }
@@ -1455,7 +1456,7 @@ footer .pie{margin-top:18px;opacity:.6}
       $('form-mth').style.display = 'none'; $('m-listo').style.display = 'block';
       if (modoBrigada) {
         $('m-listo-tit').textContent = '¡Registro guardado!';
-        $('m-listo-txt').textContent = 'Talonario N° ' + d.talonario + ' · ' + d.nombre + '.';
+        $('m-listo-txt').textContent = (d.talonario ? 'Talonario N° ' + d.talonario + ' · ' : '') + d.nombre + '.';
         infoBrigada();
         irA('mejora');
         return;

@@ -556,8 +556,16 @@ footer .pie{margin-top:18px;opacity:.6}
       <div class="aviso-vol"><span>ℹ️</span><div>Este registro es para quienes quieren <b>ayudar a otras familias</b>. Si quieres registrar <b>tu propio hogar</b> en Mejora tu Hogar, <a href="#mejora">hazlo aquí</a>.</div></div>
 
       <div id="heroe-ya" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px;text-align:center">
-        <p id="heroe-ya-txt" style="margin:0 0 10px;font-weight:700"></p>
+        <p style="margin:0 0 10px;font-weight:700">¡Ya eres Héroe de la Vivienda!</p>
         <a class="btn-vol" id="heroe-ya-panel" href="backoffice.html" target="_blank" rel="noopener" style="display:block;text-decoration:none">📊 Entrar a mi panel de héroe</a>
+      </div>
+
+      <div id="heroe-login" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px">
+        <p style="margin:0 0 8px;font-weight:700;text-align:center">¿Ya eres héroe? Inicia sesión</p>
+        <input id="hl-tel" inputmode="numeric" maxlength="10" placeholder="Tu celular (09...)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+        <input id="hl-cod" maxlength="30" placeholder="Tu código (está en tu link)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+        <button class="btn-vol" id="hl-entrar" type="button" style="width:100%">Entrar a mi panel</button>
+        <p id="hl-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
       </div>
 
       <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
@@ -1598,19 +1606,33 @@ footer .pie{margin-top:18px;opacity:.6}
     $('caja-vol').className = 'caja-form';
     dibujarCaptcha('vol');
   };
-  // Si este celular ya se registró como héroe, no vuelve a pedir el formulario: muestra el acceso a su panel
+  // Acceso de héroes: si este celular ya tiene su panel, lo muestra; si no, pide celular y código para entrar
   (function () {
-    var k = leer('moreta_heroe_k'), codigo = leer('moreta_heroe');
-    if (!k && !codigo) { return; }
-    $('btn-vol').style.display = 'none';
-    $('heroe-ya').style.display = 'block';
+    var k = leer('moreta_heroe_k');
     if (k) {
+      $('heroe-ya').style.display = 'block';
       $('heroe-ya-panel').href = 'backoffice.html?k=' + encodeURIComponent(k);
-      $('heroe-ya-txt').textContent = '¡Ya eres Héroe de la Vivienda!';
-    } else {
-      $('heroe-ya-panel').style.display = 'none';
-      $('heroe-ya-txt').textContent = '¡Ya eres Héroe de la Vivienda! Escribe al equipo de la campaña para recibir el acceso a tu panel.';
+      return;
     }
+    $('heroe-login').style.display = 'block';
+    $('hl-entrar').onclick = function () {
+      var tel = $('hl-tel').value.replace(/\D/g, ''), cod = $('hl-cod').value.trim().toLowerCase();
+      var msg = $('hl-msg');
+      if (tel.length !== 10 || !cod) { msg.textContent = 'Escribe tu celular de 10 dígitos y tu código.'; return; }
+      msg.textContent = 'Entrando…';
+      xhrSupabase('POST', '/rest/v1/rpc/heroe_acceder', 'application/json', JSON.stringify({ p_telefono: tel, p_codigo: cod }), function (st, txt) {
+        var d = null; try { d = txt ? JSON.parse(txt) : null; } catch (e) {}
+        if (st >= 200 && st < 300 && d && d.token) {
+          guardar('moreta_heroe_k', d.token);
+          guardar('moreta_heroe', cod);
+          $('heroe-login').style.display = 'none';
+          $('heroe-ya').style.display = 'block';
+          $('heroe-ya-panel').href = 'backoffice.html?k=' + encodeURIComponent(d.token);
+        } else {
+          msg.textContent = 'No encontramos ese celular y código. Revisa que estén bien escritos.';
+        }
+      });
+    };
   })();
 
   $('form-unete').onsubmit = function (ev) {

@@ -564,12 +564,24 @@ footer .pie{margin-top:18px;opacity:.6}
       <div id="heroe-login" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px">
         <p style="margin:0 0 8px;font-weight:700;text-align:center">¿Ya eres héroe? Inicia sesión</p>
         <input id="hl-tel" inputmode="numeric" maxlength="10" placeholder="Tu celular (09...)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
-        <input id="hl-cod" maxlength="30" placeholder="Tu código (está en tu link)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+        <input type="password" id="hl-cod" maxlength="72" autocomplete="current-password" placeholder="Tu contraseña"style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
         <button class="btn-vol" id="hl-entrar" type="button" style="width:100%">Entrar a mi panel</button>
         <p id="hl-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
+        <button type="button" id="hl-primera" style="background:none;border:0;color:inherit;text-decoration:underline;font-size:13px;margin:8px 0 0;cursor:pointer;width:100%">¿Te registraste antes? Crea tu contraseña aquí</button>
+        <div id="hp-box" style="display:none;margin-top:10px">
+          <input id="hp-nombre" maxlength="120" placeholder="Tu nombre y apellido" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+          <input type="password" id="hp-clave" maxlength="72" autocomplete="new-password" placeholder="Nueva contraseña (mínimo 6)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+          <button class="btn-vol" id="hp-crear" type="button" style="width:100%">Guardar y entrar</button>
+          <p id="hp-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
+        </div>
       </div>
 
       <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
+
+      <div id="heroes-ranking" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:12px 0 0">
+        <p style="margin:0 0 8px;font-weight:800;text-align:center">🏆 Ranking de héroes</p>
+        <ol id="heroes-lista" style="margin:0;padding-left:0;list-style:none;font-size:15px"></ol>
+      </div>
 
       <div class="caja-form oculto" id="caja-vol">
         <form class="form" id="form-unete" novalidate>
@@ -578,6 +590,10 @@ footer .pie{margin-top:18px;opacity:.6}
 
           <label class="l" for="f-tel">Celular / WhatsApp</label>
           <input type="tel" id="f-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
+
+          <label class="l" for="f-clave">Crea una contraseña (mínimo 6 caracteres)</label>
+          <input type="password" id="f-clave" maxlength="72" autocomplete="new-password" placeholder="Para entrar a tu panel después">
+          <p class="ayuda" style="margin:4px 0 0">Con tu celular y esta contraseña entrarás a tu panel de héroe cuando quieras.</p>
 
           <label class="l" for="f-parroquia">Parroquia</label>
           <select id="f-parroquia" class="sel-parroquia"></select>
@@ -1617,15 +1633,15 @@ footer .pie{margin-top:18px;opacity:.6}
     }
     $('heroe-login').style.display = 'block';
     $('hl-entrar').onclick = function () {
-      var tel = $('hl-tel').value.replace(/\D/g, ''), cod = $('hl-cod').value.trim().toLowerCase();
+      var tel = $('hl-tel').value.replace(/\D/g, ''), cod = $('hl-cod').value;
       var msg = $('hl-msg');
-      if (tel.length !== 10 || !cod) { msg.textContent = 'Escribe tu celular de 10 dígitos y tu código.'; return; }
+      if (tel.length !== 10 || cod.length < 6) { msg.textContent = 'Escribe tu celular de 10 dígitos y tu contraseña.'; return; }
       msg.textContent = 'Entrando…';
-      xhrSupabase('POST', '/rest/v1/rpc/heroe_acceder', 'application/json', JSON.stringify({ p_telefono: tel, p_codigo: cod }), function (st, txt) {
+      xhrSupabase('POST', '/rest/v1/rpc/heroe_entrar', 'application/json', JSON.stringify({ p_telefono: tel, p_clave: cod }), function (st, txt) {
         var d = null; try { d = txt ? JSON.parse(txt) : null; } catch (e) {}
         if (st >= 200 && st < 300 && d && d.token) {
           guardar('moreta_heroe_k', d.token);
-          guardar('moreta_heroe', cod);
+          guardar('moreta_heroe', 'ok');
           $('heroe-login').style.display = 'none';
           $('heroe-ya').style.display = 'block';
           $('heroe-ya-panel').href = 'backoffice.html?k=' + encodeURIComponent(d.token);
@@ -1635,6 +1651,44 @@ footer .pie{margin-top:18px;opacity:.6}
       });
     };
   })();
+
+  // Ranking público de héroes (solo nombre corto y número de familias)
+  xhrSupabase('POST', '/rest/v1/rpc/heroes_ranking', 'application/json', '{}', function (st, txt) {
+    var lista = null; try { lista = txt ? JSON.parse(txt) : null; } catch (e) {}
+    if (!(st >= 200 && st < 300) || !lista || !lista.length) { return; }
+    var ol = $('heroes-lista'); ol.innerHTML = '';
+    var medallas = ['🥇', '🥈', '🥉'];
+    lista.forEach(function (h, i) {
+      var li = document.createElement('li');
+      li.style.cssText = 'display:flex;justify-content:space-between;gap:8px;padding:8px 4px;border-top:1px solid rgba(255,255,255,.15)';
+      var izq = document.createElement('span'); izq.textContent = (medallas[i] || (i + 1) + '.') + ' ' + h.nombre;
+      var der = document.createElement('b'); der.textContent = h.registros + ' familias';
+      li.appendChild(izq); li.appendChild(der); ol.appendChild(li);
+    });
+    $('heroes-ranking').style.display = 'block';
+  });
+
+  // Héroes que se registraron antes de las contraseñas: crean la suya una sola vez
+  $('hl-primera').onclick = function () { $('hp-box').style.display = 'block'; };
+  $('hp-crear').onclick = function () {
+    var tel = $('hl-tel').value.replace(/\D/g, ''), nom = $('hp-nombre').value.trim(), cl = $('hp-clave').value;
+    var msg = $('hp-msg');
+    if (tel.length !== 10 || nom.length < 3) { msg.textContent = 'Escribe tu celular de 10 dígitos (arriba) y tu nombre.'; return; }
+    if (cl.length < 6) { msg.textContent = 'La contraseña debe tener al menos 6 caracteres.'; return; }
+    msg.textContent = 'Guardando…';
+    xhrSupabase('POST', '/rest/v1/rpc/heroe_crear_clave', 'application/json', JSON.stringify({ p_telefono: tel, p_nombre: nom, p_clave: cl }), function (st, txt) {
+      var d = null; try { d = txt ? JSON.parse(txt) : null; } catch (e) {}
+      if (st >= 200 && st < 300 && d && d.token) {
+        guardar('moreta_heroe_k', d.token);
+        guardar('moreta_heroe', 'ok');
+        $('heroe-login').style.display = 'none';
+        $('heroe-ya').style.display = 'block';
+        $('heroe-ya-panel').href = 'backoffice.html?k=' + encodeURIComponent(d.token);
+      } else {
+        msg.textContent = 'No encontramos ese celular y nombre, o ya tiene contraseña. Revisa tus datos o usa "Entrar".';
+      }
+    });
+  };
 
   $('form-unete').onsubmit = function (ev) {
     ev.preventDefault();
@@ -1647,6 +1701,8 @@ footer .pie{margin-top:18px;opacity:.6}
     if (nombre.length < 2) { return mostrarError('f-err', 'Escribe tu nombre y apellido.'); }
     if (!/^0\d{9}$/.test(tel)) { return mostrarError('f-err', 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
     if (!parroquia) { return mostrarError('f-err', 'Selecciona tu parroquia.'); }
+    var clave = $('f-clave').value;
+    if (clave.length < 6) { return mostrarError('f-err', 'Crea una contraseña de al menos 6 caracteres. La usarás para entrar a tu panel.'); }
     if (!$('f-consent').checked) { return mostrarError('f-err', 'Para continuar, acepta el uso de tus datos.'); }
     mostrarError('f-err', '');
 
@@ -1655,7 +1711,7 @@ footer .pie{margin-top:18px;opacity:.6}
     boton.disabled = true; boton.textContent = 'Enviando…';
     var codigo = codigoHeroe(nombre);
     enviarAlPortero('vol', 'voluntario', {
-      nombre: nombre, telefono: tel, parroquia: parroquia, barrio: barrio || null,
+      nombre: nombre, telefono: tel, parroquia: parroquia, barrio: barrio || null, clave: clave,
       ayuda: ayuda.join(', ') || null, fuente: fuente, codigo: codigo, consentimiento: true
     }, [], null, function (ok, msg, resp) {
       if (ok) {

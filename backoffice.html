@@ -143,6 +143,9 @@
       $('faltan').textContent = 'Te faltan ' + (meta - total) + ' familias para llegar a ' + NOMBRE_NEXT[d.rango] + '.';
     }
 
+    if (d.posicion) {
+      $('faltan').textContent = 'Eres el número ' + d.posicion + ' de ' + d.de_total + ' héroes. ' + $('faltan').textContent;
+    }
     $('s-total').textContent = total;
     $('s-semana').textContent = d.registros_semana;
     $('s-visitas').textContent = d.visitas;

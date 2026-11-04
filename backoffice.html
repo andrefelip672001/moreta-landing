@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mi panel · Héroe de la Vivienda</title>
+<style>
+  :root { --rosa: #e6006e; --navy: #1a1a5e; --gris: #5b5f7a; --fondo: #f3f4fb; --blanco: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --fondo: #12122e; --blanco: #1f1f44; --navy: #f2f2ff; --gris: #b9bcd8; }
+  }
+  :root[data-theme="dark"] { --fondo: #12122e; --blanco: #1f1f44; --navy: #f2f2ff; --gris: #b9bcd8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--navy); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 16px; }
+  header { background: var(--navy); color: #fff; border-radius: 16px; padding: 18px; text-align: center; }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 4px 0 0; opacity: .85; font-size: 14px; }
+  .card { background: var(--blanco); border-radius: 16px; padding: 16px; margin-top: 14px; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+  .card h2 { font-size: 16px; margin: 0 0 10px; }
+  .rango { display: inline-block; padding: 6px 14px; border-radius: 999px; font-weight: 800; color: #fff; background: var(--rosa); }
+  .rango.Plata { background: #d9822b; }
+  .rango.Oro { background: #d4a017; }
+  .rango.Líder { background: #2563eb; }
+  .rango.Élite { background: #7c3aed; }
+  .barra { height: 12px; background: rgba(127,127,160,.25); border-radius: 999px; overflow: hidden; margin: 12px 0 6px; }
+  .barra div { height: 100%; background: var(--rosa); border-radius: 999px; width: 0; transition: width .4s; }
+  .ayuda { color: var(--gris); font-size: 14px; margin: 4px 0 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+  .stat { background: var(--fondo); border-radius: 12px; padding: 12px 6px; text-align: center; }
+  .stat b { display: block; font-size: 26px; color: var(--rosa); }
+  .stat span { font-size: 12px; color: var(--gris); }
+  .link { word-break: break-all; background: var(--fondo); border-radius: 10px; padding: 10px; font-size: 14px; margin-bottom: 10px; }
+  .btn { display: block; width: 100%; border: 0; border-radius: 12px; padding: 13px; font-size: 15px; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer; margin-top: 8px; color: #fff; background: var(--rosa); }
+  .btn.wa { background: #25d366; }
+  .btn.fb { background: #1877f2; }
+  .btn.sec { background: var(--navy); }
+  label { display: block; font-size: 14px; font-weight: 700; margin-top: 10px; }
+  input { width: 100%; padding: 11px; border-radius: 10px; border: 1px solid rgba(127,127,160,.4); font-size: 15px; margin-top: 4px; background: var(--blanco); color: var(--navy); }
+  .msg { font-size: 14px; margin-top: 8px; min-height: 18px; }
+  .msg.ok { color: #15803d; }
+  .msg.err { color: #b91c1c; }
+  .aviso { font-size: 13px; color: var(--gris); margin-top: 14px; text-align: center; }
+  .oculto { display: none !important; }
+</style>
+</head>
+<body>
+<script src="config.js"></script>
+<div class="wrap">
+  <header>
+    <h1 id="nombre">Mi panel de héroe</h1>
+    <p>Con Moreta se arregla tu caleta</p>
+  </header>
+
+  <div class="card oculto" id="sin-acceso">
+    <h2>No encontramos tu panel</h2>
+    <p class="ayuda">Entra con el link completo que recibiste al registrarte. Si lo perdiste, escribe al equipo de la campaña.</p>
+  </div>
+
+  <div id="contenido" class="oculto">
+    <div class="card">
+      <h2>Tu rango</h2>
+      <span class="rango" id="rango">Héroe</span>
+      <div class="barra"><div id="barra"></div></div>
+      <p class="ayuda" id="faltan"></p>
+      <div class="stats">
+        <div class="stat"><b id="s-total">0</b><span>familias registradas</span></div>
+        <div class="stat"><b id="s-semana">0</b><span>esta semana</span></div>
+        <div class="stat"><b id="s-visitas">0</b><span>visitas a tu link</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Tu link personal</h2>
+      <div class="link" id="link"></div>
+      <button class="btn" id="copiar">Copiar mi link</button>
+      <a class="btn wa" id="wsp" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+      <a class="btn fb" id="fb" href="#" target="_blank" rel="noopener">Publicar en Facebook</a>
+      <p class="ayuda">Cada familia que se registre con tu link suma a tu cuenta.</p>
+    </div>
+
+    <div class="card">
+      <h2>Mis redes sociales</h2>
+      <p class="ayuda">Aparecerán en tu perfil de héroe. Puedes dejarlas vacías.</p>
+      <form id="form-redes">
+        <label for="r-facebook">Facebook</label>
+        <input id="r-facebook" maxlength="200" placeholder="facebook.com/tu-perfil">
+        <label for="r-instagram">Instagram</label>
+        <input id="r-instagram" maxlength="200" placeholder="instagram.com/tu-perfil">
+        <label for="r-tiktok">TikTok</label>
+        <input id="r-tiktok" maxlength="200" placeholder="tiktok.com/@tu-perfil">
+        <label for="r-whatsapp">WhatsApp (opcional)</label>
+        <input id="r-whatsapp" maxlength="20" inputmode="tel" placeholder="0991234567">
+        <button class="btn sec" type="submit" id="guardar-redes">Guardar redes</button>
+        <p class="msg" id="msg-redes"></p>
+      </form>
+    </div>
+
+    <p class="aviso">Solo tú y el equipo de la campaña pueden ver este panel. No compartas este link: quien lo tenga puede ver tu información.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var C = (typeof CONFIG !== 'undefined') ? CONFIG : {};
+  var URL_BASE = (C.SUPABASE_URL || '').replace(/\/+$/, '');
+  var KEY = C.SUPABASE_ANON_KEY || '';
+  var NEXT = { 'Héroe': 21, 'Plata': 31, 'Oro': 41, 'Líder': 100 };
+  var NOMBRE_NEXT = { 'Héroe': 'Plata', 'Plata': 'Oro', 'Oro': 'Líder', 'Líder': 'Élite' };
+  var token = null;
+
+  function $(id) { return document.getElementById(id); }
+
+  // Toma el token del link; si no viene, usa el último que quedó guardado en este celular
+  var m = /[?&]k=([^&#]+)/.exec(location.search);
+  if (m) { token = decodeURIComponent(m[1]); try { localStorage.setItem('moreta_heroe_k', token); } catch (e) {} }
+  else { try { token = localStorage.getItem('moreta_heroe_k'); } catch (e) {} }
+
+  function llamar(fn, cuerpo) {
+    return fetch(URL_BASE + '/rest/v1/rpc/' + fn, {
+      method: 'POST',
+      headers: { 'apikey': KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify(cuerpo)
+    }).then(function (r) { if (!r.ok) { throw new Error('http ' + r.status); } return r.json(); });
+  }
+
+  function pintar(d) {
+    $('nombre').textContent = 'Hola, ' + String(d.nombre).split(' ')[0] + ' 👋';
+    var rango = $('rango');
+    rango.textContent = d.rango;
+    rango.className = 'rango ' + d.rango;
+
+    var total = d.registros;
+    if (d.rango === 'Élite') {
+      $('barra').style.width = '100%';
+      $('faltan').textContent = '¡Llegaste al rango máximo! Gracias por ayudar a tantas familias.';
+    } else {
+      var meta = NEXT[d.rango];
+      var inicio = { 'Héroe': 1, 'Plata': 21, 'Oro': 31, 'Líder': 41 }[d.rango];
+      var pct = Math.max(0, Math.min(100, (total - inicio + 1) / (meta - inicio + 1) * 100));
+      $('barra').style.width = pct + '%';
+      $('faltan').textContent = 'Te faltan ' + (meta - total) + ' familias para llegar a ' + NOMBRE_NEXT[d.rango] + '.';
+    }
+
+    $('s-total').textContent = total;
+    $('s-semana').textContent = d.registros_semana;
+    $('s-visitas').textContent = d.visitas;
+
+    var link = new URL('./?src=heroe-' + d.codigo, location.href).href;
+    $('link').textContent = link;
+    $('copiar').onclick = function () {
+      var btn = $('copiar');
+      var ok = false;
+      try { if (navigator.clipboard) { navigator.clipboard.writeText(link); ok = true; } } catch (e) {}
+      btn.textContent = ok ? '¡Link copiado!' : 'Mantén presionado el link para copiarlo';
+      setTimeout(function () { btn.textContent = 'Copiar mi link'; }, 2500);
+    };
+    var texto = 'Hola, soy ' + String(d.nombre).split(' ')[0] + '. Con Moreta se arregla tu caleta. Regístrate gratis en Mejora tu Hogar: ' + link;
+    $('wsp').href = 'https://wa.me/?text=' + encodeURIComponent(texto);
+    $('fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
+
+    var r = d.redes || {};
+    $('r-facebook').value = r.facebook || '';
+    $('r-instagram').value = r.instagram || '';
+    $('r-tiktok').value = r.tiktok || '';
+    $('r-whatsapp').value = r.whatsapp || '';
+
+    $('contenido').classList.remove('oculto');
+  }
+
+  function noHayAcceso() { $('sin-acceso').classList.remove('oculto'); }
+
+  if (!token || !URL_BASE) { noHayAcceso(); return; }
+  llamar('heroe_panel', { p_token: token })
+    .then(function (d) { if (d) { pintar(d); } else { noHayAcceso(); } })
+    .catch(function () { noHayAcceso(); });
+
+  $('form-redes').onsubmit = function (ev) {
+    ev.preventDefault();
+    var btn = $('guardar-redes'), msg = $('msg-redes');
+    btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Guardando…';
+    llamar('heroe_guardar_redes', {
+      p_token: token,
+      p_redes: {
+        facebook: $('r-facebook').value.trim(),
+        instagram: $('r-instagram').value.trim(),
+        tiktok: $('r-tiktok').value.trim(),
+        whatsapp: $('r-whatsapp').value.replace(/\D/g, '')
+      }
+    }).then(function (ok) {
+      btn.disabled = false;
+      msg.className = ok ? 'msg ok' : 'msg err';
+      msg.textContent = ok ? '¡Redes guardadas!' : 'No se pudieron guardar. Intenta de nuevo.';
+    }).catch(function () {
+      btn.disabled = false; msg.className = 'msg err';
+      msg.textContent = 'No se pudieron guardar. Revisa tu conexión e intenta de nuevo.';
+    });
+  };
+})();
+</script>
+</body>
+</html>

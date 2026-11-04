@@ -542,13 +542,13 @@ footer .pie{margin-top:18px;opacity:.6}
 <section id="unete" style="padding-top:10px">
   <div class="wrap">
     <div class="vol">
-      <span class="et">🦸 Héroes de la Vivienda</span><span class="premio">🏆 Gana premios registrando</span>
+      <span class="et">🦸 Héroes de la Vivienda</span><span class="premio">🏆 Sube de rango</span>
       <h2>Sé un héroe <em>de la vivienda</em></h2>
-      <p class="sub">Muchas familias no saben que <b>con Moreta se arregla su caleta</b>. Regístrate como Héroe de la Vivienda y <b>gana premios</b>: recibe tu propio link para invitar a tus vecinos.</p>
+      <p class="sub">Muchas familias no saben que <b>con Moreta se arregla su caleta</b>. Regístrate como Héroe de la Vivienda y <b>sube de rango</b>: recibe tu propio link para invitar a tus vecinos.</p>
       <div class="pasos-heroe">
         <div><b>1</b><span>Regístrate como héroe</span></div>
         <div><b>2</b><span>Comparte tu link con tus vecinos</span></div>
-        <div><b>3</b><span>Gana premios por cada familia</span></div>
+        <div><b>3</b><span>Sube de rango con cada familia</span></div>
       </div>
       <div class="aviso-vol"><span>ℹ️</span><div>Este registro es para quienes quieren <b>ayudar a otras familias</b>. Si quieres registrar <b>tu propio hogar</b> en Mejora tu Hogar, <a href="#mejora">hazlo aquí</a>.</div></div>
 
@@ -590,8 +590,9 @@ footer .pie{margin-top:18px;opacity:.6}
         <div class="listo" id="f-listo">
           <div class="big">🦸</div>
           <h3>¡Ya eres un Héroe de la Vivienda!</h3>
-          <p><b>Mientras más familias registres, más premios puedes ganar.</b> Este es tu link personal; cada familia que se registre con él suma a tu cuenta:</p>
+          <p><b>Mientras más familias registres, más subes de rango.</b> Este es tu link personal; cada familia que se registre con él suma a tu cuenta:</p>
           <div class="mi-link"><span id="mi-link-txt"></span></div>
+          <a class="bt-comp" href="backoffice.html" id="heroe-panel" target="_blank" rel="noopener" data-track="heroe" data-detalle="abrir-panel">📊 Entrar a mi panel de héroe</a>
           <a class="bt-comp bt-wa" href="#" id="heroe-wsp" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-whatsapp">Enviar mi link por WhatsApp</a>
           <a class="bt-comp bt-fb" href="#" id="heroe-fb" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-facebook">Publicar mi link en Facebook</a>
           <button class="bt-comp bt-cp2" id="heroe-copiar" data-track="heroe" data-detalle="copiar-link">🔗 <span id="heroe-copiar-txt" style="margin-left:8px">Copiar mi link</span></button>
@@ -1380,7 +1381,7 @@ footer .pie{margin-top:18px;opacity:.6}
       reiniciarCaptcha(k); // cada verificación sirve una sola vez
       var r = {};
       try { r = JSON.parse(x.responseText); } catch (e) {}
-      if (x.status >= 200 && x.status < 300 && r.ok) { return cb(true); }
+      if (x.status >= 200 && x.status < 300 && r.ok) { return cb(true, null, r); }
       if (x.status === 0) { return cb(false, 'No hay conexión a internet. Revisa tus datos o wifi e inténtalo otra vez.'); }
       cb(false, (r.error === 'cedula' && MENSAJES_ERROR['dup_' + tipo]) || MENSAJES_ERROR[r.error] || 'No pudimos guardar tus datos. Inténtalo otra vez en unos minutos.');
     };
@@ -1578,10 +1579,14 @@ footer .pie{margin-top:18px;opacity:.6}
     enviarAlPortero('vol', 'voluntario', {
       nombre: nombre, telefono: tel, parroquia: parroquia, barrio: barrio || null,
       ayuda: ayuda.join(', ') || null, fuente: fuente, codigo: codigo, consentimiento: true
-    }, [], null, function (ok, msg) {
+    }, [], null, function (ok, msg, resp) {
       if (ok) {
         $('form-unete').style.display = 'none'; $('f-listo').style.display = 'block';
         mostrarLinkHeroe(codigo, nombre);
+        if (resp && resp.token) {
+          $('heroe-panel').href = 'backoffice.html?k=' + encodeURIComponent(resp.token);
+          guardar('moreta_heroe_k', resp.token);
+        }
         track('registro', 'unete');
       } else {
         boton.disabled = false; boton.textContent = '¡Quiero ser héroe!';

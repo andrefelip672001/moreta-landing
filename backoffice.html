@@ -51,6 +51,7 @@
   <header>
     <h1 id="nombre">Mi panel de héroe</h1>
     <p>Con Moreta se arregla tu caleta</p>
+    <button type="button" id="cerrar-sesion-arriba" style="margin-top:10px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:6px 14px;font-size:13px;cursor:pointer">Cerrar sesión</button>
   </header>
 
   <div class="card oculto" id="sin-acceso">
@@ -180,11 +181,13 @@
     .then(function (d) { if (d) { pintar(d); } else { noHayAcceso(); } })
     .catch(function () { noHayAcceso(); });
 
-  $('cerrar-sesion').onclick = function () {
+  function cerrarSesion() {
     if (!confirm('¿Cerrar sesión en este celular?')) { return; }
     try { localStorage.removeItem('moreta_heroe_k'); localStorage.removeItem('moreta_heroe'); } catch (e) {}
     location.href = location.pathname;
-  };
+  }
+  $('cerrar-sesion').onclick = cerrarSesion;
+  $('cerrar-sesion-arriba').onclick = cerrarSesion;
 
   $('form-redes').onsubmit = function (ev) {
     ev.preventDefault();

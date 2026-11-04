@@ -98,6 +98,7 @@
     </div>
 
     <p class="aviso">Solo tú y el equipo de la campaña pueden ver este panel. No compartas este link: quien lo tenga puede ver tu información.</p>
+    <div style="text-align:center"><button type="button" class="btn sec" id="cerrar-sesion" style="display:inline-block;width:auto;padding:10px 18px">Cerrar sesión en este celular</button></div>
   </div>
 </div>
 
@@ -178,6 +179,12 @@
   llamar('heroe_panel', { p_token: token })
     .then(function (d) { if (d) { pintar(d); } else { noHayAcceso(); } })
     .catch(function () { noHayAcceso(); });
+
+  $('cerrar-sesion').onclick = function () {
+    if (!confirm('¿Cerrar sesión en este celular?')) { return; }
+    try { localStorage.removeItem('moreta_heroe_k'); localStorage.removeItem('moreta_heroe'); } catch (e) {}
+    location.href = location.pathname;
+  };
 
   $('form-redes').onsubmit = function (ev) {
     ev.preventDefault();

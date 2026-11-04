@@ -559,6 +559,7 @@ footer .pie{margin-top:18px;opacity:.6}
       <div id="heroe-ya" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px;text-align:center">
         <p style="margin:0 0 10px;font-weight:700">¡Ya eres Héroe de la Vivienda!</p>
         <a class="btn-vol" id="heroe-ya-panel" href="backoffice.html" target="_blank" rel="noopener" style="display:block;text-decoration:none">📊 Entrar a mi panel de héroe</a>
+        <button type="button" id="heroe-salir" style="background:none;border:0;color:inherit;text-decoration:underline;font-size:13px;margin:10px 0 0;cursor:pointer">Cerrar sesión en este celular</button>
       </div>
 
       <div id="heroe-login" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px">
@@ -1667,6 +1668,14 @@ footer .pie{margin-top:18px;opacity:.6}
     });
     $('heroes-ranking').style.display = 'block';
   });
+
+  // Cerrar sesión de héroe en este celular (otra persona podrá entrar con su propia cuenta)
+  $('heroe-salir').onclick = function () {
+    if (!confirm('¿Cerrar sesión en este celular?')) { return; }
+    guardar('moreta_heroe_k', '');
+    guardar('moreta_heroe', '');
+    location.reload();
+  };
 
   // Héroes que se registraron antes de las contraseñas: crean la suya una sola vez
   $('hl-primera').onclick = function () { $('hp-box').style.display = 'block'; };

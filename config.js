@@ -19,6 +19,7 @@ var CONFIG = {
   FACEBOOK: "https://www.facebook.com/moretamiguelangel",
   INSTAGRAM: "https://www.instagram.com/moretamiguelangel/",
   TIKTOK: "https://www.tiktok.com/@moretamiguelangel",
+  WHATSAPP_CANAL: "https://whatsapp.com/channel/0029Vb6im4vJJhzTkgvYxa2k",
 
   // Correo para solicitudes sobre datos personales (aviso de privacidad)
   CORREO_PRIVACIDAD: "",

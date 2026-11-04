@@ -88,6 +88,15 @@
       <p class="ayuda" id="ranking-vacio" style="display:none">Todavía no hay ranking. ¡Sé el primero!</p>
     </div>
 
+    <div class="card">
+      <h2>Sigue a Moreta en redes</h2>
+      <p class="ayuda">Comparte nuestras redes con tus contactos.</p>
+      <a class="btn fb" id="red-fb" href="#" target="_blank" rel="noopener">Facebook de Moreta</a>
+      <a class="btn" id="red-ig" href="#" target="_blank" rel="noopener" style="background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)">Instagram de Moreta</a>
+      <a class="btn" id="red-tt" href="#" target="_blank" rel="noopener" style="background:#000">TikTok de Moreta</a>
+      <a class="btn wa" id="red-wa" href="#" target="_blank" rel="noopener">Canal de WhatsApp de Moreta</a>
+    </div>
+
     <p class="aviso">Solo tú y el equipo de la campaña pueden ver este panel. No compartas este link: quien lo tenga puede ver tu información.</p>
     <div style="text-align:center"><button type="button" class="btn sec" id="cerrar-sesion" style="display:inline-block;width:auto;padding:10px 18px">Cerrar sesión en este celular</button></div>
   </div>
@@ -159,6 +168,16 @@
   }
 
   function noHayAcceso() { $('sin-acceso').classList.remove('oculto'); }
+
+  // Redes oficiales de la campaña (se configuran en config.js)
+  function ponerRed(id, url) {
+    var a = $(id);
+    if (url) { a.href = url; } else { a.style.display = 'none'; }
+  }
+  ponerRed('red-fb', C.FACEBOOK);
+  ponerRed('red-ig', C.INSTAGRAM);
+  ponerRed('red-tt', C.TIKTOK);
+  ponerRed('red-wa', C.WHATSAPP_CANAL);
 
   // Ranking público de héroes (nombre corto y número de familias)
   llamar('heroes_ranking', {})

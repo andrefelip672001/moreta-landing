@@ -82,20 +82,10 @@
     </div>
 
     <div class="card">
-      <h2>Mis redes sociales</h2>
-      <p class="ayuda">Aparecerán en tu perfil de héroe. Puedes dejarlas vacías.</p>
-      <form id="form-redes">
-        <label for="r-facebook">Facebook</label>
-        <input id="r-facebook" maxlength="200" placeholder="facebook.com/tu-perfil">
-        <label for="r-instagram">Instagram</label>
-        <input id="r-instagram" maxlength="200" placeholder="instagram.com/tu-perfil">
-        <label for="r-tiktok">TikTok</label>
-        <input id="r-tiktok" maxlength="200" placeholder="tiktok.com/@tu-perfil">
-        <label for="r-whatsapp">WhatsApp (opcional)</label>
-        <input id="r-whatsapp" maxlength="20" inputmode="tel" placeholder="0991234567">
-        <button class="btn sec" type="submit" id="guardar-redes">Guardar redes</button>
-        <p class="msg" id="msg-redes"></p>
-      </form>
+      <h2>🏆 Ranking de héroes</h2>
+      <p class="ayuda">Los héroes con más familias registradas.</p>
+      <ol id="ranking-lista" style="list-style:none;padding:0;margin:10px 0 0"></ol>
+      <p class="ayuda" id="ranking-vacio" style="display:none">Todavía no hay ranking. ¡Sé el primero!</p>
     </div>
 
     <p class="aviso">Solo tú y el equipo de la campaña pueden ver este panel. No compartas este link: quien lo tenga puede ver tu información.</p>
@@ -165,16 +155,38 @@
     $('wsp').href = 'https://wa.me/?text=' + encodeURIComponent(texto);
     $('fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
 
-    var r = d.redes || {};
-    $('r-facebook').value = r.facebook || '';
-    $('r-instagram').value = r.instagram || '';
-    $('r-tiktok').value = r.tiktok || '';
-    $('r-whatsapp').value = r.whatsapp || '';
-
     $('contenido').classList.remove('oculto');
   }
 
   function noHayAcceso() { $('sin-acceso').classList.remove('oculto'); }
+
+  // Ranking público de héroes (nombre corto y número de familias)
+  llamar('heroes_ranking', {})
+    .then(function (lista) {
+      var ol = $('ranking-lista');
+      ol.textContent = '';
+      if (!lista || !lista.length) { $('ranking-vacio').style.display = 'block'; return; }
+      lista.forEach(function (h, i) {
+        var li = document.createElement('li');
+        li.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid rgba(127,127,160,.25)';
+        var pos = document.createElement('b');
+        pos.textContent = (i + 1) + '.';
+        pos.style.cssText = 'min-width:28px;color:var(--rosa)';
+        var nom = document.createElement('span');
+        nom.textContent = h.nombre;
+        nom.style.cssText = 'flex:1;font-weight:700';
+        var rg = document.createElement('span');
+        rg.textContent = h.rango;
+        rg.className = 'rango ' + h.rango;
+        rg.style.cssText = 'font-size:12px;padding:3px 10px';
+        var cant = document.createElement('span');
+        cant.textContent = h.registros + ' familias';
+        cant.style.cssText = 'font-size:13px;color:var(--gris)';
+        li.appendChild(pos); li.appendChild(nom); li.appendChild(rg); li.appendChild(cant);
+        ol.appendChild(li);
+      });
+    })
+    .catch(function () { $('ranking-vacio').style.display = 'block'; });
 
   if (!token || !URL_BASE) { noHayAcceso(); return; }
   llamar('heroe_panel', { p_token: token })
@@ -189,27 +201,6 @@
   $('cerrar-sesion').onclick = cerrarSesion;
   $('cerrar-sesion-arriba').onclick = cerrarSesion;
 
-  $('form-redes').onsubmit = function (ev) {
-    ev.preventDefault();
-    var btn = $('guardar-redes'), msg = $('msg-redes');
-    btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Guardando…';
-    llamar('heroe_guardar_redes', {
-      p_token: token,
-      p_redes: {
-        facebook: $('r-facebook').value.trim(),
-        instagram: $('r-instagram').value.trim(),
-        tiktok: $('r-tiktok').value.trim(),
-        whatsapp: $('r-whatsapp').value.replace(/\D/g, '')
-      }
-    }).then(function (ok) {
-      btn.disabled = false;
-      msg.className = ok ? 'msg ok' : 'msg err';
-      msg.textContent = ok ? '¡Redes guardadas!' : 'No se pudieron guardar. Intenta de nuevo.';
-    }).catch(function () {
-      btn.disabled = false; msg.className = 'msg err';
-      msg.textContent = 'No se pudieron guardar. Revisa tu conexión e intenta de nuevo.';
-    });
-  };
 })();
 </script>
 </body>

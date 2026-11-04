@@ -555,6 +555,11 @@ footer .pie{margin-top:18px;opacity:.6}
       </div>
       <div class="aviso-vol"><span>ℹ️</span><div>Este registro es para quienes quieren <b>ayudar a otras familias</b>. Si quieres registrar <b>tu propio hogar</b> en Mejora tu Hogar, <a href="#mejora">hazlo aquí</a>.</div></div>
 
+      <div id="heroe-ya" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px;text-align:center">
+        <p id="heroe-ya-txt" style="margin:0 0 10px;font-weight:700"></p>
+        <a class="btn-vol" id="heroe-ya-panel" href="backoffice.html" target="_blank" rel="noopener" style="display:block;text-decoration:none">📊 Entrar a mi panel de héroe</a>
+      </div>
+
       <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
 
       <div class="caja-form oculto" id="caja-vol">
@@ -1593,6 +1598,21 @@ footer .pie{margin-top:18px;opacity:.6}
     $('caja-vol').className = 'caja-form';
     dibujarCaptcha('vol');
   };
+  // Si este celular ya se registró como héroe, no vuelve a pedir el formulario: muestra el acceso a su panel
+  (function () {
+    var k = leer('moreta_heroe_k'), codigo = leer('moreta_heroe');
+    if (!k && !codigo) { return; }
+    $('btn-vol').style.display = 'none';
+    $('heroe-ya').style.display = 'block';
+    if (k) {
+      $('heroe-ya-panel').href = 'backoffice.html?k=' + encodeURIComponent(k);
+      $('heroe-ya-txt').textContent = '¡Ya eres Héroe de la Vivienda!';
+    } else {
+      $('heroe-ya-panel').style.display = 'none';
+      $('heroe-ya-txt').textContent = '¡Ya eres Héroe de la Vivienda! Escribe al equipo de la campaña para recibir el acceso a tu panel.';
+    }
+  })();
+
   $('form-unete').onsubmit = function (ev) {
     ev.preventDefault();
     var nombre = trim($('f-nombre').value);

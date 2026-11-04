@@ -160,7 +160,7 @@
       btn.textContent = ok ? '¡Link copiado!' : 'Mantén presionado el link para copiarlo';
       setTimeout(function () { btn.textContent = 'Copiar mi link'; }, 2500);
     };
-    var texto = 'Hola, soy ' + String(d.nombre).split(' ')[0] + '. Con Moreta se arregla tu caleta. Regístrate gratis en Mejora tu Hogar: ' + link;
+    var texto = 'Hola, soy ' + String(d.nombre).split(' ')[0] + ' y te invito para que Moreta arregle tu caleta.\nRegístrate gratis aquí 👇🏻\n' + link;
     $('wsp').href = 'https://wa.me/?text=' + encodeURIComponent(texto);
     $('fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
 

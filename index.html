@@ -1428,9 +1428,10 @@ footer .pie{margin-top:18px;opacity:.6}
       d.talonario = tal || null; d.brigada = brigada; d.fuente = 'brigada';
     }
     if (d.nombre.length < 2) { return mostrarError('m-err', 'Escribe tus nombres y apellidos.'); }
-    if (!cedulaValida(d.cedula)) { return mostrarError('m-err', 'Revisa tu número de cédula, no es válido.'); }
+    // En brigadas la cédula es opcional; si se escribe, debe ser válida
+    if ((!modoBrigada || d.cedula) && !cedulaValida(d.cedula)) { return mostrarError('m-err', 'Revisa tu número de cédula, no es válido.'); }
     if (!/^0\d{9}$/.test(d.telefono)) { return mostrarError('m-err', 'Escribe un celular válido de 10 dígitos (ej: 0991234567).'); }
-    // Para jefes de brigada solo son obligatorios nombre, cédula y celular (arriba)
+    // Para jefes de brigada solo son obligatorios nombre y celular
     if (!modoBrigada) {
       if (!d.sexo) { return mostrarError('m-err', 'Selecciona tu sexo.'); }
       if (!(d.edad >= 18 && d.edad <= 110)) { return mostrarError('m-err', d.edad < 18 ? 'Para registrar un hogar debes ser mayor de 18 años.' : 'Escribe tu edad.'); }

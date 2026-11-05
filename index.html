@@ -344,6 +344,161 @@ footer .pie{margin-top:18px;opacity:.6}
   </div>
 </header>
 
+<!-- ================= 7. HÉROES DE LA VIVIENDA (voluntariado) ================= -->
+<section id="unete" style="padding-top:10px">
+  <div class="wrap">
+    <div class="vol">
+      <span class="et">🦸 Héroes de la Vivienda</span><span class="premio">🏆 Sube de rango</span>
+      <h2>Sé un héroe <em>de la vivienda</em></h2>
+      <p class="sub">Muchas familias no saben que <b>con Moreta se arregla su caleta</b>. Regístrate como Héroe de la Vivienda y <b>sube de rango</b>: recibe tu propio link para invitar a tus vecinos.</p>
+      <div class="pasos-heroe">
+        <div><b>1</b><span>Regístrate como héroe</span></div>
+        <div><b>2</b><span>Comparte tu link con tus vecinos</span></div>
+        <div><b>3</b><span>Sube de rango con cada familia</span></div>
+      </div>
+      <div class="aviso-vol"><span>ℹ️</span><div>Este registro es para quienes quieren <b>ayudar a otras familias</b>. Si quieres registrar <b>tu propio hogar</b> en Mejora tu Hogar, <a href="#mejora">hazlo aquí</a>.</div></div>
+
+      <div id="heroe-ya" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px;text-align:center">
+        <p style="margin:0 0 10px;font-weight:700">¡Ya eres Héroe de la Vivienda!</p>
+        <a class="btn-vol" id="heroe-ya-panel" href="backoffice.html" target="_blank" rel="noopener" style="display:block;text-decoration:none">📊 Entrar a mi panel de héroe</a>
+        <button type="button" id="heroe-salir" style="background:none;border:0;color:inherit;text-decoration:underline;font-size:13px;margin:10px 0 0;cursor:pointer">Cerrar sesión en este celular</button>
+      </div>
+
+      <div id="heroe-login" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px">
+        <p style="margin:0 0 8px;font-weight:700;text-align:center">¿Ya eres héroe? Inicia sesión</p>
+        <input id="hl-tel" inputmode="numeric" maxlength="10" placeholder="Tu celular (09...)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+        <input type="password" id="hl-cod" maxlength="72" autocomplete="current-password" placeholder="Tu contraseña"style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+        <button class="btn-vol" id="hl-entrar" type="button" style="width:100%">Entrar a mi panel</button>
+        <p id="hl-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
+        <button type="button" id="hl-primera" style="background:none;border:0;color:inherit;text-decoration:underline;font-size:13px;margin:8px 0 0;cursor:pointer;width:100%">¿Te registraste antes? Crea tu contraseña aquí</button>
+        <div id="hp-box" style="display:none;margin-top:10px">
+          <input id="hp-nombre" maxlength="120" placeholder="Tu nombre y apellido" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+          <input type="password" id="hp-clave" maxlength="72" autocomplete="new-password" placeholder="Nueva contraseña (mínimo 6)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+          <button class="btn-vol" id="hp-crear" type="button" style="width:100%">Guardar y entrar</button>
+          <p id="hp-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
+        </div>
+      </div>
+
+      <button class="btn-heroe" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
+
+      <div class="caja-form oculto" id="caja-vol">
+        <form class="form" id="form-unete" novalidate>
+          <label class="l" for="f-nombre">Nombre y apellido</label>
+          <input type="text" id="f-nombre" maxlength="120" autocomplete="name" placeholder="Ej: María Pérez">
+
+          <label class="l" for="f-tel">Celular / WhatsApp</label>
+          <input type="tel" id="f-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
+
+          <label class="l" for="f-clave">Crea una contraseña (mínimo 6 caracteres)</label>
+          <input type="password" id="f-clave" maxlength="72" autocomplete="new-password" placeholder="Para entrar a tu panel después">
+          <p class="ayuda" style="margin:4px 0 0">Con tu celular y esta contraseña entrarás a tu panel de héroe cuando quieras.</p>
+
+          <label class="l" for="f-parroquia">Parroquia</label>
+          <select id="f-parroquia" class="sel-parroquia"></select>
+
+          <label class="l" for="f-barrio">Barrio o sector</label>
+          <input type="text" id="f-barrio" maxlength="120" placeholder="Ej: Cooperativa 30 de Julio">
+
+          <label class="l">¿Cómo te gustaría ayudar?</label>
+          <div class="chips" id="f-ayuda">
+            <label class="chip"><input type="checkbox" value="Registrar a mis vecinos"><span>Registrar a mis vecinos</span></label>
+            <label class="chip"><input type="checkbox" value="Compartir en redes y WhatsApp"><span>Compartir en redes y WhatsApp</span></label>
+            <label class="chip"><input type="checkbox" value="Eventos y caravanas"><span>Eventos y caravanas</span></label>
+            <label class="chip"><input type="checkbox" value="Delegado de recinto"><span>Delegado de recinto</span></label>
+            <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
+          </div>
+
+          <label class="consent">
+            <input type="checkbox" id="f-consent">
+            <span>Acepto que la campaña use mis datos para contactarme sobre actividades de la campaña, según el aviso de privacidad al final de esta página.</span>
+          </label>
+
+          <div class="captcha" id="cap-vol"></div>
+          <button type="submit" class="enviar" id="f-enviar">¡Quiero ser héroe!</button>
+          <p class="err" id="f-err"></p>
+        </form>
+
+        <div class="listo" id="f-listo">
+          <div class="big">🦸</div>
+          <h3>¡Ya eres un Héroe de la Vivienda!</h3>
+          <p><b>Mientras más familias registres, más subes de rango.</b> Este es tu link personal; cada familia que se registre con él suma a tu cuenta:</p>
+          <div class="mi-link"><span id="mi-link-txt"></span></div>
+          <a class="bt-comp bt-panel" href="backoffice.html" id="heroe-panel" target="_blank" rel="noopener" data-track="heroe" data-detalle="abrir-panel">📊 Entrar a mi panel de héroe</a>
+          <a class="bt-comp bt-wa" href="#" id="heroe-wsp" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-whatsapp">Enviar mi link por WhatsApp</a>
+          <a class="bt-comp bt-fb" href="#" id="heroe-fb" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-facebook">Publicar mi link en Facebook</a>
+          <button class="bt-comp bt-cp2" id="heroe-copiar" data-track="heroe" data-detalle="copiar-link">🔗 <span id="heroe-copiar-txt" style="margin-left:8px">Copiar mi link</span></button>
+          <p class="ayuda" style="margin-top:14px;text-align:center">Guarda este link. En tu panel puedes ver tu rango, las familias que registraste y editar tus redes sociales.</p>
+          <div class="com-mini" data-comunidad style="display:none">
+            <p>📲 Mientras tanto, únete a la comunidad:</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="heroes-ranking" class="rk" style="display:none">
+        <h3>🏆 Ranking de héroes</h3>
+        <p class="rk-sub">Los que más familias registran suben de rango</p>
+        <ol id="heroes-lista" style="margin:0;padding:0;list-style:none"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. TESTIMONIOS ================= -->
+<section id="testimonios" style="padding-top:10px">
+  <div class="wrap">
+    <h2>Lo que dice <em>la gente</em></h2>
+    <p class="sub">Testimonios de nuestra Tierrita. Desliza para ver más.</p>
+    <div class="carrusel" id="lista-testimonios"></div>
+  </div>
+</section>
+
+<!-- ================= 4. CONOCE A MORETA ================= -->
+<section id="conoce" class="bio">
+  <div class="wrap">
+    <div class="bio-cab">
+      <div class="bio-foto"><img src="img/moreta.jpg" alt="Miguel Ángel Moreta" loading="lazy"></div>
+      <div>
+        <h2>Conoce a Moreta <em>quien arregla tu caleta</em></h2>
+      </div>
+    </div>
+    <div class="texto" id="texto-bio"></div>
+  </div>
+</section>
+
+<!-- ================= 5. PROPUESTAS (videos) ================= -->
+<section id="propuestas">
+  <div class="wrap">
+    <h2>Mis <em>propuestas</em></h2>
+    <p class="sub">Compromisos concretos para nuestra Tierrita.</p>
+    <div id="lista-prop-txt"></div>
+    <div id="bloque-prop-videos">
+      <p class="subtit">🎥 Te las explico en video</p>
+      <div class="carrusel" id="lista-propuestas"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. AGENDA ================= -->
+<section id="agenda" style="padding-top:10px;display:none">
+  <div class="wrap">
+    <h2>Agenda de <em>medios</em></h2>
+    <p class="sub">Sintoniza y acompáñanos.</p>
+    <div id="lista-agenda"></div>
+  </div>
+</section>
+
+<!-- ================= 6b. COMUNIDAD WHATSAPP / TELEGRAM ================= -->
+<section id="comunidad" style="padding-top:10px;display:none">
+  <div class="wrap">
+    <div class="com">
+      <div class="com-ic">📲</div>
+      <h2>Únete a mi <em>comunidad</em></h2>
+      <p class="sub">Recibe en tu celular la agenda, las propuestas y las novedades de Mejora tu Hogar. Sin spam, solo lo importante.</p>
+      <div data-comunidad></div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= 2. MEJORA TU HOGAR (bloqueado) ================= -->
 <section id="mejora">
   <div class="wrap">
@@ -491,161 +646,6 @@ footer .pie{margin-top:18px;opacity:.6}
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 3. TESTIMONIOS ================= -->
-<section id="testimonios" style="padding-top:10px">
-  <div class="wrap">
-    <h2>Lo que dice <em>la gente</em></h2>
-    <p class="sub">Testimonios de nuestra Tierrita. Desliza para ver más.</p>
-    <div class="carrusel" id="lista-testimonios"></div>
-  </div>
-</section>
-
-<!-- ================= 4. CONOCE A MORETA ================= -->
-<section id="conoce" class="bio">
-  <div class="wrap">
-    <div class="bio-cab">
-      <div class="bio-foto"><img src="img/moreta.jpg" alt="Miguel Ángel Moreta" loading="lazy"></div>
-      <div>
-        <h2>Conoce a Moreta <em>quien arregla tu caleta</em></h2>
-      </div>
-    </div>
-    <div class="texto" id="texto-bio"></div>
-  </div>
-</section>
-
-<!-- ================= 5. PROPUESTAS (videos) ================= -->
-<section id="propuestas">
-  <div class="wrap">
-    <h2>Mis <em>propuestas</em></h2>
-    <p class="sub">Compromisos concretos para nuestra Tierrita.</p>
-    <div id="lista-prop-txt"></div>
-    <div id="bloque-prop-videos">
-      <p class="subtit">🎥 Te las explico en video</p>
-      <div class="carrusel" id="lista-propuestas"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6. AGENDA ================= -->
-<section id="agenda" style="padding-top:10px;display:none">
-  <div class="wrap">
-    <h2>Agenda de <em>medios</em></h2>
-    <p class="sub">Sintoniza y acompáñanos.</p>
-    <div id="lista-agenda"></div>
-  </div>
-</section>
-
-<!-- ================= 6b. COMUNIDAD WHATSAPP / TELEGRAM ================= -->
-<section id="comunidad" style="padding-top:10px;display:none">
-  <div class="wrap">
-    <div class="com">
-      <div class="com-ic">📲</div>
-      <h2>Únete a mi <em>comunidad</em></h2>
-      <p class="sub">Recibe en tu celular la agenda, las propuestas y las novedades de Mejora tu Hogar. Sin spam, solo lo importante.</p>
-      <div data-comunidad></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 7. HÉROES DE LA VIVIENDA (voluntariado) ================= -->
-<section id="unete" style="padding-top:10px">
-  <div class="wrap">
-    <div class="vol">
-      <span class="et">🦸 Héroes de la Vivienda</span><span class="premio">🏆 Sube de rango</span>
-      <h2>Sé un héroe <em>de la vivienda</em></h2>
-      <p class="sub">Muchas familias no saben que <b>con Moreta se arregla su caleta</b>. Regístrate como Héroe de la Vivienda y <b>sube de rango</b>: recibe tu propio link para invitar a tus vecinos.</p>
-      <div class="pasos-heroe">
-        <div><b>1</b><span>Regístrate como héroe</span></div>
-        <div><b>2</b><span>Comparte tu link con tus vecinos</span></div>
-        <div><b>3</b><span>Sube de rango con cada familia</span></div>
-      </div>
-      <div class="aviso-vol"><span>ℹ️</span><div>Este registro es para quienes quieren <b>ayudar a otras familias</b>. Si quieres registrar <b>tu propio hogar</b> en Mejora tu Hogar, <a href="#mejora">hazlo aquí</a>.</div></div>
-
-      <div id="heroe-ya" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px;text-align:center">
-        <p style="margin:0 0 10px;font-weight:700">¡Ya eres Héroe de la Vivienda!</p>
-        <a class="btn-vol" id="heroe-ya-panel" href="backoffice.html" target="_blank" rel="noopener" style="display:block;text-decoration:none">📊 Entrar a mi panel de héroe</a>
-        <button type="button" id="heroe-salir" style="background:none;border:0;color:inherit;text-decoration:underline;font-size:13px;margin:10px 0 0;cursor:pointer">Cerrar sesión en este celular</button>
-      </div>
-
-      <div id="heroe-login" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px">
-        <p style="margin:0 0 8px;font-weight:700;text-align:center">¿Ya eres héroe? Inicia sesión</p>
-        <input id="hl-tel" inputmode="numeric" maxlength="10" placeholder="Tu celular (09...)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
-        <input type="password" id="hl-cod" maxlength="72" autocomplete="current-password" placeholder="Tu contraseña"style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
-        <button class="btn-vol" id="hl-entrar" type="button" style="width:100%">Entrar a mi panel</button>
-        <p id="hl-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
-        <button type="button" id="hl-primera" style="background:none;border:0;color:inherit;text-decoration:underline;font-size:13px;margin:8px 0 0;cursor:pointer;width:100%">¿Te registraste antes? Crea tu contraseña aquí</button>
-        <div id="hp-box" style="display:none;margin-top:10px">
-          <input id="hp-nombre" maxlength="120" placeholder="Tu nombre y apellido" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
-          <input type="password" id="hp-clave" maxlength="72" autocomplete="new-password" placeholder="Nueva contraseña (mínimo 6)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
-          <button class="btn-vol" id="hp-crear" type="button" style="width:100%">Guardar y entrar</button>
-          <p id="hp-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
-        </div>
-      </div>
-
-      <button class="btn-heroe" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
-
-      <div class="caja-form oculto" id="caja-vol">
-        <form class="form" id="form-unete" novalidate>
-          <label class="l" for="f-nombre">Nombre y apellido</label>
-          <input type="text" id="f-nombre" maxlength="120" autocomplete="name" placeholder="Ej: María Pérez">
-
-          <label class="l" for="f-tel">Celular / WhatsApp</label>
-          <input type="tel" id="f-tel" maxlength="10" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX">
-
-          <label class="l" for="f-clave">Crea una contraseña (mínimo 6 caracteres)</label>
-          <input type="password" id="f-clave" maxlength="72" autocomplete="new-password" placeholder="Para entrar a tu panel después">
-          <p class="ayuda" style="margin:4px 0 0">Con tu celular y esta contraseña entrarás a tu panel de héroe cuando quieras.</p>
-
-          <label class="l" for="f-parroquia">Parroquia</label>
-          <select id="f-parroquia" class="sel-parroquia"></select>
-
-          <label class="l" for="f-barrio">Barrio o sector</label>
-          <input type="text" id="f-barrio" maxlength="120" placeholder="Ej: Cooperativa 30 de Julio">
-
-          <label class="l">¿Cómo te gustaría ayudar?</label>
-          <div class="chips" id="f-ayuda">
-            <label class="chip"><input type="checkbox" value="Registrar a mis vecinos"><span>Registrar a mis vecinos</span></label>
-            <label class="chip"><input type="checkbox" value="Compartir en redes y WhatsApp"><span>Compartir en redes y WhatsApp</span></label>
-            <label class="chip"><input type="checkbox" value="Eventos y caravanas"><span>Eventos y caravanas</span></label>
-            <label class="chip"><input type="checkbox" value="Delegado de recinto"><span>Delegado de recinto</span></label>
-            <label class="chip"><input type="checkbox" value="Otro"><span>Otro</span></label>
-          </div>
-
-          <label class="consent">
-            <input type="checkbox" id="f-consent">
-            <span>Acepto que la campaña use mis datos para contactarme sobre actividades de la campaña, según el aviso de privacidad al final de esta página.</span>
-          </label>
-
-          <div class="captcha" id="cap-vol"></div>
-          <button type="submit" class="enviar" id="f-enviar">¡Quiero ser héroe!</button>
-          <p class="err" id="f-err"></p>
-        </form>
-
-        <div class="listo" id="f-listo">
-          <div class="big">🦸</div>
-          <h3>¡Ya eres un Héroe de la Vivienda!</h3>
-          <p><b>Mientras más familias registres, más subes de rango.</b> Este es tu link personal; cada familia que se registre con él suma a tu cuenta:</p>
-          <div class="mi-link"><span id="mi-link-txt"></span></div>
-          <a class="bt-comp bt-panel" href="backoffice.html" id="heroe-panel" target="_blank" rel="noopener" data-track="heroe" data-detalle="abrir-panel">📊 Entrar a mi panel de héroe</a>
-          <a class="bt-comp bt-wa" href="#" id="heroe-wsp" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-whatsapp">Enviar mi link por WhatsApp</a>
-          <a class="bt-comp bt-fb" href="#" id="heroe-fb" target="_blank" rel="noopener" data-track="heroe" data-detalle="compartir-facebook">Publicar mi link en Facebook</a>
-          <button class="bt-comp bt-cp2" id="heroe-copiar" data-track="heroe" data-detalle="copiar-link">🔗 <span id="heroe-copiar-txt" style="margin-left:8px">Copiar mi link</span></button>
-          <p class="ayuda" style="margin-top:14px;text-align:center">Guarda este link. En tu panel puedes ver tu rango, las familias que registraste y editar tus redes sociales.</p>
-          <div class="com-mini" data-comunidad style="display:none">
-            <p>📲 Mientras tanto, únete a la comunidad:</p>
-          </div>
-        </div>
-      </div>
-
-      <div id="heroes-ranking" class="rk" style="display:none">
-        <h3>🏆 Ranking de héroes</h3>
-        <p class="rk-sub">Los que más familias registran suben de rango</p>
-        <ol id="heroes-lista" style="margin:0;padding:0;list-style:none"></ol>
       </div>
     </div>
   </div>

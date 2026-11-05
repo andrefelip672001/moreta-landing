@@ -138,6 +138,9 @@ h2 em{font-family:var(--f-script);text-transform:none;color:var(--magenta);font-
 .vol.fer{background:var(--magenta)}
 .vol.fer h2 em{color:#fff;opacity:.9}
 .vol.fer .btn-vol{border-color:#fff}
+.candado-hero{background:#fff;color:var(--marino);border-radius:18px;padding:22px 18px;text-align:center;margin-top:14px;box-shadow:0 10px 30px rgba(0,0,102,.25)}
+.candado-hero h3{font-size:18px;font-weight:900;margin-top:6px}
+.candado-hero p{font-size:13.5px;color:var(--gris);margin-top:6px;line-height:1.5}
 .btn-heroe{width:100%;margin-top:16px;padding:16px;border-radius:14px;border:0;background:#FFD400;color:var(--marino);font:inherit;font-weight:900;font-size:17px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.28)}
 .rk{background:linear-gradient(135deg,#FFD400 0%,#FF3D8B 100%);color:var(--marino);border-radius:18px;padding:18px 14px;margin-top:18px;box-shadow:0 10px 28px rgba(0,0,0,.3)}
 .rk h3{font-family:var(--f-titulo);font-weight:900;font-size:20px;text-align:center;margin:0;text-transform:uppercase}
@@ -380,7 +383,12 @@ footer .pie{margin-top:18px;opacity:.6}
       </div>
 
       <button class="btn-heroe" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
-      <p id="heroe-bloq" class="ayuda" style="display:none;text-align:center;margin-top:10px;color:#fff;font-weight:700">🔒 Primero mira el video completo de Miguel Ángel Moreta para desbloquear tu registro. <a href="#mejora" style="color:#FFD400">Ir al video</a></p>
+      <div id="heroe-candado" class="candado-hero" style="display:none">
+        <div class="ic" style="font-size:38px">🔒</div>
+        <h3>Mira el video completo</h3>
+        <p>El registro de héroes se desbloquea cuando termines de ver el mensaje de Miguel Ángel Moreta.</p>
+        <button type="button" class="btn-sec" id="heroe-ir-video" style="width:100%;margin-top:12px">Ir al video</button>
+      </div>
 
       <div class="caja-form oculto" id="caja-vol">
         <form class="form" id="form-unete" novalidate>
@@ -998,6 +1006,9 @@ footer .pie{margin-top:18px;opacity:.6}
     $('mth').className = 'mth';
     textoVideo('✔ ¡Listo! Ya puedes registrarte abajo 👇', true);
     avance(100);
+    var bv = document.getElementById('btn-vol'), hc = document.getElementById('heroe-candado');
+    if (bv && bv.className.indexOf('oculto') < 0) { bv.textContent = '🦸 Quiero ser Héroe de la Vivienda'; }
+    if (hc) { hc.style.display = 'none'; }
     if (desdeVideo && !desbloqueado) {
       desbloqueado = true; guardar('moreta_video_ok', '1');
       track('video-principal', 'completo');
@@ -1634,13 +1645,19 @@ footer .pie{margin-top:18px;opacity:.6}
   }
 
   /* ---------- Formulario Voluntarios ---------- */
+  // Bloqueo del registro de héroes: mismo candadito que el formulario de hogar, hasta terminar el video
+  if (!desbloqueado) {
+    $('btn-vol').textContent = '🔒 Quiero ser Héroe de la Vivienda';
+    $('heroe-candado').style.display = 'block';
+  }
+  $('heroe-ir-video').onclick = function () { irA('mejora'); };
   $('btn-vol').onclick = function () {
-    if (!desbloqueado) { // el registro de héroes se abre cuando termina el video
-      $('heroe-bloq').style.display = 'block';
-      irA('mejora');
+    if (!desbloqueado) {
+      $('heroe-candado').style.display = 'block';
+      $('heroe-candado').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    $('heroe-bloq').style.display = 'none';
+    $('heroe-candado').style.display = 'none';
     $('btn-vol').className = 'btn-heroe oculto';
     $('caja-vol').className = 'caja-form';
     dibujarCaptcha('vol');

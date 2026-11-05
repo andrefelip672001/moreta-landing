@@ -138,6 +138,15 @@ h2 em{font-family:var(--f-script);text-transform:none;color:var(--magenta);font-
 .vol.fer{background:var(--magenta)}
 .vol.fer h2 em{color:#fff;opacity:.9}
 .vol.fer .btn-vol{border-color:#fff}
+.btn-heroe{width:100%;margin-top:16px;padding:16px;border-radius:14px;border:0;background:#FFD400;color:var(--marino);font:inherit;font-weight:900;font-size:17px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.28)}
+.rk{background:linear-gradient(135deg,#FFD400 0%,#FF3D8B 100%);color:var(--marino);border-radius:18px;padding:18px 14px;margin-top:18px;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+.rk h3{font-family:var(--f-titulo);font-weight:900;font-size:20px;text-align:center;margin:0;text-transform:uppercase}
+.rk-sub{text-align:center;font-size:13px;font-weight:700;margin:4px 0 0}
+.rk-fila{display:flex;align-items:center;gap:8px;background:#fff;border-radius:14px;padding:10px 12px;margin-top:8px;list-style:none}
+.rk-pos{width:30px;height:30px;flex:0 0 30px;border-radius:50%;background:var(--marino);color:#fff;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}
+.rk-nom{flex:1;font-weight:800;font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rk-rango{font-size:12px;font-weight:800;background:var(--fondo);border-radius:20px;padding:4px 9px;white-space:nowrap}
+.rk-cant{font-size:13px;font-weight:900;color:var(--magenta);white-space:nowrap}
 .vol.fer .enviar{background:var(--azul)}
 .vol.fer .et{background:rgba(255,255,255,.2)}
 .premio{display:inline-block;margin-left:6px;background:var(--rosa);color:#fff;font-size:11px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;padding:4px 10px;border-radius:20px}
@@ -469,11 +478,10 @@ footer .pie{margin-top:18px;opacity:.6}
             <h3 id="m-listo-tit">¡Felicitaciones, ya eres parte del sueño!</h3>
             <p id="m-listo-txt">Tú y tu familia vivirán felices y con la dignidad que se merecen. Gracias por confiar en el proyecto más grande de <b>Vivienda Social en Ecuador</b>.</p>
             <div class="solo-publico">
-            <p class="sigue">Para mantenerte informado de todo, sigue mis redes sociales:</p>
+            <p class="sigue">Conviértete en héroe de la vivienda y recibe reconocimientos:</p>
             <div class="redes-listo">
               <a class="rl-fb" data-red="facebook" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>Facebook</a>
               <a class="rl-ig" data-red="instagram" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>Instagram</a>
-              <a class="rl-wa" data-red="whatsapp" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="whatsapp-canal">Canal de WhatsApp</a>
               <a class="rl-tt" data-red="tiktok" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="tiktok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>TikTok</a>
             </div>
             </div>
@@ -579,12 +587,7 @@ footer .pie{margin-top:18px;opacity:.6}
         </div>
       </div>
 
-      <button class="btn-vol" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
-
-      <div id="heroes-ranking" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:12px 0 0">
-        <p style="margin:0 0 8px;font-weight:800;text-align:center">🏆 Ranking de héroes</p>
-        <ol id="heroes-lista" style="margin:0;padding-left:0;list-style:none;font-size:15px"></ol>
-      </div>
+      <button class="btn-heroe" id="btn-vol" data-track="boton" data-detalle="abrir-heroe">🦸 Quiero ser Héroe de la Vivienda</button>
 
       <div class="caja-form oculto" id="caja-vol">
         <form class="form" id="form-unete" novalidate>
@@ -637,6 +640,12 @@ footer .pie{margin-top:18px;opacity:.6}
             <p>📲 Mientras tanto, únete a la comunidad:</p>
           </div>
         </div>
+      </div>
+
+      <div id="heroes-ranking" class="rk" style="display:none">
+        <h3>🏆 Ranking de héroes</h3>
+        <p class="rk-sub">Los que más familias registran suben de rango</p>
+        <ol id="heroes-lista" style="margin:0;padding:0;list-style:none"></ol>
       </div>
     </div>
   </div>
@@ -702,11 +711,10 @@ footer .pie{margin-top:18px;opacity:.6}
           <div class="big">🛠️</div>
           <h3>¡Ya estás registrado como artesano!</h3>
           <p>Gracias por sumarte al proyecto más grande de Vivienda Social en Ecuador. Te contactaremos por WhatsApp.</p>
-          <p class="sigue">Para mantenerte informado de todo, sigue mis redes sociales:</p>
+          <p class="sigue">Conviértete en héroe de la vivienda y recibe reconocimientos:</p>
           <div class="redes-listo">
               <a class="rl-fb" data-red="facebook" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>Facebook</a>
               <a class="rl-ig" data-red="instagram" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>Instagram</a>
-              <a class="rl-wa" data-red="whatsapp" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="whatsapp-canal">Canal de WhatsApp</a>
               <a class="rl-tt" data-red="tiktok" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="tiktok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>TikTok</a>
             </div>
         </div>
@@ -761,11 +769,10 @@ footer .pie{margin-top:18px;opacity:.6}
           <div class="big">🔩</div>
           <h3>¡Tu ferretería ya es aliada!</h3>
           <p>Gracias por sumarte al proyecto más grande de Vivienda Social en Ecuador. Te contactaremos por WhatsApp.</p>
-          <p class="sigue">Para mantenerte informado de todo, sigue mis redes sociales:</p>
+          <p class="sigue">Conviértete en héroe de la vivienda y recibe reconocimientos:</p>
           <div class="redes-listo">
               <a class="rl-fb" data-red="facebook" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg>Facebook</a>
               <a class="rl-ig" data-red="instagram" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="#fff" stroke="none"/></svg>Instagram</a>
-              <a class="rl-wa" data-red="whatsapp" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="whatsapp-canal">Canal de WhatsApp</a>
               <a class="rl-tt" data-red="tiktok" href="#" target="_blank" rel="noopener" data-track="red-registro" data-detalle="tiktok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>TikTok</a>
             </div>
         </div>
@@ -796,6 +803,9 @@ footer .pie{margin-top:18px;opacity:.6}
       <a class="bt-comp bt-wa" href="#" data-compartir="whatsapp" data-track="compartir" data-detalle="whatsapp">
         <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.43 9.43 0 01-4.8-1.32l-.35-.2-3.57.93.95-3.48-.22-.36a9.4 9.4 0 01-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.99 6.67 2.77a9.37 9.37 0 012.76 6.68c0 5.21-4.24 9.44-9.44 9.44zM20.08 3.9A11.3 11.3 0 0012.04.57C5.78.57.68 5.67.67 11.93c0 2 .52 3.95 1.52 5.67L.57 23.5l6.03-1.58a11.33 11.33 0 005.43 1.38h.01c6.26 0 11.36-5.1 11.36-11.36 0-3.04-1.18-5.89-3.32-8.04z"/></svg>
         Enviar por WhatsApp
+      </a>
+      <a class="bt-comp bt-wa" href="#" data-red="whatsapp" data-track="compartir" data-detalle="canal-whatsapp">
+        Canal de WhatsApp
       </a>
       <button class="bt-comp bt-cp" data-compartir="copiar" data-track="compartir" data-detalle="copiar-enlace">🔗 <span id="txt-copiar" style="margin-left:8px">Copiar enlace</span></button>
     </div>
@@ -1624,19 +1634,20 @@ footer .pie{margin-top:18px;opacity:.6}
 
   /* ---------- Formulario Voluntarios ---------- */
   $('btn-vol').onclick = function () {
-    $('btn-vol').className = 'btn-vol oculto';
+    $('btn-vol').className = 'btn-heroe oculto';
     $('caja-vol').className = 'caja-form';
     dibujarCaptcha('vol');
+    $('caja-vol').scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-  // Acceso de héroes: si este celular ya tiene su panel, lo muestra; si no, pide celular y código para entrar
-  (function () {
+  // Acceso de héroes: muestra el panel si este celular tiene sesión, o el inicio de sesión si no.
+  // Se vuelve a revisar al regresar a la página o si se cerró sesión en otra pestaña.
+  function sincronizarHeroe() {
     var k = leer('moreta_heroe_k');
-    if (k) {
-      $('heroe-ya').style.display = 'block';
-      $('heroe-ya-panel').href = 'backoffice.html?k=' + encodeURIComponent(k);
-      return;
-    }
-    $('heroe-login').style.display = 'block';
+    $('heroe-ya').style.display = k ? 'block' : 'none';
+    $('heroe-login').style.display = k ? 'none' : 'block';
+    if (k) { $('heroe-ya-panel').href = 'backoffice.html?k=' + encodeURIComponent(k); }
+  }
+  (function () {
     $('hl-entrar').onclick = function () {
       var tel = $('hl-tel').value.replace(/\D/g, ''), cod = $('hl-cod').value;
       var msg = $('hl-msg');
@@ -1655,20 +1666,26 @@ footer .pie{margin-top:18px;opacity:.6}
         }
       });
     };
+    sincronizarHeroe();
+    window.addEventListener('pageshow', sincronizarHeroe);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) { sincronizarHeroe(); } });
+    window.addEventListener('storage', sincronizarHeroe);
   })();
 
-  // Ranking público de héroes (solo nombre corto y número de familias)
+  // Ranking público de héroes (nombre corto, rango y número de familias)
+  var RANGOS = { 'Héroe': '🦸', 'Plata': '🥈', 'Oro': '🥇', 'Líder': '🌟', 'Élite': '👑' };
   xhrSupabase('POST', '/rest/v1/rpc/heroes_ranking', 'application/json', '{}', function (st, txt) {
     var lista = null; try { lista = txt ? JSON.parse(txt) : null; } catch (e) {}
     if (!(st >= 200 && st < 300) || !lista || !lista.length) { return; }
     var ol = $('heroes-lista'); ol.innerHTML = '';
-    var medallas = ['🥇', '🥈', '🥉'];
     lista.forEach(function (h, i) {
-      var li = document.createElement('li');
-      li.style.cssText = 'display:flex;justify-content:space-between;gap:8px;padding:8px 4px;border-top:1px solid rgba(255,255,255,.15)';
-      var izq = document.createElement('span'); izq.textContent = (medallas[i] || (i + 1) + '.') + ' ' + h.nombre;
-      var der = document.createElement('b'); der.textContent = h.registros + ' familias';
-      li.appendChild(izq); li.appendChild(der); ol.appendChild(li);
+      var li = document.createElement('li'); li.className = 'rk-fila';
+      var pos = document.createElement('span'); pos.className = 'rk-pos'; pos.textContent = String(i + 1);
+      var nom = document.createElement('span'); nom.className = 'rk-nom'; nom.textContent = h.nombre;
+      var rg = document.createElement('span'); rg.className = 'rk-rango'; rg.textContent = (RANGOS[h.rango] || '🦸') + ' ' + h.rango;
+      var cant = document.createElement('span'); cant.className = 'rk-cant'; cant.textContent = h.registros + ' familias';
+      li.appendChild(pos); li.appendChild(nom); li.appendChild(rg); li.appendChild(cant);
+      ol.appendChild(li);
     });
     $('heroes-ranking').style.display = 'block';
   });

@@ -1650,11 +1650,12 @@ footer .pie{margin-top:18px;opacity:.6}
     $('btn-vol').textContent = '🔒 Quiero ser Héroe de la Vivienda';
     $('heroe-candado').style.display = 'block';
   }
-  $('heroe-ir-video').onclick = function () { irA('mejora'); };
+  // Si está bloqueado, va directo al video (no al formulario de hogar)
+  $('heroe-ir-video').onclick = function () { irA('vm'); };
   $('btn-vol').onclick = function () {
     if (!desbloqueado) {
       $('heroe-candado').style.display = 'block';
-      $('heroe-candado').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      irA('vm');
       return;
     }
     $('heroe-candado').style.display = 'none';

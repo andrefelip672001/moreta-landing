@@ -168,7 +168,11 @@
       btn.textContent = ok ? '¡Link copiado!' : 'Mantén presionado el link para copiarlo';
       setTimeout(function () { btn.textContent = 'Copiar mi link'; }, 2500);
     };
-    var texto = 'Hola, soy ' + String(d.nombre).split(' ')[0] + ' y te invito para que Moreta arregle tu caleta.\nRegístrate gratis aquí 👇🏻\n' + link;
+    var texto = '🏠 ¿YA MEJORARON TU VIVIENDA?\n\n¡Tú también puedes ser parte de esta iniciativa!\n\n' +
+      'Te invito a conocer el proyecto *MORETA ARREGLA TU CALETA.*\n' +
+      'Regístrate *GRATIS*, invita a tus amigos, familiares y participa para recibir recompensas.\n\n' +
+      '👇 ¡INGRESA AQUÍ Y DESCUBRE CÓMO FUNCIONA!\n' + link + '\n\n' +
+      '¡Comparte esta oportunidad! 🏡';
     $('wsp').href = 'https://wa.me/?text=' + encodeURIComponent(texto);
     $('fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
 

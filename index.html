@@ -105,7 +105,8 @@ h2 em{font-family:var(--f-script);text-transform:none;color:var(--magenta);font-
 /* Formularios */
 .form label.l{font-weight:700;font-size:13.5px;display:block;margin:16px 0 7px}
 .form label.l:first-child{margin-top:0}
-.form input[type=text],.form input[type=tel],.form input[type=email],.form select{width:100%;padding:13px 14px;border:1.5px solid var(--linea);border-radius:12px;font:inherit;font-size:16px;color:var(--marino);background:#fff;-webkit-appearance:none;appearance:none}
+.form input[type=password]{font-size:18px;padding:15px 14px}
+.form input[type=text],.form input[type=tel],.form input[type=email],.form input[type=password],.form select{width:100%;padding:13px 14px;border:1.5px solid var(--linea);border-radius:12px;font:inherit;font-size:16px;color:var(--marino);background:#fff;-webkit-appearance:none;appearance:none}
 .form input:focus,.form select:focus{outline:none;border-color:var(--azul)}
 .dos{display:flex;margin:0 -6px}
 .dos>div{flex:1;padding:0 6px;min-width:0}
@@ -370,13 +371,13 @@ footer .pie{margin-top:18px;opacity:.6}
       <div id="heroe-login" style="display:none;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin:6px 0 10px">
         <p style="margin:0 0 8px;font-weight:700;text-align:center">¿Ya eres héroe? Inicia sesión</p>
         <input id="hl-tel" inputmode="numeric" maxlength="10" placeholder="Tu celular (09...)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
-        <input type="password" id="hl-cod" maxlength="72" autocomplete="current-password" placeholder="Tu contraseña"style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+        <input type="password" id="hl-cod" maxlength="72" autocomplete="current-password" placeholder="Tu contraseña"style="width:100%;padding:13px;border-radius:10px;border:0;font-size:18px;margin-bottom:8px;box-sizing:border-box">
         <button class="btn-vol" id="hl-entrar" type="button" style="width:100%">Entrar a mi panel</button>
         <p id="hl-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
         <button type="button" id="hl-primera" style="background:none;border:0;color:inherit;text-decoration:underline;font-size:13px;margin:8px 0 0;cursor:pointer;width:100%">¿Te registraste antes? Crea tu contraseña aquí</button>
         <div id="hp-box" style="display:none;margin-top:10px">
           <input id="hp-nombre" maxlength="120" placeholder="Tu nombre y apellido" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
-          <input type="password" id="hp-clave" maxlength="72" autocomplete="new-password" placeholder="Nueva contraseña (mínimo 6)" style="width:100%;padding:11px;border-radius:10px;border:0;font-size:15px;margin-bottom:8px;box-sizing:border-box">
+          <input type="password" id="hp-clave" maxlength="72" autocomplete="new-password" placeholder="Nueva contraseña (mínimo 6)" style="width:100%;padding:13px;border-radius:10px;border:0;font-size:18px;margin-bottom:8px;box-sizing:border-box">
           <button class="btn-vol" id="hp-crear" type="button" style="width:100%">Guardar y entrar</button>
           <p id="hp-msg" style="margin:8px 0 0;font-size:14px;text-align:center"></p>
         </div>

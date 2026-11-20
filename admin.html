@@ -231,6 +231,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
         <div class="fila">
           <input class="in" id="ho-buscar" placeholder="Buscar nombre, cédula, talonario…" style="width:240px">
           <select class="in" id="ho-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
+          <select class="in" id="ho-estado" style="width:auto"><option value="">Todos</option><option value="sin">Sin contactar</option><option value="si">Ya contactados</option></select>
           <button class="btn mag" id="ho-excel">⬇ Descargar Excel</button>
         </div>
       </div>
@@ -708,8 +709,8 @@ async function firmar(rutas) {
    ========================================================= */
 let hogares = [], urlsFotos = {};
 function hogFiltrados() {
-  const q = $('#ho-buscar').value.toLowerCase().trim(), p = $('#ho-parroquia').value;
-  return hogares.filter(h => (!p || h.parroquia === p) &&
+  const q = $('#ho-buscar').value.toLowerCase().trim(), p = $('#ho-parroquia').value, e = $('#ho-estado').value;
+  return hogares.filter(h => (!p || h.parroquia === p) && (!e || (e === 'sin' ? !h.contactado : !!h.contactado)) &&
     (!q || [h.nombre, h.cedula, h.telefono, h.correo, h.sexo, h.barrio, h.direccion, h.mejoras, h.talonario, h.brigada && nombreBrigada(h.brigada)].join(' ').toLowerCase().includes(q)));
 }
 const HOG_POR_PAGINA = 30;
@@ -725,6 +726,7 @@ function tarjetaHogar(h) {
     <div class="hog">
       <div class="datos">
         <h3>${esc(h.nombre)}</h3>
+        <button class="btn peq" data-contacto="${h.id}" style="margin:4px 0 8px;${h.contactado ? 'background:#13A35B;color:#fff' : 'background:#fff;color:#1a1a5e;border:1px solid #1a1a5e'}">${h.contactado ? '✅ Ya le escribí' + (h.contactado_en ? ' · ' + esc(fecha(h.contactado_en)) : '') : '☐ Marcar como contactado'}</button>
         <div class="meta">${esc(fecha(h.creado))} · ${h.brigada ? `🚩 ingresado por <b>${esc(nombreBrigada(h.brigada))}</b> · talonario <b>${esc(h.talonario || '—')}</b>` : 'llegó por ' + esc(nombre(h.fuente || 'directo'))}</div>
         <dl>
           <dt>Cédula</dt><dd>${esc(h.cedula)}</dd>
@@ -755,7 +757,8 @@ function pintarHogares() {
   hogPagina = Math.min(Math.max(0, hogPagina), paginas - 1);
   const ini = hogPagina * HOG_POR_PAGINA;
   pagActual = lista.slice(ini, ini + HOG_POR_PAGINA);
-  $('#ho-total').textContent = `${lista.length} de ${hogares.length} hogares registrados`;
+  const sinContactar = hogares.filter(h => !h.contactado).length;
+  $('#ho-total').textContent = `${lista.length} de ${hogares.length} hogares registrados · ${sinContactar} sin contactar`;
   $('#ho-pag').innerHTML = lista.length > HOG_POR_PAGINA
     ? `<button class="btn peq" id="ho-ant" ${hogPagina === 0 ? 'disabled' : ''}>← Anterior</button>
        <span>Página ${hogPagina + 1} de ${paginas}</span>
@@ -807,6 +810,18 @@ $('#ho-pag').addEventListener('click', e => {
 });
 $('#ho-buscar').oninput = () => { hogPagina = 0; pintarHogares(); };
 $('#ho-parroquia').onchange = () => { hogPagina = 0; pintarHogares(); };
+$('#ho-estado').onchange = () => { hogPagina = 0; pintarHogares(); };
+$('#ho-lista').addEventListener('click', async e => {
+  const id = e.target.dataset.contacto; if (!id) return;
+  const h = hogares.find(x => String(x.id) === id); if (!h) return;
+  const marcar = !h.contactado;
+  try {
+    const cambios = { contactado: marcar, contactado_en: marcar ? new Date().toISOString() : null };
+    await api(`hogares?id=eq.${id}`, { method: 'PATCH', body: cambios, prefer: 'return=minimal' });
+    Object.assign(h, cambios);
+    pintarHogares();
+  } catch (x) { aviso(x.message, true); }
+});
 
 $('#ho-lista').addEventListener('click', async e => {
   const id = e.target.dataset.borrarHog; if (!id) return;

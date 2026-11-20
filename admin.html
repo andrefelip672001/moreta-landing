@@ -179,6 +179,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
       <button data-tab="artesanos">🛠️ Artesanos</button>
       <button data-tab="ferreteros">🔩 Ferreteros</button>
       <button data-tab="brigadas">🚩 Brigadas</button>
+      <button data-tab="carga">📤 Carga masiva</button>
       <button data-tab="bio">⭐ Video principal y bio</button>
       <button data-tab="videos">🎥 Videos</button>
       <button data-tab="propuestas">📋 Propuestas</button>
@@ -233,7 +234,14 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
           <button class="btn mag" id="ho-excel">⬇ Descargar Excel</button>
         </div>
       </div>
+      <div class="card" style="margin-top:12px">
+        <h3 style="margin:0 0 6px">💬 Mensaje para WhatsApp</h3>
+        <p class="sub" style="margin:0 0 8px">Escribe <b>{nombre}</b> donde quieras el primer nombre de cada familia. El botón "Enviar WhatsApp" abre el chat con este texto para que solo tenga que darle enviar.</p>
+        <textarea class="in" id="ho-msg" rows="5" style="width:100%"></textarea>
+        <button class="btn mag" id="ho-msg-guardar" style="margin-top:8px">Guardar mensaje</button>
+      </div>
       <div id="ho-lista"></div>
+      <div id="ho-pag" class="fila" style="justify-content:center;margin-top:16px;gap:10px;flex-wrap:wrap"></div>
     </section>
 
     <!-- Voluntarios -->
@@ -327,6 +335,25 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
     <section data-sec="descargables" class="oculto" data-crud="descargables"></section>
 
     <!-- Video principal y biografía -->
+    <section data-sec="carga" class="oculto">
+      <div class="card">
+        <h3>📤 Carga masiva de registros</h3>
+        <p style="font-size:14px;opacity:.85">Para subir muchos registros de una vez (por ejemplo, los que llegaron en papel). Descarga la plantilla, llénala y súbela aquí. El sistema revisa cada fila antes de guardar y te muestra las que tienen errores. <b>Solo se guardan filas con "Sí" en consentimiento.</b></p>
+        <div class="fila" style="margin-top:10px">
+          <button class="btn sec" id="cm-plantilla">⬇ Descargar plantilla</button>
+          <input type="file" id="cm-archivo" accept=".xlsx,.xls,.csv">
+        </div>
+        <div id="cm-resumen" style="margin-top:12px;font-size:15px"></div>
+        <div class="fila oculto" id="cm-fila-subir" style="margin-top:12px"><button class="btn mag" id="cm-subir">Subir registros válidos</button></div>
+        <div id="cm-progreso" style="margin-top:10px;font-size:14px"></div>
+      </div>
+      <div class="tabla-wrap oculto" id="cm-errores-wrap">
+        <table>
+          <thead><tr><th>Fila</th><th>Nombre</th><th>Problema</th></tr></thead>
+          <tbody id="cm-errores"></tbody>
+        </table>
+      </div>
+    </section>
     <section data-sec="bio" class="oculto">
       <div class="cab"><div><h2>Video principal y biografía</h2><p class="sub">El video que la gente debe ver completo para desbloquear Mejora tu Hogar.</p></div></div>
       <div class="card">
@@ -685,10 +712,16 @@ function hogFiltrados() {
   return hogares.filter(h => (!p || h.parroquia === p) &&
     (!q || [h.nombre, h.cedula, h.telefono, h.correo, h.sexo, h.barrio, h.direccion, h.mejoras, h.talonario, h.brigada && nombreBrigada(h.brigada)].join(' ').toLowerCase().includes(q)));
 }
-function pintarHogares() {
-  const lista = hogFiltrados();
-  $('#ho-total').textContent = `${lista.length} de ${hogares.length} hogares registrados`;
-  $('#ho-lista').innerHTML = lista.length ? lista.map(h => `
+const HOG_POR_PAGINA = 30;
+const MENSAJE_HOGAR_DEFECTO = 'Hola {nombre}, soy Miguel Ángel Moreta. Te invito a seguir mis canales para estar al día de nuestras propuestas para Santo Domingo. 👉 https://whatsapp.com/channel/0029Vb6im4vJJhzTkgvYxa2k';
+let hogPagina = 0, MENSAJE_HOGAR = MENSAJE_HOGAR_DEFECTO, pagActual = [], fotosIntentadas = new Set(), mensajeCargado = false;
+function linkWhatsappHogar(h) {
+  const tel = '593' + String(h.telefono || '').replace(/\D/g, '').replace(/^0/, '');
+  const txt = MENSAJE_HOGAR.replace(/\{nombre\}/g, String(h.nombre || '').split(' ')[0]);
+  return `https://wa.me/${tel}?text=${encodeURIComponent(txt)}`;
+}
+function tarjetaHogar(h) {
+  return `
     <div class="hog">
       <div class="datos">
         <h3>${esc(h.nombre)}</h3>
@@ -696,21 +729,48 @@ function pintarHogares() {
         <dl>
           <dt>Cédula</dt><dd>${esc(h.cedula)}</dd>
           <dt>Persona</dt><dd>${h.sexo ? esc(h.sexo) : '—'}${h.edad ? ' · ' + h.edad + ' años' : ''}</dd>
-          <dt>Celular</dt><dd><a href="https://wa.me/593${esc(h.telefono.slice(1))}" target="_blank">${esc(h.telefono)} (WhatsApp)</a></dd>
+          <dt>Celular</dt><dd><a href="https://wa.me/593${esc(String(h.telefono || '').slice(1))}" target="_blank">${esc(h.telefono)} (WhatsApp)</a></dd>
           <dt>Correo</dt><dd>${h.correo ? `<a href="mailto:${esc(h.correo)}" style="color:var(--azul)">${esc(h.correo)}</a>` : '<span style="color:var(--gris);font-weight:500">No dejó correo</span>'}</dd>
           <dt>Parroquia</dt><dd>${esc(h.parroquia)}${h.barrio ? ' · ' + esc(h.barrio) : ''}</dd>
           <dt>Dirección</dt><dd>${esc(h.direccion)}</dd>
           <dt>Vivienda</dt><dd>${esc(h.vivienda)} · ${h.personas} persona${h.personas == 1 ? '' : 's'}</dd>
           <dt>Necesita</dt><dd>${esc(h.mejoras)}</dd>
         </dl>
+        ${h.telefono ? `<a class="btn peq" href="${esc(linkWhatsappHogar(h))}" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;background:#25d366;color:#fff;text-decoration:none">💬 Enviar WhatsApp</a>` : ''}
         <button class="btn peq rojo" style="margin-top:12px" data-borrar-hog="${h.id}">Eliminar registro</button>
       </div>
       <div class="fotos">${(h.fotos || []).length ? h.fotos.map(f => urlsFotos[f]
           ? `<a href="${esc(urlsFotos[f])}" target="_blank" title="Ver foto completa"><img src="${esc(urlsFotos[f])}" alt="" loading="lazy"></a>`
           : '<div class="sinfoto">Foto no disponible</div>').join('')
         : '<div class="sinfoto">Sin fotos</div>'}</div>
-    </div>`).join('')
+    </div>`;
+}
+function dibujarHogares() {
+  $('#ho-lista').innerHTML = pagActual.length ? pagActual.map(tarjetaHogar).join('')
     : '<div class="card vacio" style="margin-top:12px">No hay registros todavía.</div>';
+}
+function pintarHogares() {
+  const lista = hogFiltrados();
+  const paginas = Math.max(1, Math.ceil(lista.length / HOG_POR_PAGINA));
+  hogPagina = Math.min(Math.max(0, hogPagina), paginas - 1);
+  const ini = hogPagina * HOG_POR_PAGINA;
+  pagActual = lista.slice(ini, ini + HOG_POR_PAGINA);
+  $('#ho-total').textContent = `${lista.length} de ${hogares.length} hogares registrados`;
+  $('#ho-pag').innerHTML = lista.length > HOG_POR_PAGINA
+    ? `<button class="btn peq" id="ho-ant" ${hogPagina === 0 ? 'disabled' : ''}>← Anterior</button>
+       <span>Página ${hogPagina + 1} de ${paginas}</span>
+       <button class="btn peq" id="ho-sig" ${hogPagina >= paginas - 1 ? 'disabled' : ''}>Siguiente →</button>` : '';
+  dibujarHogares();
+  firmarFotosVisibles();
+}
+// Solo se firman las fotos de la página que se está viendo (antes se firmaban todas)
+async function firmarFotosVisibles() {
+  const rutas = [].concat(...pagActual.map(h => h.fotos || [])).filter(r => !urlsFotos[r] && !fotosIntentadas.has(r));
+  if (!rutas.length) return;
+  rutas.forEach(r => fotosIntentadas.add(r));
+  try { Object.assign(urlsFotos, await firmar(rutas)); }
+  catch (x) { aviso('No se pudieron cargar las fotos: ' + x.message, true); }
+  dibujarHogares();
 }
 cargadores.hogares = async () => {
   try { await cargarBrigadas(); } catch (e) {}
@@ -723,14 +783,31 @@ cargadores.hogares = async () => {
   const actual = $('#ho-parroquia').value;
   const ps = [...new Set(hogares.map(h => h.parroquia))].sort();
   $('#ho-parroquia').innerHTML = '<option value="">Todas las parroquias</option>' + ps.map(p => `<option ${p === actual ? 'selected' : ''}>${esc(p)}</option>`).join('');
-  pintarHogares();
-  const rutas = [].concat(...hogares.map(h => h.fotos || []));
-  try { urlsFotos = {}; for (let i = 0; i < rutas.length; i += 100) Object.assign(urlsFotos, await firmar(rutas.slice(i, i + 100))); }
-  catch (x) { aviso('No se pudieron cargar las fotos: ' + x.message, true); }
+  try {
+    const f = await api('ajustes?select=valor&clave=eq.mensaje_hogar');
+    MENSAJE_HOGAR = (f && f[0] && f[0].valor) || MENSAJE_HOGAR_DEFECTO;
+  } catch (e) { MENSAJE_HOGAR = MENSAJE_HOGAR_DEFECTO; }
+  if (!mensajeCargado) { $('#ho-msg').value = MENSAJE_HOGAR; mensajeCargado = true; }
   pintarHogares();
 };
-$('#ho-buscar').oninput = pintarHogares;
-$('#ho-parroquia').onchange = pintarHogares;
+$('#ho-msg-guardar').onclick = async () => {
+  const txt = $('#ho-msg').value.trim();
+  if (!txt) return aviso('Escribe el mensaje', true);
+  try {
+    await api('ajustes?on_conflict=clave', { method: 'POST', body: { clave: 'mensaje_hogar', valor: txt, actualizado: new Date().toISOString() }, prefer: 'resolution=merge-duplicates,return=minimal' });
+    MENSAJE_HOGAR = txt; aviso('Mensaje guardado'); pintarHogares();
+  } catch (x) { aviso(x.message, true); }
+};
+$('#ho-pag').addEventListener('click', e => {
+  if (e.target.id === 'ho-ant') { hogPagina--; }
+  else if (e.target.id === 'ho-sig') { hogPagina++; }
+  else return;
+  pintarHogares();
+  $('#ho-lista').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+$('#ho-buscar').oninput = () => { hogPagina = 0; pintarHogares(); };
+$('#ho-parroquia').onchange = () => { hogPagina = 0; pintarHogares(); };
+
 $('#ho-lista').addEventListener('click', async e => {
   const id = e.target.dataset.borrarHog; if (!id) return;
   const h = hogares.find(x => String(x.id) === id);
@@ -1314,6 +1391,232 @@ $('#bio-guardar').onclick = async () => {
 
 /* ---------- Inicio: si ya hay sesión guardada, entrar directo ---------- */
 if (ses) entrar().catch(() => salir());
+</script>
+<script>
+/* =========================================================
+   CARGA MASIVA: sube muchos registros desde Excel o CSV
+   ========================================================= */
+(function () {
+  const COLS = ['Nombre*', 'Celular*', 'Cédula', 'Correo', 'Sexo', 'Edad', 'Parroquia', 'Barrio', 'Dirección', 'Vivienda', 'Personas', 'Necesita', 'Código de brigada', 'N° de talonario', 'Código de héroe', 'Consentimiento (Sí/No)*'];
+  const SEXOS = ['Hombre', 'Mujer', 'Prefiero no decirlo'];
+  const VIVIENDAS = ['Propia', 'Familiar', 'Arrendada', 'Otra'];
+  const CLAVES = { nombre: /^nombre/, telefono: /celular|telefono/, cedula: /cedula/, correo: /correo/, sexo: /sexo/, edad: /edad/, parroquia: /parroquia/, barrio: /barrio/, direccion: /direccion/, vivienda: /vivienda/, personas: /personas/, mejoras: /necesita|mejora/, brigada: /brigada/, talonario: /talonario/, heroe: /heroe/, consentimiento: /consentimiento/ };
+  let codBrigada = new Set(), codHeroe = new Set(), validas = [], conError = [];
+
+  const norm = s => String(s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+  const soloDig = v => String(v ?? '').replace(/\D/g, '');
+  const txt = (v, max) => { const s = String(v ?? '').trim(); return s === '' ? null : s.slice(0, max); };
+  const buscar = (lista, v) => lista.find(x => norm(x) === norm(v)) || null;
+
+  function cedulaOK(c) {
+    if (!/^\d{10}$/.test(c)) return false;
+    const p = +c.slice(0, 2); if (!((p >= 1 && p <= 24) || p === 30)) return false;
+    if (+c[2] >= 6) return false;
+    let s = 0;
+    for (let i = 0; i < 9; i++) { let x = +c[i] * (i % 2 === 0 ? 2 : 1); if (x > 9) x -= 9; s += x; }
+    return (10 - (s % 10)) % 10 === +c[9];
+  }
+
+  function traducir(msg) {
+    msg = String(msg || '');
+    if (/duplicate|unique|23505/i.test(msg)) return 'La cédula o el talonario ya están registrados';
+    if (/brigada/i.test(msg)) return 'Código de brigada no válido';
+    if (/cedula/i.test(msg)) return 'Cédula no válida';
+    if (/check|violates|null value/i.test(msg)) return 'Faltan datos o hay datos no válidos';
+    return msg;
+  }
+
+  function filaDeAyuda() {
+    return [
+      ['Juan Pérez', '0991234567', '1710034065', '', 'Hombre', '45', 'Tarqui', 'Barrio Centro', 'Calle 1 y referencia', 'Propia', '4', 'Techo, piso', 'nombre-de-la-brigada', '1234', '', 'Sí']
+    ];
+  }
+
+  cargadores.carga = async function () {
+    const b = await api('brigadas?select=codigo,activo');
+    codBrigada = new Set((b || []).filter(x => x.activo).map(x => x.codigo));
+    const v = await api('voluntarios?select=codigo');
+    codHeroe = new Set((v || []).map(x => x.codigo).filter(Boolean));
+  };
+
+  $('#cm-plantilla').onclick = () => descargarExcel('plantilla-carga-masiva.xlsx', [
+    { nombre: 'Registros', cab: COLS, filas: filaDeAyuda() },
+    { nombre: 'Instrucciones', cab: ['Cómo llenarla'], filas: [
+      ['1. Una fila por persona. Borra la fila de ejemplo antes de subirla.'],
+      ['2. Nombre y Celular son obligatorios. Cédula también es obligatoria si la persona no tiene un jefe de brigada.'],
+      ['3. Sexo: Hombre, Mujer o Prefiero no decirlo. Vivienda: Propia, Familiar, Arrendada u Otra.'],
+      ['4. Código de brigada y Código de héroe deben existir en el sistema (déjalos vacíos si no aplican).'],
+      ['5. Consentimiento: escribe Sí solo si la persona aceptó que sus datos se usen para contactarla. Sin Sí, la fila no se guarda.'],
+    ] },
+  ]);
+
+  $('#cm-archivo').onchange = async (ev) => {
+    const archivo = ev.target.files[0];
+    if (!archivo) return;
+    const resumen = $('#cm-resumen');
+    resumen.textContent = 'Revisando el archivo…';
+    $('#cm-fila-subir').classList.add('oculto');
+    $('#cm-progreso').textContent = '';
+    try {
+      await cargadores.carga();
+      await analizar(archivo);
+    } catch (e) {
+      resumen.textContent = 'No pudimos leer el archivo: ' + e.message;
+    }
+  };
+
+  async function analizar(archivo) {
+    await cargarXLSX();
+    const wb = XLSX.read(await archivo.arrayBuffer(), { type: 'array' });
+    const hoja = wb.Sheets[wb.SheetNames[0]];
+    const datos = XLSX.utils.sheet_to_json(hoja, { header: 1, defval: '', raw: false, blankrows: false });
+    if (datos.length < 2) throw new Error('el archivo no tiene filas de datos.');
+
+    const cab = datos[0].map(norm);
+    const col = {};
+    Object.keys(CLAVES).forEach(k => { col[k] = cab.findIndex(c => CLAVES[k].test(c)); });
+    if (col.nombre < 0 || col.telefono < 0) throw new Error('faltan las columnas Nombre y Celular.');
+
+    validas = []; conError = [];
+    const cedulasVistas = new Set(), talonariosVistos = new Set();
+    const get = (fila, k) => (col[k] >= 0 ? fila[col[k]] : '');
+
+    datos.slice(1).forEach((fila, i) => {
+      const num = i + 2;
+      if (fila.every(c => String(c).trim() === '')) return;
+      const errs = [];
+      const nombre = txt(get(fila, 'nombre'), 120);
+      if (!nombre || nombre.length < 2) errs.push('Falta el nombre');
+
+      let tel = soloDig(get(fila, 'telefono'));
+      if (tel.length === 9 && tel[0] === '9') tel = '0' + tel;
+      if (!/^0\d{9}$/.test(tel)) errs.push('Celular no válido (10 dígitos, ej: 0991234567)');
+
+      let ced = soloDig(get(fila, 'cedula'));
+      if (ced.length === 9) ced = '0' + ced;
+      if (ced && !cedulaOK(ced)) errs.push('Cédula no válida');
+      if (ced && cedulasVistas.has(ced)) errs.push('Cédula repetida en el archivo');
+      if (ced) cedulasVistas.add(ced);
+
+      const correo = txt(get(fila, 'correo'), 120);
+      const correoLimpio = correo ? correo.toLowerCase() : null;
+      if (correoLimpio && !/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/.test(correoLimpio)) errs.push('Correo mal escrito');
+
+      const sexo = buscar(SEXOS, get(fila, 'sexo'));
+      if (txt(get(fila, 'sexo'), 40) && !sexo) errs.push('Sexo no válido');
+
+      const edadTxt = soloDig(get(fila, 'edad'));
+      const edad = edadTxt ? parseInt(edadTxt, 10) : null;
+      if (edad !== null && !(edad >= 18 && edad <= 110)) errs.push('Edad no válida (18 a 110)');
+
+      const vivienda = buscar(VIVIENDAS, get(fila, 'vivienda'));
+      if (txt(get(fila, 'vivienda'), 40) && !vivienda) errs.push('Vivienda no válida');
+
+      const personasTxt = soloDig(get(fila, 'personas'));
+      const personas = personasTxt ? parseInt(personasTxt, 10) : null;
+      if (personas !== null && !(personas >= 1 && personas <= 30)) errs.push('Personas no válido (1 a 30)');
+
+      const brigada = txt(get(fila, 'brigada'), 40);
+      const codBri = brigada ? brigada.toLowerCase() : null;
+      if (codBri && !codBrigada.has(codBri)) errs.push('Código de brigada no existe o está inactivo');
+
+      let tal = soloDig(get(fila, 'talonario'));
+      if (tal && !/^\d{4,8}$/.test(tal)) errs.push('Talonario no válido (4 a 8 dígitos)');
+      if (tal && tal.length < 4) tal = tal.padStart(4, '0');
+      if (tal && talonariosVistos.has(tal)) errs.push('Talonario repetido en el archivo');
+      if (tal) talonariosVistos.add(tal);
+
+      const heroe = txt(get(fila, 'heroe'), 30);
+      const codHer = heroe ? heroe.toLowerCase() : null;
+      if (codHer && !codHeroe.has(codHer)) errs.push('Código de héroe no existe');
+
+      const consent = /^(si|sí|s|yes|x|1)$/i.test(String(get(fila, 'consentimiento')).trim());
+      if (!consent) errs.push('Falta el consentimiento (escribe Sí)');
+
+      const parroquia = txt(get(fila, 'parroquia'), 80);
+      const direccion = txt(get(fila, 'direccion'), 250);
+      const mejoras = txt(get(fila, 'mejoras'), 200);
+      if (!codBri) {
+        // Quien no tiene jefe de brigada debe tener todos sus datos (igual que el formulario)
+        if (!ced) errs.push('Falta la cédula');
+        if (!sexo) errs.push('Falta el sexo');
+        if (edad === null) errs.push('Falta la edad');
+        if (!parroquia) errs.push('Falta la parroquia');
+        if (!direccion || direccion.length < 5) errs.push('Falta la dirección');
+        if (!vivienda) errs.push('Falta la vivienda');
+        if (personas === null) errs.push('Faltan las personas');
+        if (!mejoras) errs.push('Faltan las mejoras que necesita');
+      }
+
+      if (errs.length) { conError.push({ fila: num, nombre: nombre || '(sin nombre)', problema: errs.join('; ') }); return; }
+
+      validas.push({ fila: num, nombre, datos: {
+        nombre, telefono: tel, cedula: ced || null, correo: correoLimpio, sexo: sexo || null,
+        edad, parroquia, barrio: txt(get(fila, 'barrio'), 120), direccion, vivienda: vivienda || null,
+        personas, mejoras, brigada: codBri, talonario: tal || null,
+        fuente: codBri ? 'brigada' : (codHer ? 'heroe-' + codHer : 'carga-masiva'),
+        consentimiento: true
+      } });
+    });
+
+    const r = $('#cm-resumen');
+    r.innerHTML = '';
+    const linea = document.createElement('div');
+    linea.innerHTML = '<b>' + validas.length + '</b> filas listas para guardar' + (conError.length ? ' · <b style="color:#b91c1c">' + conError.length + '</b> con errores (ver abajo)' : '');
+    r.appendChild(linea);
+    $('#cm-fila-subir').classList.toggle('oculto', validas.length === 0);
+    $('#cm-subir').textContent = 'Subir ' + validas.length + ' registros válidos';
+
+    const cuerpo = $('#cm-errores');
+    cuerpo.innerHTML = '';
+    conError.forEach(e => {
+      const tr = document.createElement('tr');
+      [e.fila, e.nombre, e.problema].forEach(t => { const td = document.createElement('td'); td.textContent = t; tr.appendChild(td); });
+      cuerpo.appendChild(tr);
+    });
+    $('#cm-errores-wrap').classList.toggle('oculto', conError.length === 0);
+  }
+
+  $('#cm-subir').onclick = async () => {
+    const boton = $('#cm-subir'), progreso = $('#cm-progreso');
+    if (!validas.length) return;
+    if (!confirm('Vas a guardar ' + validas.length + ' registros. ¿Continuar?')) return;
+    boton.disabled = true;
+    const lista = validas.slice();
+    const fallidas = [];
+    let guardadas = 0;
+    const TAM = 50;
+    for (let i = 0; i < lista.length; i += TAM) {
+      const lote = lista.slice(i, i + TAM);
+      progreso.textContent = 'Guardando… ' + Math.min(i + TAM, lista.length) + ' de ' + lista.length;
+      try {
+        await api('hogares', { method: 'POST', body: lote.map(x => x.datos), prefer: 'return=minimal' });
+        guardadas += lote.length;
+      } catch (e) {
+        // Si el lote falla, se guarda fila por fila para saber cuáles tienen problema
+        for (const x of lote) {
+          try { await api('hogares', { method: 'POST', body: [x.datos], prefer: 'return=minimal' }); guardadas++; }
+          catch (err) { fallidas.push({ fila: x.fila, nombre: x.nombre, problema: traducir(err.message) }); }
+        }
+      }
+    }
+    progreso.innerHTML = '<b>Listo:</b> ' + guardadas + ' guardados' + (fallidas.length ? ', ' + fallidas.length + ' no se pudieron guardar (ver abajo)' : '') + '.';
+    if (fallidas.length) {
+      conError = conError.concat(fallidas);
+      const cuerpo = $('#cm-errores');
+      fallidas.forEach(e => {
+        const tr = document.createElement('tr');
+        [e.fila, e.nombre, e.problema].forEach(t => { const td = document.createElement('td'); td.textContent = t; tr.appendChild(td); });
+        cuerpo.appendChild(tr);
+      });
+      $('#cm-errores-wrap').classList.remove('oculto');
+    }
+    validas = [];
+    boton.disabled = false;
+    $('#cm-fila-subir').classList.add('oculto');
+    aviso('Carga terminada ✓');
+  };
+})();
 </script>
 </body>
 </html>

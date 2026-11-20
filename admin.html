@@ -231,7 +231,7 @@ td a{color:var(--verde);font-weight:700;text-decoration:none}
         <div class="fila">
           <input class="in" id="ho-buscar" placeholder="Buscar nombre, cédula, talonario…" style="width:240px">
           <select class="in" id="ho-parroquia" style="width:auto"><option value="">Todas las parroquias</option></select>
-          <select class="in" id="ho-estado" style="width:auto"><option value="">Todos</option><option value="sin">Sin contactar</option><option value="si">Ya contactados</option></select>
+          <select class="in" id="ho-estado" style="width:auto"><option value="sin" selected>Sin contactar</option><option value="">Todos</option><option value="si">Ya contactados</option></select>
           <button class="btn mag" id="ho-excel">⬇ Descargar Excel</button>
         </div>
       </div>
@@ -738,7 +738,7 @@ function tarjetaHogar(h) {
           <dt>Vivienda</dt><dd>${esc(h.vivienda)} · ${h.personas} persona${h.personas == 1 ? '' : 's'}</dd>
           <dt>Necesita</dt><dd>${esc(h.mejoras)}</dd>
         </dl>
-        ${h.telefono ? `<a class="btn peq" href="${esc(linkWhatsappHogar(h))}" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;background:#25d366;color:#fff;text-decoration:none">💬 Enviar WhatsApp</a>` : ''}
+        ${h.telefono ? `<a class="btn peq" data-wa="${h.id}" href="${esc(linkWhatsappHogar(h))}" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;background:#25d366;color:#fff;text-decoration:none">💬 Enviar WhatsApp</a>` : ''}
         <button class="btn peq rojo" style="margin-top:12px" data-borrar-hog="${h.id}">Eliminar registro</button>
       </div>
       <div class="fotos">${(h.fotos || []).length ? h.fotos.map(f => urlsFotos[f]
@@ -811,6 +811,18 @@ $('#ho-pag').addEventListener('click', e => {
 $('#ho-buscar').oninput = () => { hogPagina = 0; pintarHogares(); };
 $('#ho-parroquia').onchange = () => { hogPagina = 0; pintarHogares(); };
 $('#ho-estado').onchange = () => { hogPagina = 0; pintarHogares(); };
+// Al tocar "Enviar WhatsApp" se marca como contactado automáticamente
+$('#ho-lista').addEventListener('click', async e => {
+  const a = e.target.closest && e.target.closest('a[data-wa]'); if (!a) return;
+  const h = hogares.find(x => String(x.id) === a.dataset.wa);
+  if (!h || h.contactado) return;
+  const cambios = { contactado: true, contactado_en: new Date().toISOString() };
+  try {
+    await api(`hogares?id=eq.${h.id}`, { method: 'PATCH', body: cambios, prefer: 'return=minimal' });
+    Object.assign(h, cambios);
+    pintarHogares();
+  } catch (x) { aviso('No se pudo marcar como contactado: ' + x.message, true); }
+});
 $('#ho-lista').addEventListener('click', async e => {
   const id = e.target.dataset.contacto; if (!id) return;
   const h = hogares.find(x => String(x.id) === id); if (!h) return;
